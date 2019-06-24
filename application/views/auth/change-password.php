@@ -15,7 +15,6 @@
 									<h1 class="h4 text-gray-900 mb-2">Change Password</h1>
 									<h5 class='mb-3'><?= $this->session->userdata('reset_email'); ?></h5>
 								</div>
-
 								<?= $this->session->flashdata('message'); ?>
 
 								<form method="POST" action="<?= base_url('auth/changepassword'); ?>" class="user">

@@ -133,7 +133,10 @@ class Auth extends CI_Controller
 		if ($type == 'verify') {
 			$this->email->subject('Account Verification | PF Admin');
 			$this->email->message("Click here to verify your account : <a href='" . base_url('auth/verify?email=') . $this->input->post('email') . "&token=" . urlencode($token) . "'>Activate</a>");
-		} else if ($type == 'forgot') { }
+		} else if ($type == 'forgot') {
+			$this->email->subject('Reset Password | FP Admin');
+			$this->email->message('Click this link to reset your password account : <a href="' . base_url() . 'auth/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Reset</a>');
+		}
 
 		if ($this->email->send()) {
 			return true;
@@ -177,19 +180,90 @@ class Auth extends CI_Controller
 	}
 
 	public function forgotPassword()
-	{ }
+	{
+		$data['title'] = "Forgot Password";
+
+		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('layouts/auth_header', $data);
+			$this->load->view('auth/forgot-password');
+			$this->load->view('layouts/auth_footer');
+		} else {
+			$email = $this->input->post('email');
+
+			if ($this->auth->checkActiveEmail($email)) {
+
+				$token = $this->auth->insertToken();
+
+				$this->_sendEmail($token, 'forgot');
+
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Please check your email to reset your password.</div>');
+				redirect('auth/forgotpassword');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Email is not registered or activated</div>');
+				redirect('auth/forgotpassword');
+			}
+		}
+	}
 
 	public function resetPassword()
-	{ }
+	{
+		$email = $this->input->get('email');
+		$token = $this->input->get('token');
+
+		$user = $this->auth->getUser($email);
+
+		if ($user) {
+			$user_token = $this->auth->getToken($token);
+
+			if ($user_token) {
+				$this->session->set_userdata('reset_email', $email);
+				$this->changePassword();
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Reset password failed! Token invalid.</div>');
+				redirect('auth');
+			}
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger">Reset password failed!. Wrong email.');
+			redirect('auth');
+		}
+	}
 
 	public function changePassword()
-	{ }
+	{
+		if (!$this->session->userdata('reset_email')) {
+			redirect('auth');
+		}
+
+		$data['title'] = "Change Password";
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]|matches[confirm_password]');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|trim|matches[password]');
+
+		if ($this->form_validation->run() ==  FALSE) {
+			$this->load->view('layouts/auth_header', $data);
+			$this->load->view('auth/change-password');
+			$this->load->view('layouts/auth_footer');
+		} else {
+			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			$email = $this->session->userdata('reset_email');
+
+			if ($this->auth->changePassword($password, $email)) {
+				$this->session->unset_userdata('reset_email');
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Password has been changed!. Please login</div>');
+				redirect('auth');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed change password!. Please contact admin</div>');
+				redirect('auth');
+			}
+		}
+	}
 
 	public function logout()
 	{
-		$this->session->unset_userdata(' email ');
-		$this->session->unset_userdata(' role_id ');
-		$this->session->set_flashdata(' message ', ' < div clas s ="alert alert-primary " >Yo u\'ve been logout</a></div>');
+		$this->session->unset_userdata('email');
+		$this->session->unset_userdata('role_id');
+		$this->session->set_flashdata('message', '<div class="alert alert-primary" >You\'ve been logout</a></div>');
 		redirect('auth');
 	}
 }

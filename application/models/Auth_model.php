@@ -65,4 +65,23 @@ class Auth_model extends CI_Model
 
 		return $this->db->affected_rows();
 	}
+
+	public function checkActiveEmail($email)
+	{
+		$user = $this->db->get_where('users', [
+			'email' => $email,
+			'is_active' => 1
+		])->row_array();
+
+		return $user;
+	}
+
+	public function changePassword($password, $email)
+	{
+		$this->db->set('password', $password);
+		$this->db->where('email', $email);
+		$this->db->update('users');
+
+		return $this->db->affected_rows();
+	}
 }
