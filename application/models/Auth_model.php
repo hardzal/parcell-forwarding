@@ -84,4 +84,10 @@ class Auth_model extends CI_Model
 
 		return $this->db->affected_rows();
 	}
+
+	public function insertUserDetail($user_details)
+	{
+		$this->db->insert('user_details', $user_details);
+		return $this->db->affected_rows();
+	}
 }

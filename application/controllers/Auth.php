@@ -160,8 +160,9 @@ class Auth extends CI_Controller
 					$this->auth->activatedUser($email);
 					$this->auth->deleteToken($email);
 
-					$this->session->set_flashdata('message', '<div class="alert alert-success">Congratulation! your account has been created ' . $email . ' has been activated. Please Login!</div>');
-					redirect('auth');
+					$this->session->set_userdata('verified_email', $email);
+					$this->session->set_flashdata('message', '<div class="alert alert-success">Congratulation! your account has been created ' . $email . ' has been activated. Please Insert User details!</div>');
+					redirect('auth/userdetail');
 				} else {
 					$this->auth->deleteUser($email);
 					$this->auth->deleteToken($email);
@@ -176,6 +177,89 @@ class Auth extends CI_Controller
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger">Account activation failed! Email not registered!</div>');
 			redirect('auth');
+		}
+	}
+
+
+	public function userDetail()
+	{
+		if (!$this->session->userdata('verified_email')) {
+			redirect('auth');
+		}
+		$user = $this->auth->getUser($this->session->userdata('verified_email'));
+		$data['title'] = "User Details";
+		$data['states'] = [
+			'Brunei Darussalam',
+			'Cambodia',
+			'Indonesia',
+			'Laos',
+			'Malaysia',
+			'Myanmar',
+			'Philippines',
+			'Singapore',
+			'Thailand',
+			'Vietnam',
+		];
+		$this->form_validation->set_rules('name', 'Name', 'required|trim');
+		$this->form_validation->set_rules('phone_number', 'Phone Number', 'required|numeric|max_length[12]');
+		$this->form_validation->set_rules('birth_date', 'Birth date', 'required');
+		$this->form_validation->set_rules('address', 'Address', 'required|trim');
+		$this->form_validation->set_rules('avatar', 'Avatar', 'trim');
+		$this->form_validation->set_rules('city', 'City or District', 'required|trim');
+		$this->form_validation->set_rules('state', 'State', 'required');
+		$this->form_validation->set_rules('postcode', 'Post Code', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('layouts/auth_header', $data);
+			$this->load->view('auth/user-detail', $data);
+			$this->load->view('layouts/auth_footer');
+		} else {
+			$this->session->unset_userdata('verified_email');
+
+			$name = $this->input->post('name');
+			$gender = $this->input->post('gender');
+			$phone_number = $this->input->post('phone_number');
+			$birth_date = $this->input->post('birth_date');
+
+			$address = $this->input->post('address');
+			$city = $this->input->post('city');
+			$state = $this->input->post('state');
+			$postcode = $this->input->post('postcode');
+
+			$image_name = $_FILES['avatar']['name'];
+			if ($image_name) {
+				$config['allowed_types'] = "gif|jpg|png";
+				$config['max_sizes'] = 2048;
+				$config['upload_path'] = "./assets/img/profile/";
+
+				$this->load->library('upload', $config);
+
+				$this->upload->do_upload('avatar');
+				$new_image = $this->upload->data('file_name');
+			} else {
+				$new_image = 'default.jpg';
+			}
+
+			$user_details = [
+				'user_id' => $user['id'],
+				'name' => $name,
+				'phone_number' => $phone_number,
+				'gender' => $gender,
+				'birth_date' => $birth_date,
+				'avatar' => $new_image,
+				'address' => $address,
+				'city' => $city,
+				'state' => $state,
+				'postcode' => $postcode
+			];
+
+			if ($this->auth->insertUserDetail($user_details)) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Congratulation! your account has been created ' . $user['email'] . ' has been activated. Please Login!</div>');
+				redirect('auth');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed to insert data user. Please contact admin!</div>');
+				redirect('auth');
+			}
 		}
 	}
 
