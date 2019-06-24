@@ -4,10 +4,10 @@
 
 Authentication
 
-- [ ] Login
-- [ ] Register
-- [ ] Forgot Password
-- [ ] Activation Email
+- [x] Login
+- [x] Register
+- [x] Forgot Password
+- [x] Activation Email
 - [ ] Edit Profil
 - [ ] Change Password
 
@@ -23,19 +23,6 @@ Auction
 - [ ] Melelang barang yang tidak dibayar oleh user
 - [ ] Mengirim barang hasil lelangan
 
-
----
-users
-user_details
-user_roles
-user_histories
-user_items
-user_token
-items
-item_auctions
-user_item_pays
-deliveries
----
-
+->login
 email: rizaldoeta98@gmail.com	
 password: 654321
