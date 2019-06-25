@@ -1,6 +1,6 @@
 # Project Parcell
 
-## Feature
+## Fitur
 
 Authentication
 
@@ -11,17 +11,29 @@ Authentication
 - [ ] Edit Profil
 - [ ] Change Password
 
-Service
+Servis
 
 - [ ] User memasukkan data barang
 - [ ] User melakukan pembayaran
 - [ ] Menerima pengiriman barang dari user
-- [ ] Mengirim barang yang diterima dari user
+- [ ] Mengirim barang pesanan user
+- [ ] Melihat riwayat service 
 
-Auction
+- [ ] Verifikasi data barang oleh admin
+- [ ] Cek status barang oleh user
+- [ ] Menghapus data barang oleh admin
+- [ ] Memperbaharui data barang oleh user
+- [ ] Pencarian data barang oleh user
+
+Lelang
 
 - [ ] Melelang barang yang tidak dibayar oleh user
 - [ ] Mengirim barang hasil lelangan
+
+Fitur lainnya
+
+- [ ] CRUD Image Slider Home
+- [ ] CRUD About Us
 
 ->login
 email: rizaldoeta98@gmail.com	

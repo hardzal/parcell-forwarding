@@ -31,12 +31,6 @@
 									</button>
 								</form>
 								<hr>
-								<div class="text-center">
-									<a class="small" href="<?= base_url('auth/signup'); ?>">Create an Account!</a>
-								</div>
-								<div class="text-center">
-									<a class="small" href="<?= base_url('auth'); ?>">Already have an account? Login!</a>
-								</div>
 							</div>
 						</div>
 					</div>

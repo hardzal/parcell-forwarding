@@ -11,10 +11,12 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('layouts/admin_header');
+		$data['title'] = "Dashboard Admin";
+
+		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar');
 		$this->load->view('layouts/admin_topbar');
-		$this->load->view('admin/index');
+		$this->load->view('admin/index', $data);
 		$this->load->view('layouts/admin_footer');
 	}
 }

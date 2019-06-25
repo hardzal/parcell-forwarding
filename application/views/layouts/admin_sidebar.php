@@ -19,13 +19,61 @@
 
 	<!-- Nav Item - Dashboard -->
 	<li class="nav-item">
-		<a class="nav-link" href="<?= base_url(); ?>/admin">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
 			<i class="fas fa-fw fa-tachometer-alt"></i>
 			<span>Dashboard</span></a>
 	</li>
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<i class="fas fa-shopping-cart"></i>
+			<span>Items</span></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<i class="fas fa-dolly"></i>
+			<span>Auctions</span></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link pt-2" href="<?= base_url(); ?>admin">
+			<i class="fas fa-users"></i>
+			<span>Users</span></a>
+	</li>
 
+	<hr class="sidebar-divider mb-3">
+
+	<div class='sidebar-heading'>
+		User </div>
+
+	<!-- Sub Heading Sesuai MENU -->
+
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item active">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>">
+			<i class="fas fa-fw fa-user"></i>
+			<span>My Profile</span></a>
+	</li>
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/editprofile">
+			<i class="fas fa-fw fa-user-edit"></i>
+			<span>Edit Profile</span></a>
+	</li>
+	<!-- Nav Item - Dashboard -->
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/changepassword">
+			<i class="fas fa-fw fa-key"></i>
+			<span>Change Password</span></a>
+	</li>
+
+	<hr class="sidebar-divider mt-3">
+
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/logs">
+			<i class="fas fa-history"></i>
+			<span>Activity Logs</span></a>
+	</li>
 	<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
+	<hr class="sidebar-divider mt-3 d-none d-md-block">
 
 	<li class='nav-item'>
 		<a class='nav-link' href='<?= base_url(); ?>auth/logout'>

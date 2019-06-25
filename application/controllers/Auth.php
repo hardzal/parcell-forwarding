@@ -12,6 +12,10 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
+		if ($this->session->userdata('email')) {
+			redirect('user');
+		}
+
 		$data['title'] = "Login Page";
 
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
@@ -69,6 +73,10 @@ class Auth extends CI_Controller
 
 	public function signup()
 	{
+		if ($this->session->userdata('email')) {
+			redirect('user');
+		}
+
 		$data['title'] = "Sign Up";
 
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email]', [
@@ -265,6 +273,10 @@ class Auth extends CI_Controller
 
 	public function forgotPassword()
 	{
+		if ($this->session->userdata('email')) {
+			redirect('user');
+		}
+
 		$data['title'] = "Forgot Password";
 
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');

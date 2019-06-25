@@ -74,15 +74,9 @@
 								<?= form_error('postcode', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
-						<button type="submit" class="btn btn-primary">Sign in</button>
+						<button type="submit" class="btn btn-primary">Saved</button>
 						</form>
 						<hr>
-						<div class="text-center">
-							<a class="small" href="<?= base_url(' auth / '); ?>forgotPassword">Forgot Password?</a>
-						</div>
-						<div class="text-center">
-							<a class="small" href="<?= base_url(' auth /'); ?>">Already have an account? Login!</a>
-						</div>
 					</div>
 				</div>
 			</div>
