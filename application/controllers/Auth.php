@@ -194,6 +194,7 @@ class Auth extends CI_Controller
 		if (!$this->session->userdata('verified_email')) {
 			redirect('auth');
 		}
+
 		$user = $this->auth->getUser($this->session->userdata('verified_email'));
 		$data['title'] = "User Details";
 		$data['states'] = [
@@ -208,6 +209,7 @@ class Auth extends CI_Controller
 			'Thailand',
 			'Vietnam',
 		];
+
 		$this->form_validation->set_rules('name', 'Name', 'required|trim');
 		$this->form_validation->set_rules('phone_number', 'Phone Number', 'required|numeric|max_length[12]');
 		$this->form_validation->set_rules('birth_date', 'Birth date', 'required');

@@ -7,7 +7,6 @@ class Admin extends CI_Controller
 	{
 		parent::__construct();
 		is_logged_in();
-		$this->load->model('Auth_model', 'auth');
 		$this->load->model('User_model', 'user');
 		$this->load->library('form_validation');
 	}
@@ -15,10 +14,7 @@ class Admin extends CI_Controller
 	public function index()
 	{
 		$data['title'] = "Dashboard Admin";
-
-		$data['user'] = $this->auth->getUser($this->session->userdata('email'));
-		$data['user_detail'] = $this->user->getUserDetail($data['user']['id']);
-
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);

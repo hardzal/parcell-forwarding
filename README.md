@@ -38,3 +38,5 @@ Fitur lainnya
 ->login
 email: rizaldoeta98@gmail.com	
 password: 654321
+email: suryadijogja@gmail.com
+password: 987654321
