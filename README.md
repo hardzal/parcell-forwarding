@@ -8,8 +8,8 @@ Authentication
 - [x] Register
 - [x] Forgot Password
 - [x] Activation Email
-- [ ] Edit Profil
-- [ ] Change Password
+- [x] Edit Profil
+- [x] Change Password
 
 Servis
 
@@ -18,7 +18,6 @@ Servis
 - [ ] Menerima pengiriman barang dari user
 - [ ] Mengirim barang pesanan user
 - [ ] Melihat riwayat service 
-
 - [ ] Verifikasi data barang oleh admin
 - [ ] Cek status barang oleh user
 - [ ] Menghapus data barang oleh admin
