@@ -197,18 +197,7 @@ class Auth extends CI_Controller
 
 		$user = $this->auth->getUser($this->session->userdata('verified_email'));
 		$data['title'] = "User Details";
-		$data['states'] = [
-			'Brunei Darussalam',
-			'Cambodia',
-			'Indonesia',
-			'Laos',
-			'Malaysia',
-			'Myanmar',
-			'Philippines',
-			'Singapore',
-			'Thailand',
-			'Vietnam',
-		];
+		$data['states'] = $this->db->get('countries')->result_array();
 
 		$this->form_validation->set_rules('name', 'Name', 'required|trim');
 		$this->form_validation->set_rules('phone_number', 'Phone Number', 'required|numeric|max_length[12]');

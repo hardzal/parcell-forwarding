@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
 	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url(); ?>user">
 		<div class="sidebar-brand-icon rotate-n-15">
 			<i class="fas fa-laugh-wink"></i>
 		</div>
@@ -11,19 +11,15 @@
 
 	<!-- Divider -->
 	<hr class="sidebar-divider mb-3">
-	<?php if ($this->session->userdata('role_id') == 1) : ?>
-		<!-- Heading -->
-		<div class="sidebar-heading">
-			Admin
-		</div>
 
-		<!-- Nav Item - Dashboard -->
-		<li class="nav-item">
-			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
-				<i class="fas fa-fw fa-tachometer-alt"></i>
-				<span>Dashboard</span>
-			</a>
-		</li>
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<i class="fas fa-fw fa-tachometer-alt"></i>
+			<span>Dashboard</span>
+		</a>
+	</li>
+
+	<?php if ($this->session->userdata('role_id') == 1) : ?>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
 				<i class="fas fa-shopping-cart"></i>
@@ -37,23 +33,23 @@
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link pt-2" href="<?= base_url(); ?>admin">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
 				<i class="fas fa-users"></i>
 				<span>Users</span>
 			</a>
 		</li>
 
-		<hr class="sidebar-divider mb-3">
-	<?php
-endif;
-?>
-	<div class='sidebar-heading'>User</div>
+	<?php endif; ?>
 
-	<!-- Sub Heading Sesuai MENU -->
-
-	<!-- Nav Item - Dashboard -->
 	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/transactions">
+			<i class="fas fa-history"></i>
+			<span>Transactions</span>
+		</a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/profile">
 			<i class="fas fa-fw fa-user"></i>
 			<span>My Profile</span>
 		</a>
@@ -71,16 +67,15 @@ endif;
 		</a>
 	</li>
 
-	<hr class="sidebar-divider mt-3">
-
-	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/logs">
-			<i class="fas fa-history"></i>
-			<span>Activity Logs</span>
-		</a>
-	</li>
 	<!-- Divider -->
 	<hr class="sidebar-divider mt-3 d-none d-md-block">
+
+	<li class='nav-item'>
+		<a class='nav-link pb-0 pt-0' href='<?= base_url(); ?>'>
+			<i class="fas fa-home"></i>
+			<span>Back to home</span></a>
+		</a>
+	</li>
 
 	<li class='nav-item'>
 		<a class='nav-link' href='<?= base_url(); ?>auth/logout'>

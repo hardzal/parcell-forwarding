@@ -53,13 +53,8 @@
 							<?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
 						</div>
 						<div class="form-row">
-							<div class="form-group col-md-6">
-								<label for="inputCity">City</label>
-								<input type="text" class="form-control" id="inputCity" name="city" />
-								<?= form_error('city', '<small class="text-danger pl-3">', '</small>'); ?>
-							</div>
 							<div class="form-group col-md-4">
-								<label for="inputState">State</label>
+								<label for="inputState">Country</label>
 								<select name="state" id="inputState" class="form-control">
 									<option selected>Choose...</option>
 									<?php foreach ($states as $state) : ?>
@@ -67,6 +62,11 @@
 									<?php endforeach; ?>
 									<?= form_error('state', '<small class="text-danger pl-3">', '</small>'); ?>
 								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="inputCity">City</label>
+								<input type="text" class="form-control" id="inputCity" name="city" />
+								<?= form_error('city', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 							<div class="form-group col-md-2">
 								<label for="postcode">Zip</label>

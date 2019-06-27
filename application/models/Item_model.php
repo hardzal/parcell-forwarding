@@ -1,6 +1,6 @@
 <?php
 
-class Item_mode extends CI_Model
+class Item_model extends CI_Model
 {
 	public function getItems()
 	{ }
@@ -19,4 +19,9 @@ class Item_mode extends CI_Model
 
 	public function searchItems()
 	{ }
+
+	public function getItemCategories()
+	{
+		return $this->db->get('item_categories')->result_array();
+	}
 }

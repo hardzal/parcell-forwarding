@@ -13,7 +13,7 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = "My Profile";
+		$data['title'] = "Dashboard User";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 
 		$this->load->view('layouts/admin_header', $data);
@@ -23,20 +23,21 @@ class User extends CI_Controller
 		$this->load->view('layouts/admin_footer');
 	}
 
+	public function profile()
+	{
+		$data['title'] = "My Profile";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar', $data);
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('users/profile', $data);
+		$this->load->view('layouts/admin_footer');
+	}
+
 	public function editprofile()
 	{
-		$data['states'] = [
-			'Brunei Darussalam',
-			'Cambodia',
-			'Indonesia',
-			'Laos',
-			'Malaysia',
-			'Myanmar',
-			'Philippines',
-			'Singapore',
-			'Thailand',
-			'Vietnam',
-		];
+		$data['states'] = $this->db->get('coutries')->result_array();
 
 		$data['title'] = "Edit Profile";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));

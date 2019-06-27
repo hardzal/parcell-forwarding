@@ -44,6 +44,7 @@
 							<label for="phone_number" class="col-lg-4 col-form-label">Phone Number</label>
 							<div class="col-lg-8">
 								<input type="text" class="form-control" id="phone_number" placeholder="Phone Number" name="phone_number" value="<?= $user['phone_number']; ?>" />
+								<?= form_error('phone_number', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
 
@@ -61,6 +62,7 @@
 							<label for="birth_date" class="col-lg-4 col-form-label">Birth date</label>
 							<div class="col-lg-8">
 								<input type="date" class="form-control" id="birth_date" name="birth_date" value="<?= $user['birth_date']; ?>" />
+								<?= form_error('birth_date', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
 
@@ -68,12 +70,14 @@
 							<label for="address" class="col-lg-4 col-form-label">Address</label>
 							<div class="col-lg-8">
 								<input type="text" class="form-control" id="address" placeholder="Address" name="address" value="<?= $user['address']; ?>" />
+								<?= form_error('address', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label for="inputCity" class="col-lg-4 col-form-label">City</label>
 							<div class="col-lg-8">
 								<input type="text" class="form-control" id="inputCity" name="city" value="<?= $user['city']; ?>" />
+								<?= form_error('city', '<small class="text-danger pl-3">', '</small>'); ?>
 								<?= form_error('city', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
@@ -91,6 +95,7 @@
 									<?php endforeach; ?>
 									<?= form_error('state', '<small class="text-danger pl-3">', '</small>'); ?>
 								</select>
+								<?= form_error('state', '<small class="text-danger pl-3">', '</small>'); ?>
 							</div>
 						</div>
 

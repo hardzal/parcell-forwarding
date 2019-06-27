@@ -35,14 +35,26 @@
 						<a class='nav-link' href='<?= base_url(); ?>service'>Service</a>
 					</li>
 					<li class='nav-item'>
-						<a class='nav-link' href='<?= base_url(); ?>auth/signup'>Sign Up</a>
-					</li>
-					<li class='nav-item'>
-						<a class='nav-link' href='<?= base_url(); ?>auth/login'>Login</a>
+						<a class='nav-link' href='<?= base_url(); ?>auction'>Auction</a>
 					</li>
 					<li class='nav-item'>
 						<a class='nav-link' href='<?= base_url(); ?>#about-us'>About Us</a>
 					</li>
+					<?php if (!$this->session->userdata('email')) : ?>
+						<li class='nav-item'>
+							<a class='nav-link' href='<?= base_url(); ?>auth/signup'>Sign Up</a>
+						</li>
+						<li class='nav-item'>
+							<a class='nav-link' href='<?= base_url(); ?>auth/login'>Login</a>
+						</li>
+					<?php else : ?>
+						<li class='nav-item'>
+							<a class='nav-link' href='<?= base_url(); ?>user'>Dashboard</a>
+						</li>
+						<li class='nav-item'>
+							<a class='nav-link' href='<?= base_url(); ?>auth/logout'>Logout</a>
+						</li>
+					<?php endif; ?>
 				</ul>
 				<form class="form-inline mt-2 mt-md-0" method="GET" action="<?= base_url(); ?>">
 					<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
