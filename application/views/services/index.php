@@ -1,41 +1,39 @@
 <div class="container mb-5">
 	<div class="py-5 text-center">
 		<h2>Item Form</h2>
+		<?= $this->session->flashdata('message'); ?>
 	</div>
 
 	<div class="row">
 		<div class="col-md-4 order-md-2 mb-4">
 			<h4 class="d-flex justify-content-between align-items-center mb-3">
 				<span class="text-muted">Your item</span>
-				<span class="badge badge-secondary badge-pill">3</span>
 			</h4>
 			<ul class="list-group mb-3">
 				<li class="list-group-item d-flex justify-content-between lh-condensed">
 					<div>
 						<h6 class="my-0">Product name</h6>
-						<small class="text-muted">Brief description</small>
 					</div>
-					<span class="text-muted">$12</span>
+					<span class="text-muted">Rp 0</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between lh-condensed">
 					<div>
-						<h6 class="my-0">Second product</h6>
-						<small class="text-muted">Brief description</small>
+						<h6 class="my-0">Biaya Pajak</h6>
 					</div>
-					<span class="text-muted">$8</span>
+					<span class="text-muted">Rp 0</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between lh-condensed">
 					<div>
-						<h6 class="my-0">Third item</h6>
-						<small class="text-muted">Brief description</small>
+						<h6 class="my-0">Biaya Ongkir</h6>
 					</div>
-					<span class="text-muted">$5</span>
+					<span class="text-muted">Rp 0</span>
 				</li>
 				<li class="list-group-item d-flex justify-content-between">
 					<span>Total (Rp)</span>
-					<strong>$20</strong>
+					<strong>Rp 0</strong>
 				</li>
 			</ul>
+			<button class="btn btn-primary btn-md btn-block" type="submit">Continue to checkout</button>
 		</div>
 
 		<div class="col-md-8 order-md-1">
@@ -103,7 +101,7 @@
 						<select name="country" class="custom-select d-block w-100" id="country" />
 						<option value="">Choose...</option>
 						<?php foreach ($states as $state) : ?>
-							<option value="<?= $state['name']; ?>"><?= $state['name']; ?></option>
+							<option value="<?= $state['id']; ?>"><?= $state['name']; ?></option>
 						<?php endforeach; ?>
 						</select>
 						<div class="invalid-feedback">
@@ -132,7 +130,7 @@
 						<select name="delivery" class="custom-select d-block w-100" id="delivery">
 							<option value="">Choose...</option>
 							<?php foreach ($deliveries as $delivery) : ?>
-								<option value="<?= $delivery['name']; ?>"><?= $delivery['name']; ?></option>
+								<option value="<?= $delivery['id']; ?>"><?= $delivery['name']; ?></option>
 							<?php endforeach; ?>
 						</select>
 						<div class="invalid-feedback">
@@ -140,11 +138,19 @@
 						</div>
 					</div>
 					<div class="col-md-4 mb-3">
-						<label for="Weight">Weight</label>
-						<input type="number" class="form-control" id="Weight" name="Weight" min=0 />
+						<label for="Weight">Weight (Kg)</label>
+						<input type="number" class="form-control" id="weight" name="weight" min=0 />
 						<div class="invalid-feedback">
-							<?= form_error('Weight', '<small class="text-danger pl-3">', '</small>'); ?>
+							<?= form_error('weight', '<small class="text-danger pl-3">', '</small>'); ?>
 						</div>
+					</div>
+				</div>
+
+				<div class="mb-3">
+					<label for="description">Description</label>
+					<textarea name="description" class="form-control" id="description"></textarea>
+					<div class="invalid-feedback">
+						<?= form_error('address_to', '<small class="text-danger pl-3">', '</small>'); ?>
 					</div>
 				</div>
 
@@ -162,7 +168,7 @@
 					<label class="custom-control-label" for="save-info">Save this information for next time</label>
 				</div>
 				<hr class="mb-4">
-				<button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+				<button class="btn btn-primary btn-lg btn-block" type="submit" id="calculate">Calculate</button>
 			</form>
 		</div>
 	</div>

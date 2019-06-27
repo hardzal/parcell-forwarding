@@ -29,7 +29,8 @@ class Service extends CI_Controller
 		$this->form_validation->set_rules('country', 'Country', 'required|trim');
 		$this->form_validation->set_rules('city', 'City', 'required|trim');
 		$this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric|trim|max_length[6]');
-
+		$this->form_validation->set_rules('delivery', 'Delivery by', 'required');
+		$this->form_validation->set_rules('weight', 'Weight', 'required');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('layouts/header', $data);
 			$this->load->view('services/index', $data);
@@ -44,9 +45,70 @@ class Service extends CI_Controller
 			$country = $this->input->post('country');
 			$city = $this->input->post('city');
 			$postcode = $this->input->post('postcode');
-			$email = $this->input->post('email');
+			$delivery_id = $this->input->post('delivery');
+			$weight = $this->input->post('weight');
+			$broken = $this->input->post('fragile');
+			$description = $this->input->post('description');
 
 			$item_code = base64_encode(random_bytes(8));
+
+			$item_data = [
+				'category_id' 	=> $item_category,
+				'name' 			=> $item_name,
+				'price' 		=> $item_price,
+				'stock'			=> $item_total,
+				'is_broken'		=> $broken,
+				'created_at'	=> time(),
+				'deleted_at'	=> 0
+			];
+
+			if ($this->item->insertItem($item_data)) {
+				$new_item = $this->item->getItemByName($item_name);
+				$delivery = $this->db->get_where('deliveries', ['id' => $delivery_id])->row_array();
+				$user_id = $data['user']['id'];
+
+				// bea masuk 7,5%
+				$bea_masuk = $item_price * 0.075;
+				// ppn 10%
+				$ppn = $item_price * 0.1;
+				// pph 10%
+				$pph = $item_price * 0.1;
+
+				$tax = $bea_masuk + $ppn + $pph;
+
+				if ($country == 3) {
+					$cost = $item_price;
+				} else {
+					$cost = $item_price + $tax;
+				}
+
+				if ($weight == 1) {
+					$cost += $delivery['cost_weight'];
+				} else {
+					$cost += ($weight * $delivery['cost_weight']);
+				}
+
+				$user_item = [
+					'user_id' => $user_id,
+					'item_id' => $new_item['id'],
+					'delivery_id' => $delivery_id,
+					'item_code' => $item_code,
+					'total' => $item_total,
+					'cost' => $cost,
+					'address_to' => $address_to,
+					'address_from' => $address_from,
+					'country_id' => $country,
+					'city' => $city,
+					'postcode' => $postcode,
+					'description' => $description,
+					'status' => 0,
+					'created_at' => time(),
+					'deleted_at' => 0
+				];
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
+				redirect('user');
+			}
 		}
 	}
 }
