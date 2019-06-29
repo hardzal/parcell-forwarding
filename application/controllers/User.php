@@ -37,7 +37,7 @@ class User extends CI_Controller
 
 	public function editprofile()
 	{
-		$data['states'] = $this->db->get('coutries')->result_array();
+		$data['states'] = $this->db->get('countries')->result_array();
 
 		$data['title'] = "Edit Profile";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
@@ -100,7 +100,7 @@ class User extends CI_Controller
 				'avatar' => $new_image,
 				'address' => $address,
 				'city' => $city,
-				'state' => $state,
+				'country_id' => $state,
 				'postcode' => $postcode
 			];
 

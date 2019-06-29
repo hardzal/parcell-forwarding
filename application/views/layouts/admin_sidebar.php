@@ -21,19 +21,19 @@
 
 	<?php if ($this->session->userdata('role_id') == 1) : ?>
 		<li class="nav-item">
-			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/admin/items">
 				<i class="fas fa-shopping-cart"></i>
 				<span>Items</span>
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/auctions">
 				<i class="fas fa-dolly"></i>
 				<span>Auctions</span>
 			</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/users">
 				<i class="fas fa-users"></i>
 				<span>Users</span>
 			</a>
@@ -42,7 +42,7 @@
 	<?php endif; ?>
 
 	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/transactions">
+		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>transaction">
 			<i class="fas fa-history"></i>
 			<span>Transactions</span>
 		</a>

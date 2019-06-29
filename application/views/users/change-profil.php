@@ -87,10 +87,10 @@
 								<select name="state" id="inputState" class="form-control">
 									<option>Choose...</option>
 									<?php foreach ($states as $state) : ?>
-										<?php if ($state == $user['state']) : ?>
-											<option value="<?= $state; ?>" selected><?= $state; ?></option>
+										<?php if ($state['id'] == $user['country_id']) : ?>
+											<option value="<?= $state['id']; ?>" selected><?= $state['name']; ?></option>
 										<?php else : ?>
-											<option value="<?= $state; ?>"><?= $state; ?></option>
+											<option value="<?= $state['id']; ?>"><?= $state['name']; ?></option>
 										<?php endif; ?>
 									<?php endforeach; ?>
 									<?= form_error('state', '<small class="text-danger pl-3">', '</small>'); ?>

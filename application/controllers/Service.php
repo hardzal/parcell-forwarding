@@ -30,7 +30,7 @@ class Service extends CI_Controller
 		$this->form_validation->set_rules('city', 'City', 'required|trim');
 		$this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric|trim|max_length[6]');
 		$this->form_validation->set_rules('delivery', 'Delivery by', 'required');
-		$this->form_validation->set_rules('weight', 'Weight', 'required');
+		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric');
 		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('layouts/header', $data);
 			$this->load->view('services/index', $data);
@@ -82,7 +82,9 @@ class Service extends CI_Controller
 					$cost = $item_price + $tax;
 				}
 
-				if ($weight == 1) {
+				$cost = $cost * $item_total;
+
+				if ($weight <= 1) {
 					$cost += $delivery['cost_weight'];
 				} else {
 					$cost += ($weight * $delivery['cost_weight']);
@@ -105,9 +107,17 @@ class Service extends CI_Controller
 					'created_at' => time(),
 					'deleted_at' => 0
 				];
+
+				if ($this->item->insertUserItem($user_item)) {
+					$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item</div>');
+					redirect('calculate');
+				} else {
+					$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
+					redirect('service');
+				}
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
-				redirect('user');
+				redirect('service');
 			}
 		}
 	}

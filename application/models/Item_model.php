@@ -9,7 +9,10 @@ class Item_model extends CI_Model
 
 	public function getItems()
 	{
-		return $this->db->get('items')->result_array();
+		$this->db->select('items.id AS item_id, items.name AS item_name, item_categories.id AS category_id, item_categories.name AS category_name, items.price AS price, items.stock AS stock');
+		$this->db->from('items');
+		$this->db->join('item_categories', 'items.category_id = item_categories.id');
+		return $this->db->get()->result_array();
 	}
 
 	public function insertItem($data)
@@ -35,5 +38,11 @@ class Item_model extends CI_Model
 	public function getItemCategories()
 	{
 		return $this->db->get('item_categories')->result_array();
+	}
+
+	public function insertUserItem($data)
+	{
+		$this->db->insert('user_items', $data);
+		return $this->db->affected_rows();
 	}
 }
