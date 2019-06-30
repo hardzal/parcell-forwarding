@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class User_model extends CI_Model
 {
@@ -42,5 +43,22 @@ class User_model extends CI_Model
 	{
 		$this->db->update('users', ['password' => $password], ['email' => $email]);
 		return $this->db->affected_rows();
+	}
+
+	public function getUserItems($id)
+	{
+		$query = "SELECT items.id AS id_item, 
+						items.name AS item_name, 
+						user_items.id AS user_item_id, 
+						user_items.cost, 
+						user_items.item_code,
+						user_items.status, 
+						user_items.total 
+			FROM user_items
+		JOIN items 
+			ON user_items.item_id = items.id
+		 WHERE user_items.user_id = $id";
+
+		return $this->db->query($query)->result_array();
 	}
 }

@@ -9,6 +9,7 @@ class Admin extends CI_Controller
 		is_logged_in();
 		$this->load->model('User_model', 'user');
 		$this->load->model('Item_model', 'item');
+		$this->load->model('Transaction_model', 'transaction');
 		$this->load->library('form_validation');
 	}
 
@@ -48,12 +49,13 @@ class Admin extends CI_Controller
 
 	public function users()
 	{
-		$data['title'] = "Auctions List";
+		$data['title'] = "User List";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['users'] = $this->user->getDataUsers();
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);
-		$this->load->view('admin/auctions', $data);
+		$this->load->view('admin/users', $data);
 		$this->load->view('layouts/admin_footer');
 	}
 
@@ -64,7 +66,19 @@ class Admin extends CI_Controller
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);
-		$this->load->view('admin/auctions', $data);
+		$this->load->view('admin/logs', $data);
+		$this->load->view('layouts/admin_footer');
+	}
+
+	public function transactions()
+	{
+		$data['title'] = "Transactions List";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['transactions'] = $this->transaction->getTransactions();
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar', $data);
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('admin/transactions', $data);
 		$this->load->view('layouts/admin_footer');
 	}
 
@@ -76,6 +90,17 @@ class Admin extends CI_Controller
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('admin/settings', $data);
+		$this->load->view('layouts/admin_footer');
+	}
+
+	public function roles()
+	{
+		$data['title'] = "User Roles";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar', $data);
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('admin/roles', $data);
 		$this->load->view('layouts/admin_footer');
 	}
 }

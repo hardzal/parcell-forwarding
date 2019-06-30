@@ -13,7 +13,7 @@ Authentication
 
 Servis
 
-- [ ] User memasukkan data barang
+- [x] User memasukkan data barang
 - [ ] User melakukan pembayaran
 - [ ] Menerima pengiriman barang dari user
 - [ ] Mengirim barang pesanan user

@@ -25,7 +25,8 @@ $(function () {
 			}
 		}
 
-		let total_cost = +(price * item_total) + tax_cost + delivery_cost;
+		let total_cost = +(price) + tax_cost + delivery_cost;
+		total_cost = total_cost * item_total;
 
 		$('.item-price').html('Rp ' + price);
 		$('.item-tax').html('Rp ' + tax_cost);

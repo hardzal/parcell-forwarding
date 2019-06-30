@@ -18,6 +18,7 @@
 									<th scope="col">Item Name</th>
 									<th scope="col">Category</th>
 									<th scope="col">Price</th>
+									<th scope="col">Stock</th>
 									<th scope="col">Action</th>
 								</tr>
 							</thead>
@@ -30,6 +31,7 @@
 										<td><?= $item['price']; ?></td>
 										<td><?= $item['stock']; ?></td>
 										<td>
+											<a href="<?= base_url('item/detail/') . $item['item_id']; ?>" class="badge badge-info mr-2 detailDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $item['item_id']; ?>">Detail</a>
 											<a href="<?= base_url('item/edit/') . $item['item_id']; ?>" class="badge badge-success mr-2 editDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $item['item_id']; ?>">Edit</a>
 											<a href="<?= base_url('item/delete/') . $item['item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>
 									</tr> <?php endforeach; ?>

@@ -125,7 +125,7 @@
 
 				<hr class="mb-4">
 				<div class="custom-control custom-checkbox">
-					<input name="fragile" type="checkbox" class="custom-control-input" id="fragile" />
+					<input name="fragile" type="checkbox" class="custom-control-input" id="fragile" value=1 />
 					<label class="custom-control-label" for="fragile">Fragile?</label>
 				</div>
 				<div class="custom-control custom-checkbox">
@@ -152,7 +152,7 @@
 										<div>
 											<h6 class="my-0">Product Price</h6>
 										</div>
-										<span class="text-muted item-price">Rp 0</span>
+										@<span class="text-muted item-price">Rp 0</span>
 									</li>
 									<li class="list-group-item d-flex justify-content-between lh-condensed mb-3">
 										<div>

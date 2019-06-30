@@ -21,7 +21,7 @@
 
 	<?php if ($this->session->userdata('role_id') == 1) : ?>
 		<li class="nav-item">
-			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>/admin/items">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/items">
 				<i class="fas fa-shopping-cart"></i>
 				<span>Items</span>
 			</a>
@@ -38,15 +38,26 @@
 				<span>Users</span>
 			</a>
 		</li>
-
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/transactions">
+				<i class="fas fa-history"></i>
+				<span>Transactions</span>
+			</a>
+		</li>
+	<?php elseif ($this->session->userdata('role_id') == 2) : ?>
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/items">
+				<i class="fas fa-shopping-cart"></i>
+				<span>My Items</span>
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/transactions">
+				<i class="fas fa-history"></i>
+				<span>My Transactions</span>
+			</a>
+		</li>
 	<?php endif; ?>
-
-	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>transaction">
-			<i class="fas fa-history"></i>
-			<span>Transactions</span>
-		</a>
-	</li>
 
 	<li class="nav-item">
 		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/profile">

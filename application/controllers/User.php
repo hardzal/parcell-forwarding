@@ -9,6 +9,7 @@ class User extends CI_Controller
 		is_logged_in();
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
+		$this->load->model('Item_model', 'item');
 	}
 
 	public function index()
@@ -149,5 +150,30 @@ class User extends CI_Controller
 				redirect('user/changepassword');
 			}
 		}
+	}
+
+	public function items()
+	{
+		$data['title'] = "My Item list";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['items'] = $this->user->getUserItems($this->session->userdata('user_id'));
+
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar');
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('users/items', $data);
+		$this->load->view('layouts/admin_footer');
+	}
+
+	public function transactions()
+	{
+		$data['title'] = "My Transactions";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar');
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('users/transactions', $data);
+		$this->load->view('layouts/admin_footer');
 	}
 }

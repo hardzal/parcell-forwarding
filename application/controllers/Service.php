@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class Service extends CI_Controller
 {
 	public function __construct()
@@ -47,8 +49,9 @@ class Service extends CI_Controller
 			$postcode = $this->input->post('postcode');
 			$delivery_id = $this->input->post('delivery');
 			$weight = $this->input->post('weight');
-			$broken = $this->input->post('fragile');
+			$broken = $this->input->post('fragile') !== NULL ? 1 : 0;
 			$description = $this->input->post('description');
+
 
 			$item_code = base64_encode(random_bytes(8));
 
@@ -65,8 +68,8 @@ class Service extends CI_Controller
 			if ($this->item->insertItem($item_data)) {
 				$new_item = $this->item->getItemByName($item_name);
 				$delivery = $this->db->get_where('deliveries', ['id' => $delivery_id])->row_array();
-				$user_id = $data['user']['id'];
-
+				$user_id = $this->session->userdata('user_id');
+				$cost_delivery = 0;
 				// bea masuk 7,5%
 				$bea_masuk = $item_price * 0.075;
 				// ppn 10%
@@ -82,13 +85,14 @@ class Service extends CI_Controller
 					$cost = $item_price + $tax;
 				}
 
-				$cost = $cost * $item_total;
-
 				if ($weight <= 1) {
-					$cost += $delivery['cost_weight'];
+					$cost_delivery += $delivery['cost_weight'];
 				} else {
-					$cost += ($weight * $delivery['cost_weight']);
+					$cost_delivery += ($weight * $delivery['cost_weight']);
 				}
+
+				$cost = $cost + $cost_delivery;
+				$cost = $cost * $item_total;
 
 				$user_item = [
 					'user_id' => $user_id,
@@ -109,8 +113,23 @@ class Service extends CI_Controller
 				];
 
 				if ($this->item->insertUserItem($user_item)) {
-					$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item</div>');
-					redirect('calculate');
+					$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item. click <a href="' . base_url('service/report') . '"><i class="fas fa-fw external-link-alt">here</i></a> to detail</div>');
+					$category = $this->item->getItemCategory($item_category);
+					$user = $this->user->getUserDetail($this->session->userdata('user_id'));
+					$this->session->set_userdata('report', [
+						'item_code' => $item_code,
+						'item_name' => $item_name,
+						'item_category' => $category['name'],
+						'name' => $user['name'],
+						'address' => $address_from,
+						'item_price' => $item_price,
+						'delivery_cost' => $cost_delivery,
+						'tax_cost' => $tax,
+						'total_cost' => $cost,
+						'created_at' => time()
+					]);
+
+					redirect('service');
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
 					redirect('service');
@@ -119,6 +138,21 @@ class Service extends CI_Controller
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
 				redirect('service');
 			}
+		}
+	}
+
+	public function report()
+	{
+		if ($this->session->userdata('report')) {
+			$data['title'] = "Item Report";
+			$data['item'] = $this->session->userdata('report');
+			$pdf = new Mpdf();
+			$html = $this->load->view('services/report', $data, true);
+			$pdf->WriteHTML($html);
+			$pdf->output('report.pdf', 'I');
+			$this->session->unset_userdata('report');
+		} else {
+			redirect('service');
 		}
 	}
 }

@@ -6,6 +6,7 @@ class Auction extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		$this->load->model('Auction_model', 'auction');
 	}
 	public function index()
 	{

@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Item_model extends CI_Model
 {
@@ -38,6 +39,11 @@ class Item_model extends CI_Model
 	public function getItemCategories()
 	{
 		return $this->db->get('item_categories')->result_array();
+	}
+
+	public function getItemCategory($id)
+	{
+		return $this->db->get_where('item_categories', ['id' => $id])->row_array();
 	}
 
 	public function insertUserItem($data)
