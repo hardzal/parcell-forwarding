@@ -22,13 +22,18 @@
 		th {
 			text-align: left;
 		}
+
+		.title {
+			margin-bottom: 3px;
+		}
 	</style>
 </head>
 
 <body>
 	<h1 class='title'>Parcell-Forwarding</h1>
+	<p>Created <em><?= date('H:i:s d F Y', $item['created_at']); ?></em></p>
 	<hr />
-	<table>
+	<table width="100%">
 		<tr>
 			<th>Item Code</th>
 			<td><?= $item['item_code']; ?></td>
@@ -51,15 +56,15 @@
 		</tr>
 		<tr>
 			<th>Price Item</th>
-			<td><?= $item['item_price']; ?></td>
+			<td>@ $ <?= number_format($item['item_price']); ?></td>
 		</tr>
 		<tr>
 			<td>Postal Fee</th>
-			<td><?= $item['delivery_cost']; ?></td>
+			<td>$ <?= number_format($item['delivery_cost']); ?></td>
 		</tr>
 		<tr>
 			<th>Tax Cost</th>
-			<td><?= $item['tax_cost']; ?></td>
+			<td>$ <?= number_format($item['tax_cost']); ?></td>
 		</tr>
 		<tr>
 			<th>Total Cost</th>
@@ -74,7 +79,6 @@
 			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
 		</p>
 		<p>Don't forget to send picture proof to our system :)</p>
-		<p>Created <em><?= $item['created_at']; ?></em></p>
 	</div>
 </body>
 

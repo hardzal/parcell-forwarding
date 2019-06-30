@@ -28,9 +28,45 @@ $(function () {
 		let total_cost = +(price) + tax_cost + delivery_cost;
 		total_cost = total_cost * item_total;
 
-		$('.item-price').html('Rp ' + price);
-		$('.item-tax').html('Rp ' + tax_cost);
-		$('.item-delivery').html('Rp ' + delivery_cost);
-		$('.total-price strong').html('Rp ' + total_cost);
+		$('.item-price').html('$ ' + price);
+		$('.item-tax').html('$ ' + tax_cost);
+		$('.item-delivery').html('$ ' + delivery_cost);
+		$('.total-price strong').html('$ ' + total_cost);
+	});
+
+	$('.tambahDataItem').on('click', function () {
+		$('#judulModalItem').html("Add New Item");
+	});
+
+	$('.editDataItem').on('click', function () {
+		$('#judulModalItem').html("Update Item");
+		$('.submitButton').html("Saved changes");
+
+		$('.modal-content form').attr('action', 'http://localhost/parcell-forwarding/item/edit');
+
+		const id = $(this).data('id');
+
+		$.ajax({
+			url: 'http://localhost/parcell-forwarding/item/edit',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#item_name').val(data.name);
+				$('#item_category').val(data.category_id);
+				$('#price').val(data.price);
+				$('#stock').val(data.stock);
+				$('#fragile').val(data.is_broken);
+				if (data.is_broken == "1") {
+					$('#fragile').prop('checked', true);
+				} else {
+					$('#fragile').prop('checked', false);
+				}
+				$('#id').val(data.id);
+				console.log(data);
+			}
+		});
 	});
 });

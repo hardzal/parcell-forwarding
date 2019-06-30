@@ -12,14 +12,13 @@
 	<!-- Divider -->
 	<hr class="sidebar-divider mb-3">
 
-	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
-			<i class="fas fa-fw fa-tachometer-alt"></i>
-			<span>Dashboard</span>
-		</a>
-	</li>
-
 	<?php if ($this->session->userdata('role_id') == 1) : ?>
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span>
+			</a>
+		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/items">
 				<i class="fas fa-shopping-cart"></i>
@@ -45,6 +44,12 @@
 			</a>
 		</li>
 	<?php elseif ($this->session->userdata('role_id') == 2) : ?>
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span>
+			</a>
+		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/items">
 				<i class="fas fa-shopping-cart"></i>

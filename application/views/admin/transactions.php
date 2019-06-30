@@ -30,7 +30,7 @@
 										<th scope="row"><?= $no; ?></th>
 										<td scope="row"><?= $transaction['email']; ?></td>
 										<td scope="row"><?= $transaction['item_name']; ?></td>
-										<td scope="row"><?= 'Rp ' . number_format($transaction['cost']); ?></td>
+										<td scope="row"><?= '$ ' . number_format($transaction['cost']); ?></td>
 										<td scope="row"><?= status_item($transaction['status']); ?></td>
 										<td scope="row">
 											<a href="<?= base_url('transaction/edit/') . $transaction['id']; ?>" class="badge badge-success mr-2 detailDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $transaction['id']; ?>">Detail</a>

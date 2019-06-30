@@ -49,7 +49,7 @@
 						</li>
 					<?php else : ?>
 						<li class='nav-item'>
-							<a class='nav-link' href='<?= base_url(); ?>user'>Dashboard</a>
+							<a class='nav-link' href='<?= base_url(); ?>admin'>Dashboard</a>
 						</li>
 						<li class='nav-item'>
 							<a class='nav-link' href='<?= base_url(); ?>auth/logout'>Logout</a>

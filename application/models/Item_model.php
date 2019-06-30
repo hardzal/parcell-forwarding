@@ -27,8 +27,11 @@ class Item_model extends CI_Model
 		return $this->db->get_where('items', ['name' => $name])->row_array();
 	}
 
-	public function updateItem()
-	{ }
+	public function updateItem($id, $data)
+	{
+		$this->db->update('items', $data, ['id' => $id]);
+		return $this->db->affected_rows();
+	}
 
 	public function deleteItem()
 	{ }

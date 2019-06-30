@@ -33,6 +33,8 @@ Fitur lainnya
 
 - [ ] CRUD Image Slider Home
 - [ ] CRUD About Us
+- [x] CRUD Item
+- [ ] CRUD User
 
 ->login
 email: rizaldoeta98@gmail.com	
