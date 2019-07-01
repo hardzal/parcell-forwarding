@@ -23,8 +23,8 @@
 							<tbody>
 								<?php foreach ($users as $user) : ?>
 									<tr>
-										<th scope="row"><?= $user['id']; ?></th>
-										<th scope="row"><?= $user['email']; ?></th>
+										<td scope="row"><?= $user['id']; ?></td>
+										<td scope="row"><?= $user['email']; ?></td>
 										<td scope="row"><?= $user['name']; ?></td>
 										<td scope="row">
 											<a href="<?= base_url('user/edit/') . $user['id']; ?>" class="badge badge-success mr-2 editDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $user['id']; ?>">Edit</a>

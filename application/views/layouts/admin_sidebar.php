@@ -21,26 +21,32 @@
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/items">
-				<i class="fas fa-shopping-cart"></i>
+				<i class="fas fa-fw fa-shopping-cart"></i>
 				<span>Items</span>
 			</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/auctions">
-				<i class="fas fa-dolly"></i>
+				<i class="fas fa-fw fa-dolly"></i>
 				<span>Auctions</span>
 			</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/users">
-				<i class="fas fa-users"></i>
+				<i class="fas fa-fw fa-users"></i>
 				<span>Users</span>
 			</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/transactions">
-				<i class="fas fa-history"></i>
+				<i class="fas fa-fw fa-history"></i>
 				<span>Transactions</span>
+			</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/settings">
+				<i class="fas fa-fw fa-user-cog"></i>
+				<span>Settings</span>
 			</a>
 		</li>
 	<?php elseif ($this->session->userdata('role_id') == 2) : ?>
@@ -52,20 +58,21 @@
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/items">
-				<i class="fas fa-shopping-cart"></i>
+				<i class="fas fa-fw fa-shopping-cart"></i>
 				<span>My Items</span>
 			</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/transactions">
-				<i class="fas fa-history"></i>
+				<i class="fas fa-fw fa-history"></i>
 				<span>My Transactions</span>
 			</a>
 		</li>
 	<?php endif; ?>
+	<hr class="sidebar-divider mt-3">
 
 	<li class="nav-item">
-		<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/profile">
+		<a class="nav-link py-0" href=" <?= base_url(); ?>user/profile">
 			<i class="fas fa-fw fa-user"></i>
 			<span>My Profile</span>
 		</a>

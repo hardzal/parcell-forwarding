@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transaction_model extends CI_Model
 {
-	public function getTransactions()
+	public function getItemTransactions()
 	{
 		$query = "SELECT user_items.id,  
 					users.email AS email,
@@ -32,11 +32,20 @@ class Transaction_model extends CI_Model
 		return $this->db->query($query)->result_array();
 	}
 
+	public function insertTransaction($data)
+	{
+		$this->db->insert('user_transactions', $data);
+		return $this->db->affected_rows();
+	}
+
 	public function updateTransaction($id, $data)
 	{ }
 
-	public function deleteTransaction($id)
-	{ }
+	public function deleteTransaction($user_item_id)
+	{
+		$this->db->delete('user_transactions', ['user_item_id' => $user_item_id]);
+		return $this->db->affected_rows();
+	}
 
 	public function searchTransaction($keyword)
 	{ }

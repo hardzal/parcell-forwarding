@@ -149,7 +149,7 @@ class Service extends CI_Controller
 			$pdf = new Mpdf();
 			$html = $this->load->view('services/report', $data, true);
 			$pdf->WriteHTML($html);
-			$pdf->output($data['item_code'] . '_report.pdf', 'I');
+			$pdf->output($data['item']['item_code'] . '_report.pdf', 'I');
 			$this->session->unset_userdata('report');
 		} else {
 			redirect('service');

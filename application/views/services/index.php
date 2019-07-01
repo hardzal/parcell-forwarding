@@ -128,10 +128,6 @@
 					<input name="fragile" type="checkbox" class="custom-control-input" id="fragile" value=1 />
 					<label class="custom-control-label" for="fragile">Fragile?</label>
 				</div>
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="same-address">
-					<label class="custom-control-label" for="same-address">Shipping address is the same as my account address</label>
-				</div>
 				<hr class="mb-4">
 				<a class="btn btn-primary btn-lg btn-block" id="calculate-item-cost" style="color:white;" data-toggle="modal" data-target="#modalMenu">Calculate</a>
 

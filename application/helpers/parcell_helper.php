@@ -26,3 +26,21 @@ function is_checked($check)
 {
 	if ($check) return "checked";
 }
+
+function is_verified($user_item_id)
+{
+	$ci = &get_instance();
+
+	$transaction = $ci->db->get_where('user_transactions', ['user_item_id' => $user_item_id]);
+
+	if ($transaction->num_rows() < 1) {
+		return '<a href="' . base_url('item/verify/') . $user_item_id . '" class="badge badge-warning mr-2 verifyDataItem" data-toggle="modal" data-target="#modalItem" data-id="' . $user_item_id . '">Verify</a>';
+	} else {
+		$data = $transaction->row_array();
+		if ($data['status'] == 0) {
+			return '<a href="#" class="badge badge-secondary mr-2">Waiting</a>';
+		} else {
+			return '<a href="#" class="badge badge-success mr-2">Progress</a>';
+		}
+	}
+}

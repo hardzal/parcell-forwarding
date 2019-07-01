@@ -103,7 +103,7 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = "Transactions List";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
-		$data['transactions'] = $this->transaction->getTransactions();
+		$data['transactions'] = $this->transaction->getItemTransactions();
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);

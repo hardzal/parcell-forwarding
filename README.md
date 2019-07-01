@@ -14,7 +14,7 @@ Authentication
 Servis
 
 - [x] User memasukkan data barang
-- [ ] User melakukan pembayaran
+- [ ] User mengirim bukti pembayaran
 - [ ] Menerima pengiriman barang dari user
 - [ ] Mengirim barang pesanan user
 - [ ] Melihat riwayat service 
@@ -41,3 +41,13 @@ email: rizaldoeta98@gmail.com
 password: 654321
 email: suryadijogja@gmail.com
 password: 987654321
+
+Membayar barang
+Verifikasi pembayaran barang
+Cek status barang oleh user
+Menghapus barang oleh admin
+Memperbaharui barang oleh user
+pencarian data barang oleh user
+export report data pembayaran
+
+CRUD ITEM [DONE]

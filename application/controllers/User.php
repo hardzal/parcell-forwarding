@@ -10,6 +10,7 @@ class User extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->model('User_model', 'user');
 		$this->load->model('Item_model', 'item');
+		$this->load->model('Transaction_model', 'transaction');
 	}
 
 	public function index()
@@ -85,7 +86,7 @@ class User extends CI_Controller
 					}
 					$new_image = $this->upload->data('file_name');
 				} else {
-					echo $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->upload->display_errors() . "</div>");
+					$this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->upload->display_errors() . "</div>");
 					redirect('user/changepassword');
 				}
 			} else {
@@ -169,6 +170,7 @@ class User extends CI_Controller
 	{
 		$data['title'] = "My Transactions";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['transactions'] = $this->user->getUserTransactions($this->session->userdata('user_id'));
 
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar');

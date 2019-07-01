@@ -22,9 +22,9 @@ class User_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
-	public function getUserDetail($id)
+	public function getUserDetail($user_id)
 	{
-		return $this->db->get_where('user_details', ['user_id' => $id])->row_array();
+		return $this->db->get_where('user_details', ['user_id' => $user_id])->row_array();
 	}
 
 	public function updateUser($user, $user_id)
@@ -45,7 +45,7 @@ class User_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function getUserItems($id)
+	public function getUserItems($user_id)
 	{
 		$query = "SELECT items.id AS id_item, 
 						items.name AS item_name, 
@@ -57,8 +57,20 @@ class User_model extends CI_Model
 			FROM user_items
 		JOIN items 
 			ON user_items.item_id = items.id
-		 WHERE user_items.user_id = $id";
+		 WHERE user_items.user_id = $user_id";
 
 		return $this->db->query($query)->result_array();
+	}
+
+	public function getUserTransactions($user_id)
+	{ }
+
+	public function getUserTransaction($user_item_id)
+	{
+		$this->db->select('*');
+		$this->db->from('user_transactions');
+		$this->db->where('user_item_id', $user_item_id);
+
+		return $this->db->get()->row_array();
 	}
 }

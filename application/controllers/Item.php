@@ -6,8 +6,11 @@ class Item extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Item_model', 'item');
+		// is_logged_in();
 		$this->load->library('form_validation');
+		$this->load->model('Item_model', 'item');
+		$this->load->model('User_model', 'user');
+		$this->load->model('Transaction_model', 'transaction');
 	}
 
 	public function index()
@@ -48,8 +51,57 @@ class Item extends CI_Controller
 
 	public function delete($id)
 	{
-		$this->db->delete('items', ['id' => $id]);
+		$this->transaction->deleteTransaction($id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success">Successful deleting item</div>');
 		redirect('admin/items');
 	}
+
+	public function verify()
+	{
+		$this->form_validation->set_rules('image', 'Image', 'trim');
+		$this->form_validation->set_rules('user_item_id', 'User Items Id', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode($this->item->getUserItems($this->input->post('id')));
+		} else {
+			$user_item_id = $this->input->post('user_item_id');
+			$image = $_FILES['image']['name'];
+			if ($image) {
+				print_r($_FILES);
+				$config['allowed_types'] = "gif|jpg|png";
+				$config['max_sizes'] = 2048;
+				$config['upload_path'] = "./assets/img/screenshot/";
+
+				$this->load->library('upload', $config);
+
+				if ($this->upload->do_upload('image')) {
+					$image = $this->upload->data('file_name');
+				} else {
+					$this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->upload->display_errors() . "</div>");
+					redirect('user/items');
+				}
+
+				$data = [
+					'user_item_id' => $user_item_id,
+					'image' => $image,
+					'status' => 0,
+					'created_at' => time()
+				];
+
+				if ($this->transaction->insertTransaction($data)) {
+					$this->session->set_flashdata('message', '<div class="alert alert-success">Successful send verified transaction item. Please wait to update</div>');
+					redirect('user/items');
+				} else {
+					$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed send verified transaction item</div>');
+					redirect('user/items');
+				}
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed upload image verified transaction item</div>');
+				redirect('user/items');
+			}
+		}
+	}
+
+	public function detail()
+	{ }
 }

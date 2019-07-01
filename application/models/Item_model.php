@@ -16,6 +16,11 @@ class Item_model extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
+	public function getUserItems($id)
+	{
+		return $this->db->get_where('user_items', ['id' => $id])->row_array();
+	}
+
 	public function insertItem($data)
 	{
 		$this->db->insert('items', $data);
@@ -33,8 +38,11 @@ class Item_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function deleteItem()
-	{ }
+	public function deleteItem($id)
+	{
+		$this->db->delete('items', ['id' => $id]);
+		return $this->db->affected_rows();
+	}
 
 	public function searchItems()
 	{ }

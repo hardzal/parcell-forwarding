@@ -16,6 +16,7 @@
 		th,
 		td {
 			border: 1px solid #000;
+			border-collapse: border-collapse;
 			padding: 5px;
 		}
 
@@ -31,7 +32,7 @@
 
 <body>
 	<h1 class='title'>Parcell-Forwarding</h1>
-	<p>Created <em><?= date('H:i:s d F Y', $item['created_at']); ?></em></p>
+	<p>Created at <em><?= date('H:i:s d F Y', $item['created_at']); ?></em></p>
 	<hr />
 	<table width="100%">
 		<tr>
@@ -55,11 +56,11 @@
 			<td><?= $item['address']; ?></td>
 		</tr>
 		<tr>
-			<th>Price Item</th>
-			<td>@ $ <?= number_format($item['item_price']); ?></td>
+			<th>Price Item @ </th>
+			<td>$ <?= number_format($item['item_price']); ?></td>
 		</tr>
 		<tr>
-			<td>Postal Fee</th>
+			<th>Postal Fee</th>
 			<td>$ <?= number_format($item['delivery_cost']); ?></td>
 		</tr>
 		<tr>
@@ -68,7 +69,7 @@
 		</tr>
 		<tr>
 			<th>Total Cost</th>
-			<td><?= $item['total_cost']; ?></td>
+			<td>$ <?= number_format($item['total_cost']); ?></td>
 		</tr>
 	</table>
 
@@ -76,7 +77,7 @@
 		<p>Transfer via Rekening<br />
 			Bank BCA a/n Parcell-Forwarding 12301-3021-2013<br />
 			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
-			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
+			Bank BNI a/n Parcell-Forwarding 12401-3421-2213<br />
 		</p>
 		<p>Don't forget to send picture proof to our system :)</p>
 	</div>

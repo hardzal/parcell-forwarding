@@ -1,4 +1,6 @@
 $(function () {
+	const base_url = "http://localhost/parcell-forwarding/";
+
 	$(".custom-file-input").on("change", function () {
 		var fileName = $(this).val().split("\\").pop();
 		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
@@ -42,12 +44,12 @@ $(function () {
 		$('#judulModalItem').html("Update Item");
 		$('.submitButton').html("Saved changes");
 
-		$('.modal-content form').attr('action', 'http://localhost/parcell-forwarding/item/edit');
+		$('.modal-content form').attr('action', base_url + 'item/edit');
 
 		const id = $(this).data('id');
 
 		$.ajax({
-			url: 'http://localhost/parcell-forwarding/item/edit',
+			url: base_url + 'item/edit',
 			data: {
 				id: id
 			},
@@ -65,6 +67,30 @@ $(function () {
 					$('#fragile').prop('checked', false);
 				}
 				$('#id').val(data.id);
+				console.log(data);
+			}
+		});
+	});
+
+	$('.verifyDataItem').on('click', function (e) {
+		$('#judulModalItem').html("Verification Item Transaction");
+		$('.submitButton').html("Saved changes");
+
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', base_url + 'item/verify');
+
+		$.ajax({
+			url: base_url + 'item/verify',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#user_item_id').val(data.id);
 				console.log(data);
 			}
 		});
