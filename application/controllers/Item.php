@@ -102,6 +102,26 @@ class Item extends CI_Controller
 		}
 	}
 
+	public function confirm()
+	{
+		$this->form_validation->set_rules('user_item_id', 'User Item Id', 'required|numeric|trim');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode($this->item->getUserItems($this->input->post('id')));
+		} else {
+			$user_item_id = $this->input->post('user_item_id');
+			$status = $this->input->post('status');
+
+			if ($this->user->updateUserItems(['status' => $status], ['id' => $user_item_id])) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful confirmed item.</div>');
+				redirect('user/items');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-failed">failed confirmed item.</div>');
+				redirect('user/items');
+			}
+		}
+	}
+
 	public function detail()
 	{ }
 }

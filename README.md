@@ -17,7 +17,6 @@ Servis
 - [x] User mengirim bukti pembayaran
 - [ ] Menerima pengiriman barang dari user
 - [ ] Mengirim barang pesanan user
-- [ ] Melihat riwayat service 
 - [ ] Cek status barang oleh user
 - [x] Menghapus data barang oleh admin
 - [ ] Memperbaharui data barang oleh user

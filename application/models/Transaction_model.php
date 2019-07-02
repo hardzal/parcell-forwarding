@@ -9,8 +9,7 @@ class Transaction_model extends CI_Model
 					users.email AS email,
 					items.name AS item_name, 
 					item_categories.name AS category_name,
-					user_items.cost AS cost,
-					user_items.status AS status
+					user_items.cost
 				FROM user_items 
 					JOIN users 
 						ON user_items.user_id = users.id

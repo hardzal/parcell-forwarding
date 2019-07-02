@@ -10,6 +10,7 @@ class Admin extends CI_Controller
 		$this->load->model('User_model', 'user');
 		$this->load->model('Item_model', 'item');
 		$this->load->model('Transaction_model', 'transaction');
+		$this->load->model('Auction_model', 'auction');
 		$this->load->library('form_validation');
 	}
 
@@ -69,6 +70,8 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = "Auctions List";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['auctions'] = $this->auction->getAuctions();
+
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);

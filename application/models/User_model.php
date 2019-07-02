@@ -52,7 +52,6 @@ class User_model extends CI_Model
 						user_items.id AS user_item_id, 
 						user_items.cost, 
 						user_items.item_code,
-						user_items.status, 
 						user_items.total 
 			FROM user_items
 		JOIN items 
@@ -72,5 +71,11 @@ class User_model extends CI_Model
 		$this->db->where('user_item_id', $user_item_id);
 
 		return $this->db->get()->row_array();
+	}
+
+	public function updateUserItems($data, $where)
+	{
+		$this->db->update('user_items', $data, $where);
+		return $this->db->affected_rows();
 	}
 }

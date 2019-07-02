@@ -78,11 +78,11 @@
 									<label for='fragile'>Fragile?</label>
 								</div>
 								<input type='hidden' value='' name='id' id='id' />
-								</div>
-								<div class='modal-footer'>
-									<button type='submit' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-									<button type='submit' class='btn btn-primary submitButton'>Submit</button>
-								</div>
+							</div>
+							<div class='modal-footer'>
+								<button type='submit' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+								<button type='submit' class='btn btn-primary submitButton'>Submit</button>
+							</div>
 						</form>
 					</div>
 				</div>

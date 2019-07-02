@@ -116,9 +116,64 @@ $(function () {
 			success: function (data) {
 				$('#user_item_id').val(data.user_item_id);
 				$('.img-thumbnail').attr('src', base_url + 'assets/img/screenshot/' + data.image);
-				$('.submitButton').attr('onclick', confirm("Are you sure to confirm it?"));
+				$('.submitButton').attr('onclick', function () {
+					return "Are you sure to confirm?";
+				})
 				console.log(data);
 			}
 		});
 	});
+
+	$('.progressDataItem').on('click', function (e) {
+		$('#judulModalItem').html("Confirm Item");
+		$('.submitButton').html("Confirm");
+		$('.status_item').remove();
+
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', base_url + 'item/confirm');
+
+		$.ajax({
+			url: base_url + 'item/confirm',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#user_item_id').val(data.id);
+				$('.custom-file').remove();
+				$('.form-group').append(`<div class='status_item'><input type='checkbox' id='status' name='status' value='1'/>
+				<label for='status'>Has it been received??</label></div>`);
+				console.log(data);
+			}
+		});
+	});
+
+	$('.progressTransaction').on('click', function (e) {
+		$('#judulModalTransaction').html("Verification Item Transaction");
+		$('.submitButton').html("Confirm Transaction");
+		$('.img-thumbnail').removeAttr('src');
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', '');
+
+		$.ajax({
+			url: '',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#user_item_id').val(data.user_item_id);
+				console.log(data);
+			}
+		});
+	});
+
 });

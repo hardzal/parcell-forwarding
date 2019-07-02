@@ -28,14 +28,14 @@
 								<tbody>
 									<?php foreach ($auctions as $auction) : ?>
 										<tr>
-											<th scope="row"><?= $auction['item_id']; ?></th>
+											<th scope="row"><?= $auction['id']; ?></th>
 											<td><?= $auction['item_name']; ?></td>
-											<td><?= $auction['category_name']; ?></td>
+											<td><?= $auction['item_category']; ?></td>
 											<td><?= number_format($auction['price']); ?></td>
 											<td><?= $auction['stock']; ?></td>
 											<td>
-												<a href="<?= base_url('item/edit/') . $auction['item_id']; ?>" class="badge badge-success mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['item_id']; ?>">Edit</a>
-												<a href="<?= base_url('item/delete/') . $auction['item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>
+												<a href="<?= base_url('item/edit/') . $auction['id']; ?>" class="badge badge-success mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $auction['id']; ?>">Edit</a>
+												<a href="<?= base_url('item/delete/') . $auction['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>
 										</tr> <?php endforeach; ?>
 								</tbody>
 							</table>

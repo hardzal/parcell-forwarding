@@ -34,7 +34,7 @@
 											<td><?= $transaction['item_code']; ?></td>
 											<td><?= $transaction['cost']; ?></td>
 											<td><?= $transaction['total']; ?></td>
-											<td><?= status_item($transaction['status']); ?></td>
+											<td><?= status_item($transaction['status'], $transaction['user_item_id'], $this->session->userdata('role_id')); ?></td>
 											<td>
 												<a href="<?= base_url('transaction/detail/') . $transaction['user_item_id']; ?>" class="badge badge-info mr-2 detailDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $transaction['user_item_id']; ?>">Detail</a>
 												<a href="<?= base_url('item/delete/') . $transaction['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>

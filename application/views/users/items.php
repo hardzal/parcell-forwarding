@@ -30,11 +30,10 @@
 										<th scope="row"><?= $no; ?></th>
 										<td><?= $item['item_name']; ?></td>
 										<td><?= $item['item_code']; ?></td>
-										<td><?= $item['cost']; ?></td>
+										<td><?= number_format($item['cost']); ?></td>
 										<td><?= $item['total']; ?></td>
-										<td><?= status_item($item['status']); ?></td>
+										<td><?= status_item($item['user_item_id'], $this->session->userdata('role_id')); ?></td>
 										<td>
-											<a href="<?= base_url('item/detail/') . $item['user_item_id']; ?>" class="badge badge-info mr-2 detailDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['user_item_id']; ?>">Detail</a>
 											<?= is_verified($item['user_item_id']); ?>
 											<a href="<?= base_url('item/delete/') . $item['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>
 									</tr>

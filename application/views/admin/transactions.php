@@ -31,9 +31,8 @@
 										<td scope="row"><?= $transaction['email']; ?></td>
 										<td scope="row"><?= $transaction['item_name']; ?></td>
 										<td scope="row"><?= '$ ' . number_format($transaction['cost']); ?></td>
-										<td scope="row"><?= status_item($transaction['status']); ?></td>
+										<td scope="row"><?= status_item($transaction['id'], $this->session->userdata('role_id')); ?></td>
 										<td scope="row">
-											<a href="<?= base_url('transaction/edit/') . $transaction['id']; ?>" class="badge badge-success mr-2 detailDataTransaction" data-toggle="modal" data-target="#modalTransaction" data-id="<?= $transaction['id']; ?>">Detail</a>
 											<?= is_confirmed($transaction['id']); ?>
 											<a href="<?= base_url('transaction/delete/') . $transaction['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
 										</td>

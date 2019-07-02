@@ -52,8 +52,16 @@
 			<td><?= $item['item_category']; ?></td>
 		</tr>
 		<tr>
+			<th>Email</th>
+			<td><?= $item['email']; ?></td>
+		</tr>
+		<tr>
 			<th>Name</th>
 			<td><?= $item['name']; ?></td>
+		</tr>
+		<tr>
+			<th>No Telepon</th>
+			<td><?= $item['phone_number']; ?></td>
 		</tr>
 		<tr>
 			<th>Alamat</th>
@@ -83,7 +91,7 @@
 			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
 			Bank BNI a/n Parcell-Forwarding 12401-3421-2213<br />
 		</p>
-		<p class='deadline'><strong>Deadline Transfer : <?= $item['deadline_at']; ?></strong></p>
+		<p class='deadline'><strong>Deadline Transfer : <?= date('H:i:s d F Y', $item['deadline_at']); ?></strong></p>
 		<p>Don't forget to send picture proof to our system :)</p>
 	</div>
 </body>

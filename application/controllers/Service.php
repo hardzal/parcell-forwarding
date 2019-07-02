@@ -51,9 +51,9 @@ class Service extends CI_Controller
 			$weight = $this->input->post('weight');
 			$broken = $this->input->post('fragile') !== NULL ? 1 : 0;
 			$description = $this->input->post('description');
+			$email = $this->input->post('email');
 
-
-			$item_code = base64_encode(random_bytes(8));
+			$item_code = substr(base64_encode(random_bytes(8)), 0, 6);
 
 			$item_data = [
 				'category_id' 	=> $item_category,
@@ -70,6 +70,7 @@ class Service extends CI_Controller
 				$delivery = $this->db->get_where('deliveries', ['id' => $delivery_id])->row_array();
 				$user_id = $this->session->userdata('user_id');
 				$cost_delivery = 0;
+
 				// bea masuk 7,5%
 				$bea_masuk = $item_price * 0.075;
 				// ppn 10%
@@ -81,6 +82,7 @@ class Service extends CI_Controller
 
 				if ($country == 3) {
 					$cost = $item_price;
+					$tax = 0;
 				} else {
 					$cost = $item_price + $tax;
 				}
@@ -109,7 +111,7 @@ class Service extends CI_Controller
 					'description' => $description,
 					'status' => 0,
 					'created_at' => time(),
-					'deleted_at' => time() + 600
+					'deleted_at' => time() + 3600
 				];
 
 				if ($this->item->insertUserItem($user_item)) {
@@ -120,13 +122,16 @@ class Service extends CI_Controller
 						'item_code' => $item_code,
 						'item_name' => $item_name,
 						'item_category' => $category['name'],
+						'email' => $email,
 						'name' => $user['name'],
-						'address' => $address_from,
+						'phone_number' => $user['phone_number'],
+						'address' => $address_to,
 						'item_price' => $item_price,
 						'delivery_cost' => $cost_delivery,
 						'tax_cost' => $tax,
 						'total_cost' => $cost,
-						'created_at' => time()
+						'created_at' => time(),
+						'deadline_at' => time() + 600
 					]);
 
 					redirect('service');
