@@ -14,13 +14,12 @@ Authentication
 Servis
 
 - [x] User memasukkan data barang
-- [ ] User mengirim bukti pembayaran
+- [x] User mengirim bukti pembayaran
 - [ ] Menerima pengiriman barang dari user
 - [ ] Mengirim barang pesanan user
 - [ ] Melihat riwayat service 
-- [ ] Verifikasi data barang oleh admin
 - [ ] Cek status barang oleh user
-- [ ] Menghapus data barang oleh admin
+- [x] Menghapus data barang oleh admin
 - [ ] Memperbaharui data barang oleh user
 - [ ] Pencarian data barang oleh user
 

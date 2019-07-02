@@ -20,16 +20,17 @@ class Transaction_model extends CI_Model
 						ON user_items.item_id = items.id
 					JOIN item_categories
 						ON items.category_id = item_categories.id
-				ORDER BY user_items.created_at DESC";
+					LEFT JOIN user_transactions
+						ON user_items.id = user_transactions.user_item_id
+				ORDER BY user_transactions.user_item_id IS NULL, 
+					user_items.created_at DESC";
 
 		return $this->db->query($query)->result_array();
 	}
 
-	public function getTransaction($id)
+	public function getTransaction($user_item_id)
 	{
-		$query = "";
-
-		return $this->db->query($query)->result_array();
+		return $this->db->get_where('user_transactions', ['user_item_id' => $user_item_id])->row_array();
 	}
 
 	public function insertTransaction($data)
@@ -38,8 +39,11 @@ class Transaction_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function updateTransaction($id, $data)
-	{ }
+	public function updateTransaction($where, $data)
+	{
+		$this->db->update('user_transactions', $data, $where);
+		return $this->db->affected_rows();
+	}
 
 	public function deleteTransaction($user_item_id)
 	{

@@ -109,7 +109,7 @@ class Service extends CI_Controller
 					'description' => $description,
 					'status' => 0,
 					'created_at' => time(),
-					'deleted_at' => 0
+					'deleted_at' => time() + 600
 				];
 
 				if ($this->item->insertUserItem($user_item)) {

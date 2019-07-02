@@ -27,6 +27,10 @@
 		.title {
 			margin-bottom: 3px;
 		}
+
+		.deadline {
+			font-size: 20px;
+		}
 	</style>
 </head>
 
@@ -79,6 +83,7 @@
 			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
 			Bank BNI a/n Parcell-Forwarding 12401-3421-2213<br />
 		</p>
+		<p class='deadline'><strong>Deadline Transfer : <?= $item['deadline_at']; ?></strong></p>
 		<p>Don't forget to send picture proof to our system :)</p>
 	</div>
 </body>

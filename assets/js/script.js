@@ -74,7 +74,7 @@ $(function () {
 
 	$('.verifyDataItem').on('click', function (e) {
 		$('#judulModalItem').html("Verification Item Transaction");
-		$('.submitButton').html("Saved changes");
+		$('.submitButton').html("Confirm Transaction");
 
 		const id = $(this).data('id');
 
@@ -90,7 +90,33 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('#user_item_id').val(data.id);
+				$('#user_item_id').val(data.user_item_id);
+				console.log(data);
+			}
+		});
+	});
+
+	$('.confirmationTransaction').on('click', function (e) {
+		$('#judulModalTransaction').html("Confirmation Item Transaction");
+		$('.submitButton').html("Confirm It");
+		$('.img-thumbnail').removeAttr('src');
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', base_url + 'transaction/confirm');
+
+		$.ajax({
+			url: base_url + 'transaction/confirm',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#user_item_id').val(data.user_item_id);
+				$('.img-thumbnail').attr('src', base_url + 'assets/img/screenshot/' + data.image);
+				$('.submitButton').attr('onclick', confirm("Are you sure to confirm it?"));
 				console.log(data);
 			}
 		});

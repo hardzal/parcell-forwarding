@@ -33,8 +33,8 @@
 										<td scope="row"><?= '$ ' . number_format($transaction['cost']); ?></td>
 										<td scope="row"><?= status_item($transaction['status']); ?></td>
 										<td scope="row">
-											<a href="<?= base_url('transaction/edit/') . $transaction['id']; ?>" class="badge badge-success mr-2 detailDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $transaction['id']; ?>">Detail</a>
-											<a href="<?= base_url('transaction/confirm/') . $transaction['id']; ?>" class="badge badge-info mr-2">Confirm</a>
+											<a href="<?= base_url('transaction/edit/') . $transaction['id']; ?>" class="badge badge-success mr-2 detailDataTransaction" data-toggle="modal" data-target="#modalTransaction" data-id="<?= $transaction['id']; ?>">Detail</a>
+											<?= is_confirmed($transaction['id']); ?>
 											<a href="<?= base_url('transaction/delete/') . $transaction['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
 										</td>
 									</tr> <?php $no = $no + 1;
@@ -48,20 +48,20 @@
 			</div>
 			<!-- End of Main Content -->
 			<!-- Modal -->
-			<div class="modal fade" id="modalMenu" tabindex="-1" role="dialog">
+			<div class="modal fade" id="modalTransaction" tabindex="-1" role="dialog">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="judulModalMenu">Add New Menu</h5>
+							<h5 class="modal-title" id="judulModalTransaction">Add New Menu</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form method="POST" action="<?= base_url('menu'); ?>">
+						<form method="POST" action="">
 							<div class="modal-body">
 								<div class='form-group'>
-									<input type='text' class='form-control' id='menu' name='menu' placeholder='Menu name' />
-									<input type="hidden" name="id" id="id" />
+									<img src='' class='img-thumbnail' />
+									<input type="hidden" name="user_item_id" id="user_item_id" />
 								</div>
 							</div>
 							<div class="modal-footer">
