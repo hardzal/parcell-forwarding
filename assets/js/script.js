@@ -153,27 +153,96 @@ $(function () {
 	});
 
 	$('.progressTransaction').on('click', function (e) {
-		$('#judulModalTransaction').html("Verification Item Transaction");
-		$('.submitButton').html("Confirm Transaction");
-		$('.img-thumbnail').removeAttr('src');
+		$('#judulModalTransaction').html("Item Transaction");
+		$('.submitButton').html("Save");
+		$('.img-thumbnail').remove();
+		$('h3.save').remove();
+
 		const id = $(this).data('id');
 
 		e.preventDefault();
 
-		$('.modal-content form').attr('action', '');
+		$('.modal-content form').attr('action', base_url + 'transaction/save');
 
 		$.ajax({
-			url: '',
+			url: base_url + 'transaction/save',
 			data: {
 				id: id
 			},
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('#user_item_id').val(data.user_item_id);
+				$('#user_item_id').val(data.user);
+				$('.form-group').append("<h3 class='save'>Terverifikasi</h3>");
 				console.log(data);
 			}
 		});
 	});
 
+	$('.viewAuction').on('click', function (e) {
+		$('#judulModalAuction').html("Auction Item");
+		$('.form-group').remove();
+		$('.submitButton').html("Save");
+
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', base_url + 'auction/view');
+
+		$.ajax({
+			url: base_url + 'auction/view',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				let auction_id;
+				let size = 0;
+				let auction = `<div class="form-group">
+				<table class="table table-bordered">
+				<thead>
+				  <tr>
+					<th scope="col">#</th>
+					<th scope="col">Name</th>
+					<th scope="col">Price</th>
+				  </tr>
+				</thead>
+				<tbody>`;
+
+				$.each(data, function (i, item) {
+					auction += `<tr>
+						<th scope="row">${i+1}</th>
+						<td>${item.name}</td>
+						<td>${item.price}</td>
+					  </tr>`;
+					size++;
+				});
+
+				auction += `</tbody>
+				</table>
+				  </div>`;
+
+				if (size > 0) {
+					$('.modal-body').append(auction);
+				} else {
+					$('.modal-body').append(`
+						<strong>Belum ada yang mengajukan</strong>
+					`);
+				}
+
+				$('.modal-body').append(`
+					<div class='form-group'>
+						<label for='auction_pricet'>Mengajukan nilai lelang</label>
+						<input type='number' name='auction_price' id='auction_price' class='form-control'/>
+					</div>
+				`);
+
+				$('#auction_id').val(id);
+				console.log(data);
+			}
+		});
+		$('.modal-body strong').html('');
+	});
 });

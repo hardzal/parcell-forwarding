@@ -45,6 +45,12 @@ class User_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+	public function updateUserItems($data, $where)
+	{
+		$this->db->update('user_items', $data, $where);
+		return $this->db->affected_rows();
+	}
+
 	public function getUserItems($user_id)
 	{
 		$query = "SELECT items.id AS id_item, 
@@ -73,9 +79,20 @@ class User_model extends CI_Model
 		return $this->db->get()->row_array();
 	}
 
-	public function updateUserItems($data, $where)
+	public function getUserAuctions($auction_id)
 	{
-		$this->db->update('user_items', $data, $where);
+		$this->db->select('*');
+		$this->db->from('user_auctions');
+		$this->db->join('users', 'users.id = user_auctions.user_id');
+		$this->db->join('user_details', 'user_details.user_id = users.id');
+		$this->db->where('auction_id', $auction_id);
+
+		return $this->db->get()->result_array();
+	}
+
+	public function insertUserAuction($data)
+	{
+		$this->db->insert('user_auctions', $data);
 		return $this->db->affected_rows();
 	}
 }

@@ -10,7 +10,6 @@
 
 						<?= $this->session->flashdata('message'); ?>
 
-						<a href="" class=" btn btn-primary mb-3 tambahDataMenu" data-toggle="modal" data-target="#modalMenu">Add New Transaction</a>
 						<table class="table table-hover">
 							<thead>
 								<tr>

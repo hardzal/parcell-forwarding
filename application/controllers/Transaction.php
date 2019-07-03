@@ -16,9 +16,7 @@ class Transaction extends CI_Controller
 	{ }
 
 	public function detail()
-	{
-		if ($this->form_validation->run()) { } else { }
-	}
+	{ }
 
 	public function confirm()
 	{
@@ -42,4 +40,15 @@ class Transaction extends CI_Controller
 
 	public function delete()
 	{ }
+
+	public function save()
+	{
+		$this->form_validation->set_rules('user_item_id', 'User Item Id', 'required|numeric|trim');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode($this->item->getUserItems($this->input->post('id')));
+		} else {
+			$user_item_id = $this->input->post('user_item_id');
+		}
+	}
 }

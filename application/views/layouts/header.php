@@ -38,7 +38,7 @@
 						<a class='nav-link' href='<?= base_url(); ?>auction'>Auction</a>
 					</li>
 					<li class='nav-item'>
-						<a class='nav-link' href='<?= base_url(); ?>#about-us'>About Us</a>
+						<a class='nav-link' href='<?= base_url(); ?>home/about'>About Us</a>
 					</li>
 					<?php if (!$this->session->userdata('email')) : ?>
 						<li class='nav-item'>

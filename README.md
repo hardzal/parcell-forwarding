@@ -15,16 +15,16 @@ Servis
 
 - [x] User memasukkan data barang
 - [x] User mengirim bukti pembayaran
-- [ ] Menerima pengiriman barang dari user
-- [ ] Mengirim barang pesanan user
-- [ ] Cek status barang oleh user
+- [x] Menerima pengiriman barang dari user
+- [x] Mengirim barang pesanan user
+- [x] Cek status barang oleh user
 - [x] Menghapus data barang oleh admin
-- [ ] Memperbaharui data barang oleh user
 - [ ] Pencarian data barang oleh user
 
 Lelang
 
-- [ ] Melelang barang yang tidak dibayar oleh user
+- [x] Melelang barang yang tidak dibayar oleh user
+- [ ] Melisting pelelang
 - [ ] Mengirim barang hasil lelangan
 
 Fitur lainnya
@@ -39,13 +39,5 @@ email: rizaldoeta98@gmail.com
 password: 654321
 email: suryadijogja@gmail.com
 password: 987654321
-
-Membayar barang
-Verifikasi pembayaran barang
-Cek status barang oleh user
-Menghapus barang oleh admin
-Memperbaharui barang oleh user
-pencarian data barang oleh user
-export report data pembayaran
 
 CRUD ITEM [DONE]
