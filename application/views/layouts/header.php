@@ -40,6 +40,9 @@
 					<li class='nav-item'>
 						<a class='nav-link' href='<?= base_url(); ?>home/about'>About Us</a>
 					</li>
+					<li class='nav-item'>
+						<a class='nav-link' href='<?= base_url(); ?>post'>Blog</a>
+					</li>
 					<?php if (!$this->session->userdata('email')) : ?>
 						<li class='nav-item'>
 							<a class='nav-link' href='<?= base_url(); ?>auth/signup'>Sign Up</a>

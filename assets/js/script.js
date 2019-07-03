@@ -272,4 +272,30 @@ $(function () {
 			}
 		});
 	});
+
+	$('.editPost').on('click', function (e) {
+		$('#judulModalPost').html("Update Post");
+		$('.submitButton').html("Save changes");
+
+		const id = $(this).data('id');
+
+		e.preventDefault();
+		$('.modal-content form').attr('action', base_url + 'post/edit');
+
+		$.ajax({
+			url: base_url + 'post/edit',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('.modal-body').append(`<input type='hidden' name='post_id' id='post_id'/>`);
+				$('#post_id').val(id);
+				$('#title').val(data.title);
+				$('#description').val(data.description);
+				console.log(data);
+			}
+		});
+	});
 });

@@ -44,6 +44,12 @@
 			</a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/posts">
+				<i class="far fa-newspaper"></i>
+				<span>Posts</span>
+			</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>admin/settings">
 				<i class="fas fa-fw fa-user-cog"></i>
 				<span>Settings</span>

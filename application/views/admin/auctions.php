@@ -29,7 +29,7 @@
 											<th scope="row"><?= $auction['id']; ?></th>
 											<td><?= $auction['item_name']; ?></td>
 											<td><?= $auction['item_category']; ?></td>
-											<td><?= number_format($auction['price']); ?></td>
+											<td>$ <?= number_format($auction['price']); ?></td>
 											<td><?= $auction['stock']; ?></td>
 											<td>
 												<a href="<?= base_url('item/edit/') . $auction['id']; ?>" class="badge badge-success mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $auction['id']; ?>">Edit</a>

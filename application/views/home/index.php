@@ -8,7 +8,7 @@
 		</ol>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img class="first-slide" src="<?= base_url(); ?>assets/img/slider/laptop.png" alt="First slide">
+				<img class="first-slide" src="<?= base_url(); ?>assets/img/posts/WhatsApp_Image_2019-07-03_at_18_45_151.jpeg" alt="First slide">
 				<div class="container">
 					<div class="carousel-caption text-left p-5" style="background-color: #00000073">
 						<h1>Parcell Forwarding.</h1>
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<div class="carousel-item">
-				<img class="second-slide" src="<?= base_url(); ?>assets/img/slider/laptop-msi.jpg" alt="Second slide">
+				<img class="second-slide" src="<?= base_url(); ?>assets/img/posts/WhatsApp_Image_2019-07-03_at_18_45_15.jpeg" alt="Second slide">
 				<div class="container">
 					<div class="carousel-caption p-5" style="background-color: #00000073">
 						<h1>Another example headline.</h1>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			<div class="carousel-item">
-				<img class="third-slide" src="<?= base_url(); ?>assets/img/slider/pc.png" alt="Third slide">
+				<img class="third-slide" src="<?= base_url(); ?>assets/img/posts/WhatsApp_Image_2019-07-03_at_18_45_16.jpeg" alt="Third slide">
 				<div class="container">
 					<div class="carousel-caption text-right p-5" style="background-color: #00000073">
 						<h1>One more for good measure.</h1>

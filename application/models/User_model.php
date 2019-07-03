@@ -99,13 +99,21 @@ class User_model extends CI_Model
 		$this->db->join('users', 'users.id = user_auctions.user_id');
 		$this->db->join('user_details', 'user_details.user_id = users.id');
 		$this->db->where('auction_id', $auction_id);
+		$this->db->order_by('user_auctions.price', 'DESC');
 
 		return $this->db->get()->result_array();
 	}
 
 	public function getUserAuction($auction_id)
 	{
-		$query = "SELECT item_auctions.item_id, user_auctions.user_id, user_auctions.price, item_auctions.stock FROM user_auctions JOIN item_auctions ON user_auctions.auction_id = item_auctions.id JOIN items ON items.id = item_auctions.item_id WHERE user_auctions.auction_id = $auction_id AND user_auctions.status = 1";
+		$query = "SELECT item_auctions.item_id, 
+				user_auctions.user_id, 
+				user_auctions.price, 
+				item_auctions.stock 
+			FROM user_auctions 
+				JOIN item_auctions ON user_auctions.auction_id = item_auctions.id 
+				JOIN items ON items.id = item_auctions.item_id 
+			WHERE user_auctions.auction_id = ". $auction_id. " AND user_auctions.status = 1";
 
 		return $this->db->query($query)->row_array();
 	}

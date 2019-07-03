@@ -57,10 +57,10 @@ class Admin extends CI_Controller
 			];
 
 			if ($this->item->insertItem($data)) {
-				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>add</strong> menu</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>add</strong> item</div>');
 				redirect('admin/items');
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>add</strong> menu</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>add</strong> item</div>');
 				redirect('admin/items');
 			}
 		}
@@ -112,6 +112,54 @@ class Admin extends CI_Controller
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('admin/transactions', $data);
 		$this->load->view('layouts/admin_footer');
+	}
+
+	public function posts()
+	{
+		$data['title'] = "Posts";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['posts'] = $this->db->get('posts')->result_array();
+
+		$this->form_validation->set_rules('title', 'Title', 'required|trim|min_length[3]');
+		$this->form_validation->set_rules('description', 'Description', 'required|trim|min_length[4]');
+
+		if ($this->form_validation->run() == FALSE) {
+			$this->load->view('layouts/admin_header', $data);
+			$this->load->view('layouts/admin_sidebar', $data);
+			$this->load->view('layouts/admin_topbar', $data);
+			$this->load->view('admin/posts', $data);
+			$this->load->view('layouts/admin_footer');
+		} else {
+			$title = $this->input->post('title');
+			$description = $this->input->post('description');
+
+			$image_name = $_FILES['image']['name'];
+			if ($image_name) {
+				$config['allowed_types'] = "gif|jpg|jpeg|png";
+				$config['max_sizes'] = 2048;
+				$config['upload_path'] = "./assets/img/posts/";
+
+				$this->load->library('upload', $config);
+
+				$this->upload->do_upload('image');
+				$new_image = $this->upload->data('file_name');
+			}
+
+			$post = [
+				'title' => $title,
+				'image' => $new_image,
+				'description' => $description
+			];
+
+			$this->db->insert('posts', $post);
+			if ($this->db->affected_rows()) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>add</strong> post</div>');
+				redirect('admin/posts');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>delete</strong> post</div>');
+				redirect('admin/posts');
+			}
+		}
 	}
 
 	public function settings()

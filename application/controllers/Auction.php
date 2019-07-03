@@ -9,6 +9,7 @@ class Auction extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->model('Auction_model', 'auction');
 		$this->load->model('User_model', 'user');
+		$this->load->model('Item_model', 'item');
 	}
 	public function index()
 	{
@@ -53,10 +54,14 @@ class Auction extends CI_Controller
 		$this->form_validation->set_rules('address_to', 'Address to', 'required|trim');
 		$this->form_validation->set_rules('country', 'Country', 'required|trim');
 		$this->form_validation->set_rules('city', 'City', 'required|trim');
-		$this->form_validation->set_rules('zip', 'Zip', 'required|trim|numeric');
+		$this->form_validation->set_rules('postcode', 'Zip', 'required|trim|numeric');
 		$this->form_validation->set_rules('delivery', 'Delivery', 'required');
 		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric|trim');
 		$this->form_validation->set_rules('description', 'Description', 'trim');
+		$this->form_validation->set_rules('stock', 'Stock', 'required|numeric|trim');
+		$this->form_validation->set_rules('price', 'Price', 'required|numeric|trim');
+		$this->form_validation->set_rules('user_id', 'User Id', 'required|numeric|trim');
+		$this->form_validation->set_rules('item_id', 'Item Id', 'required|numeric|trim');
 
 		if ($this->form_validation->run() == FALSE) {
 			echo json_encode($this->user->getUserAuction($this->input->post('id')));
@@ -64,8 +69,8 @@ class Auction extends CI_Controller
 			$address_to = $this->input->post('address_to');
 			$country = $this->input->post('country');
 			$city = $this->input->post('city');
-			$zip = $this->input->post('zip');
-			$delivery = $this->input->post('delivery');
+			$zip = $this->input->post('postcode');
+			$delivery_id = $this->input->post('delivery');
 			$weight = $this->input->post('weight');
 			$description = $this->input->post('decsription');
 
@@ -75,7 +80,7 @@ class Auction extends CI_Controller
 			$stock = $this->input->post('stock');
 			$item_code = substr(base64_encode(random_bytes(8)), 0, 6);
 
-			$delivery = $this->db->get_where('deliveries', ['id' => $delivery])->row_array();
+			$delivery = $this->db->get_where('deliveries', ['id' => $delivery_id])->row_array();
 			$cost_delivery = 0;
 
 			// bea masuk 7,5%
@@ -106,7 +111,7 @@ class Auction extends CI_Controller
 			$user_item = [
 				'user_id' => $user_id,
 				'item_id' => $item_id,
-				'delivery_id' => $delivery,
+				'delivery_id' => $delivery_id,
 				'item_code' => $item_code,
 				'total' => $stock,
 				'cost' => $cost,

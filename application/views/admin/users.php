@@ -48,7 +48,7 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<form method="POST" action="<?= base_url('menu'); ?>">
+						<form method="POST" action="<?= base_url('admin/users'); ?>" enctype="multipart/form-data">
 							<div class="modal-body">
 								<div class='form-group'>
 									<input type='text' class='form-control' id='menu' name='menu' placeholder='Menu name' />

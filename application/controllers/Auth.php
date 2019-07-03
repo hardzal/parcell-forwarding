@@ -37,8 +37,8 @@ class Auth extends CI_Controller
 
 	private function _loginProcess()
 	{
-		$email = $this->input->post('email');
-		$password = $this->input->post('password');
+		$email = $this->input->post('email', true);
+		$password = $this->input->post('password', true);
 
 		$user = $this->auth->getUser($email);
 
@@ -128,7 +128,7 @@ class Auth extends CI_Controller
 			'smtp_user' => 'langkahkita01@gmail.com',
 			'smtp_pass' => 'qwerty1070',
 			'smtp_port' => 465,
-			'mail_type' => 'html',
+			'mailtype' => 'html',
 			'charset' 	=> 'utf-8',
 			'newline' 	=> "\r\n"
 		];
@@ -141,10 +141,10 @@ class Auth extends CI_Controller
 
 		if ($type == 'verify') {
 			$this->email->subject('Account Verification | PF Admin');
-			$this->email->message("Click here to verify your account : <a href='" . base_url('auth/verify?email=') . $this->input->post('email') . "&token=" . urlencode($token) . "'>Activate</a>");
+			$this->email->message('Click this link to verify your account : <a href="' . base_url('auth/verify?email=') . $this->input->post('email') . '&token=' . urlencode($token) . '">Activate</a>');
 		} else if ($type == 'forgot') {
 			$this->email->subject('Reset Password | FP Admin');
-			$this->email->message('Click this link to reset your password account : <a href="' . base_url() . 'auth/resetpassword?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Reset</a>');
+			$this->email->message('Click this link to reset your password account : <a href="' . base_url('auth/resetpassword?email=') . $this->input->post('email') . '&token=' . urlencode($token) . '">Reset</a>');
 		}
 
 		if ($this->email->send()) {
@@ -278,7 +278,7 @@ class Auth extends CI_Controller
 			$this->load->view('auth/forgot-password');
 			$this->load->view('layouts/auth_footer');
 		} else {
-			$email = $this->input->post('email');
+			$email = $this->input->post('email', true);
 
 			if ($this->auth->checkActiveEmail($email)) {
 
@@ -333,7 +333,7 @@ class Auth extends CI_Controller
 			$this->load->view('auth/change-password');
 			$this->load->view('layouts/auth_footer');
 		} else {
-			$password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+			$password = password_hash($this->input->post('password', true), PASSWORD_DEFAULT);
 			$email = $this->session->userdata('reset_email');
 
 			if ($this->auth->changePassword($password, $email)) {
