@@ -19,6 +19,8 @@ class Home extends CI_Controller
 	public function about()
 	{
 		$data['title'] = "About | Parcell-Forwarding";
+		$data['content'] = $this->db->get_where('site_info', ['id' => 1])->row_array();
+		
 		$this->load->view('layouts/header', $data);
 		$this->load->view('home/about', $data);
 		$this->load->view('layouts/footer');

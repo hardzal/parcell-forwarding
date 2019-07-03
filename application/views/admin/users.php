@@ -10,14 +10,14 @@
 
 						<?= $this->session->flashdata('message'); ?>
 
-						<a href="" class=" btn btn-primary mb-3 tambahDataMenu" data-toggle="modal" data-target="#modalMenu">Add New User</a>
+						<!--<a href="" class=" btn btn-primary mb-3 tambahDataMenu" data-toggle="modal" data-target="#modalMenu">Add New User</a>-->
 						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th scope="col">id</th>
 									<th scope="col">Email</th>
 									<th scope="col">Name</th>
-									<th scope="col">Action</th>
+									<!--<th scope="col">Action</th>-->
 								</tr>
 							</thead>
 							<tbody>
@@ -26,9 +26,9 @@
 										<td scope="row"><?= $user['id']; ?></td>
 										<td scope="row"><?= $user['email']; ?></td>
 										<td scope="row"><?= $user['name']; ?></td>
-										<td scope="row">
+										<!--<td scope="row">
 											<a href="<?= base_url('user/edit/') . $user['id']; ?>" class="badge badge-success mr-2 editDataMenu" data-toggle="modal" data-target="#modalMenu" data-id="<?= $user['id']; ?>">Edit</a>
-											<a href="<?= base_url('user/delete/') . $user['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus user ini?')">Delete</a> </td>
+											<a href="<?= base_url('user/delete/') . $user['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus user ini?')">Delete</a> </td>-->
 									</tr> <?php endforeach; ?>
 							</tbody>
 						</table>

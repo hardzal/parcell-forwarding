@@ -44,6 +44,18 @@
 								</tbody>
 							</table>
 						<?php endif; ?>
+						<table>
+							<tr>
+								<th>Total Transactions</th>
+								<td>:</td>
+								<td><?= $total_transactions['total_transaction']; ?></td>
+							</tr>
+							<tr>
+								<th>Total Cost Transactions</th>
+								<td>:</td>
+								<td>$ <?= number_format($total_cost['total_cost']); ?></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div> <!-- /.container-fluid -->

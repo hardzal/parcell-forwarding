@@ -18,6 +18,9 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = "Dashboard Admin";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['member'] = $this->user->getTotalUser();
+		$data['transaksi'] = $this->transaction->getTotalTransaction();
+		$data['pendapatan'] = $this->transaction->getTotalCost();
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);
@@ -71,6 +74,7 @@ class Admin extends CI_Controller
 		$data['title'] = "Auctions List";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$data['auctions'] = $this->auction->getAuctions();
+		$data['item_categories'] = $this->item->getItemCategories();
 
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
@@ -166,11 +170,55 @@ class Admin extends CI_Controller
 	{
 		$data['title'] = "Settings";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
-		$this->load->view('layouts/admin_header', $data);
-		$this->load->view('layouts/admin_sidebar', $data);
-		$this->load->view('layouts/admin_topbar', $data);
-		$this->load->view('admin/settings', $data);
-		$this->load->view('layouts/admin_footer');
+		$data['content'] = $this->db->get('site_info')->result_array();
+		
+		$this->form_validation->set_rules('fb', 'Facebook', 'required|trim');
+		$this->form_validation->set_rules('tw', 'Twitter', 'required|trim');
+		$this->form_validation->set_rules('ig', 'Instagram', 'required|trim');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('about', 'About', 'required');
+
+		if($this->form_validation->run() == FALSE) {
+			$this->load->view('layouts/admin_header', $data);
+			$this->load->view('layouts/admin_sidebar', $data);
+			$this->load->view('layouts/admin_topbar', $data);
+			$this->load->view('admin/settings', $data);
+			$this->load->view('layouts/admin_footer');
+		} else {
+			$fb = $this->input->post('fb');
+			$tw = $this->input->post('tw');
+			$ig = $this->input->post('ig');
+			$email = $this->input->post('email');
+			$about = $this->input->post('about');
+	
+			$this->db->set('content', $fb);
+			$this->db->where('id', 2);
+			$this->db->update('site_info');
+
+			$this->db->set('content', $tw);
+			$this->db->where('id', 3);
+			$this->db->update('site_info');
+			
+			$this->db->set('content', $ig);
+			$this->db->where('id', 4);
+			$this->db->update('site_info');
+
+			$this->db->set('content', $email);
+			$this->db->where('id', 5);
+			$this->db->update('site_info');
+			
+			$this->db->set('content', $about);
+			$this->db->where('id', 1);
+			$this->db->update('site_info');
+
+			if($this->db->affected_rows()) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>update</strong> site info</div>');
+				redirect('admin/settings');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>update</strong> site info</div>');
+				redirect('admin/settings');
+			}
+		}
 	}
 
 	public function roles()

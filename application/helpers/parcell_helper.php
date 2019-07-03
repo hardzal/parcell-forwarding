@@ -34,7 +34,7 @@ function is_expired($user_item_id)
 			'stock' => $transaction['total'],
 			'status' => 1,
 			'created_at' => time(),
-			'deleted_at' => time() + 3600
+			'deleted_at' => time() + 600
 		];
 
 		$ci->db->insert('item_auctions', $auction);
@@ -99,13 +99,14 @@ function is_auction_expired($auction_id)
 		return '<a href="' . base_url('auction/view/') . $auction['id'] . '" class="badge badge-primary mr-2 viewAuction" data-toggle="modal" data-target="#modalAuction" data-id="' . $auction['id'] . '">view</a>';
 	} else {
 		$user_auction = $ci->db->get_where('user_auctions', ['auction_id' => $auction_id]);
-		if ($user_auction->num_rows() < 1) {
-			$ci->db->update('item_auctions', ['status' => 0], ['id' => $auction_id]);
-		} else {
+		if ($user_auction->num_rows() >= 1) {
 			$query = "UPDATE user_auctions SET status = 1 WHERE price = (SELECT MAX(price) FROM user_auctions WHERE auction_id = 1)";
 
 			$ci->db->query($query);
+		} else if ($user_auction->num_rows() < 1 || time() > $auction['deleted_at']) {
+			$ci->db->update('item_auctions', ['status' => 0], ['id' => $auction_id]);
 		}
+
 		return '<a href="#" class="badge badge-secondary mr-2">Expired</a>';
 	}
 }

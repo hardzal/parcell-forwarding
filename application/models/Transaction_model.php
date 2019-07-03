@@ -52,4 +52,16 @@ class Transaction_model extends CI_Model
 
 	public function searchTransaction($keyword)
 	{ }
+
+	public function getTotalCost() {
+		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1";
+
+		return $this->db->query($query)->row_array();
+	}
+
+	public function getTotalTransaction() {
+		$query = "SELECT COUNT(*) AS total_transaction FROM user_items WHERE status = 1";
+
+		return $this->db->query($query)->row_array();
+	}
 }

@@ -24,12 +24,12 @@ Servis
 Lelang
 
 - [x] Melelang barang yang tidak dibayar oleh user
-- [ ] Melisting pelelang
-- [ ] Mengirim barang hasil lelangan
+- [x] Melisting pelelang
+- [x] Mengirim barang hasil lelangan
 
 Fitur lainnya
 
-- [ ] CRUD Image Slider Home
+- [x] CRUD Post
 - [ ] CRUD About Us
 - [x] CRUD Item
 - [ ] CRUD User
@@ -40,4 +40,12 @@ password: 654321
 email: suryadijogja@gmail.com
 password: 987654321
 
-CRUD ITEM [DONE]
+Open noteeee malem ini harus selesai pagi kirim
+1.about us tentang perusahaan harus kelar
+1. Gambar nanti dikirim 
+3.report masukin logo sama alamat dan kontak perusahaan
+
+Email: ParcelForwading@gmail.com
+Website :parcell-forwading.com
+Customer service : 557830028
+

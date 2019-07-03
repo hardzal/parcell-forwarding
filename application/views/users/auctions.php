@@ -9,7 +9,7 @@
 						<?= form_error('image', '<div class="alert alert-danger">', '</div>'); ?>
 
 						<?= $this->session->flashdata('message'); ?>
-						<?php if (!isset($auctions) && empty($auctions)) : ?>
+						<?php if (sizeof($auctions) == 0) : ?>
 							<p>Empty auctions data</p>
 						<?php else : ?>
 							<table class="table table-hover">

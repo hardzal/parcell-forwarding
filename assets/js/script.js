@@ -147,9 +147,13 @@ $(function () {
 				$('.custom-file').remove();
 				$('.form-group').append(`<div class='status_item'><input type='checkbox' id='status' name='status' value='1'/>
 				<label for='status'>Has it been received??</label></div>`);
+				if (data.status == 1) {
+					$('#status').attr('checked', true);
+				}
 				console.log(data);
 			}
 		});
+		$('#status').attr('checked', false);
 	});
 
 	$('.progressTransaction').on('click', function (e) {
@@ -177,6 +181,7 @@ $(function () {
 				console.log(data);
 			}
 		});
+		$('h3.save').html('');
 	});
 
 	$('.viewAuction').on('click', function (e) {
@@ -297,5 +302,39 @@ $(function () {
 				console.log(data);
 			}
 		});
+	});
+
+	$('.editDataAuction').on('click', function (e) {
+		e.preventDefault();
+		const id = $(this).data('id');
+
+		$('.judulModalAuction').html("Update Auction");
+		$('.submitButton').html("Save changes");
+
+		$('.modal-content form').attr('action', base_url + 'auction/edit');
+
+		$.ajax({
+			url: base_url + 'auction/edit',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				// let deadline = new Date(data.deadline * 1000);
+				// let day = ("0" + deadline.getDate()).slice(-2);
+				// let month = ("0" + (deadline.getMonth() + 1)).slice(-2);
+				// let formatted_date = deadline.getFullYear() + "-" + (month) + "-" + (day);
+				$('#auction_id').val(id);
+				$('#item_id').val(data.item_id);
+				$('#status').val(data.status);
+				$('#item_name').val(data.item_name);
+				$('#price').val(data.price);
+				$('#stock').val(data.stock);
+				$('#id').val(data.id);
+				console.log(data);
+			}
+		});
+		$('#status').val('');
 	});
 });

@@ -127,6 +127,7 @@ class Auction extends CI_Controller
 			];
 			$item = $this->db->get_where('items', ['id' => $item_id])->row_array();
 			if ($this->item->insertUserItem($user_item)) {
+				$this->db->delete('user_auctions', ['auction_id' => $id]);
 				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item. click <a href="' . base_url('service/report') . '"><i class="fas fa-fw external-link-alt">here</i></a> to detail</div>');
 				$category = $this->item->getItemCategory($item['category_id']);
 				$user = $this->user->getUserDetail($this->session->userdata('user_id'));
@@ -152,5 +153,44 @@ class Auction extends CI_Controller
 				redirect('user/auctions');
 			}
 		}
+	}
+
+	public function edit()
+	{
+		$this->form_validation->set_rules('price', 'Item Price', 'required|numeric');
+		$this->form_validation->set_rules('stock', 'Item Stock', 'required|numeric');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode($this->auction->getAuction($this->input->post('id')));
+		} else {
+			$auction = $this->auction->getAuction($this->input->post('auction_id'));
+			if ($auction['status'] == 1) {
+				$deadline = time() + 600;
+			} else {
+				$deadline = $auction['deadline'];
+			}
+			$data = [
+				'item_id' => $this->input->post('item_id'),
+				'price' => $this->input->post('price'),
+				'stock' => $this->input->post('stock'),
+				'status' => $this->input->post('status'),
+				'deleted_at' => $deadline
+			];
+			$id = $this->input->post('auction_id');
+			if ($this->auction->updateAuction($data, ['id' => $id])) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>updating</strong> item</div>');
+				redirect('admin/auctions');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>updating</strong> item</div>');
+				redirect('admin/auctions');
+			}
+		}
+	}
+
+	public function delete($id)
+	{
+		$this->auction->deleteAuction($id);
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>deleting</strong> item</div>');
+		redirect('admin/auctions');
 	}
 }

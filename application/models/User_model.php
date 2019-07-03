@@ -113,7 +113,28 @@ class User_model extends CI_Model
 			FROM user_auctions 
 				JOIN item_auctions ON user_auctions.auction_id = item_auctions.id 
 				JOIN items ON items.id = item_auctions.item_id 
-			WHERE user_auctions.auction_id = ". $auction_id. " AND user_auctions.status = 1";
+			WHERE user_auctions.auction_id = " . $auction_id . " AND user_auctions.status = 1";
+
+		return $this->db->query($query)->row_array();
+	}
+
+	public function getTotalTransaction($user_id)
+	{
+		$query = "SELECT COUNT(*) AS total_transaction FROM user_items WHERE status = 1 AND user_id = $user_id";
+
+		return $this->db->query($query)->row_array();
+	}
+
+	public function getTotalCost($user_id)
+	{
+		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1 AND user_id = $user_id";
+
+		return $this->db->query($query)->row_array();
+	}
+
+	public function getTotalUser()
+	{
+		$query = "SELECT COUNT(*) AS total_user FROM users WHERE role_id = 2";
 
 		return $this->db->query($query)->row_array();
 	}

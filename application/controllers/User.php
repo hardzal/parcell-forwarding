@@ -172,6 +172,8 @@ class User extends CI_Controller
 		$data['title'] = "My Transactions";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$data['transactions'] = $this->user->getUserTransactions($this->session->userdata('user_id'));
+		$data['total_transactions'] = $this->user->getTotalTransaction($this->session->userdata('user_id'));
+		$data['total_cost'] = $this->user->getTotalCost($this->session->userdata('user_id'));
 
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar');

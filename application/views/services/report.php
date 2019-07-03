@@ -24,20 +24,51 @@
 			text-align: left;
 		}
 
-		.title {
+		.header {
+			overflow: hidden;
+		}
+
+		div.title {
+			overflow: hidden;
+			text-align: center;
+		}
+
+		h1.title {
 			margin-bottom: 3px;
 		}
 
 		.deadline {
 			font-size: 20px;
 		}
+
+		.logo {
+			width: 10%;
+			margin: 5px;
+			float: left;
+			text-align: left;
+		}
+
+		img {
+			width: 100%;
+		}
+
+		.footnote {
+			text-align: center;
+		}
 	</style>
 </head>
 
 <body>
-	<h1 class='title'>Parcell-Forwarding</h1>
-	<p>Created at <em><?= date('H:i:s d F Y', $item['created_at']); ?></em></p>
-	<hr />
+	<div class='header'>
+		<div class='logo'>
+			<img src='<?=base_url();?>/assets/img/logo-nobg.png' alt='logo' title='logo' />
+		</div>
+		<div class='title'>
+			<h1 class='title'>Parcell-Forwarding</h1>
+			<p>Email: ParcelForwading@gmail.com - Customer service : 557830028<br/>
+			Website :parcell-forwading.com</p>
+		</div>
+		<hr />
 	<table width="100%">
 		<tr>
 			<th>Item Code</th>
@@ -85,7 +116,7 @@
 		</tr>
 	</table>
 
-	<div>
+	<div class='footnote'>
 		<p>Transfer via Rekening<br />
 			Bank BCA a/n Parcell-Forwarding 12301-3021-2013<br />
 			Bank BRI a/n Parcell-Forwarding 12401-3421-2213<br />
@@ -93,6 +124,7 @@
 		</p>
 		<p class='deadline'><strong>Deadline Transfer : <?= date('H:i:s d F Y', $item['deadline_at']); ?></strong></p>
 		<p>Don't forget to send picture proof to our system :)</p>
+		<small>Created at <em><?= date('H:i:s d F Y', $item['created_at']); ?></em></small>
 	</div>
 </body>
 
