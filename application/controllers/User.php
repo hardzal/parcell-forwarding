@@ -11,6 +11,7 @@ class User extends CI_Controller
 		$this->load->model('User_model', 'user');
 		$this->load->model('Item_model', 'item');
 		$this->load->model('Transaction_model', 'transaction');
+		$this->load->model('Auction_model', 'auction');
 	}
 
 	public function index()
@@ -176,6 +177,21 @@ class User extends CI_Controller
 		$this->load->view('layouts/admin_sidebar');
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('users/transactions', $data);
+		$this->load->view('layouts/admin_footer');
+	}
+
+	public function auctions()
+	{
+		$data['title'] = "My Auctions";
+		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
+		$data['auctions'] = $this->auction->getUserAuctions($this->session->userdata('user_id'));
+		$data['states'] = $this->db->get('countries')->result_array();
+		$data['deliveries'] = $this->db->get('deliveries')->result_array();
+
+		$this->load->view('layouts/admin_header', $data);
+		$this->load->view('layouts/admin_sidebar');
+		$this->load->view('layouts/admin_topbar', $data);
+		$this->load->view('users/auctions', $data);
 		$this->load->view('layouts/admin_footer');
 	}
 }

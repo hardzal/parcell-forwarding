@@ -9,7 +9,7 @@
 			<form method="POST" action="<?= base_url('service'); ?>" id="item-input" class="needs-validation">
 				<div class="mb-3">
 					<label for="email">Email</label>
-					<input type="email" class="form-control" value="<?= $user['email']; ?>" name="email" id="email" readonly />
+					<input type="email" class="form-control" value="<?= $this->session->userdata('email'); ?>" name="email" id="email" readonly />
 				</div>
 
 				<div class="mb-3">
@@ -152,13 +152,13 @@
 									</li>
 									<li class="list-group-item d-flex justify-content-between lh-condensed mb-3">
 										<div>
-											<h6 class="my-0">Biaya Pajak</h6>
+											<h6 class="my-0">Tax Cost</h6>
 										</div>
 										<span class="text-muted item-tax">Rp 0</span>
 									</li>
 									<li class="list-group-item d-flex justify-content-between lh-condensed mb-3">
 										<div>
-											<h6 class="my-0">Biaya Ongkir</h6>
+											<h6 class="my-0">Delivery Fee</h6>
 										</div>
 										<span class="text-muted item-delivery">Rp 0</span>
 									</li>
@@ -182,6 +182,7 @@
 
 
 </div>
+<?php $deliveries = json_encode($this->db->get('deliveries')->result_array()); ?>
 
 <script>
 	// Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -205,8 +206,5 @@
 		}, false);
 	})();
 
-	<?php
-	$deliveries = json_encode($this->db->get('deliveries')->result_array());
-	?>
 	let deliveries = <?php echo $deliveries; ?>;
 </script>

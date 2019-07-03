@@ -63,6 +63,12 @@
 			</a>
 		</li>
 		<li class="nav-item">
+			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/auctions">
+				<i class="fas fa-fw fa-dolly"></i>
+				<span>My Auctions</span>
+			</a>
+		</li>
+		<li class="nav-item">
 			<a class="nav-link pb-0 pt-2" href="<?= base_url(); ?>user/transactions">
 				<i class="fas fa-fw fa-history"></i>
 				<span>My Transactions</span>

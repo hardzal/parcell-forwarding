@@ -58,7 +58,7 @@ class Item extends CI_Controller
 
 	public function verify()
 	{
-		$this->form_validation->set_rules('image', 'Image', 'trim');
+		// $this->form_validation->set_rules('image', 'Image', 'trim');
 		$this->form_validation->set_rules('user_item_id', 'User Items Id', 'required');
 
 		if ($this->form_validation->run() == FALSE) {

@@ -14,6 +14,7 @@ class Auction extends CI_Controller
 	{
 		$data['title'] = "Auction list";
 		$data['auctions'] = $this->auction->getAuctions();
+
 		$this->load->view('layouts/header', $data);
 		$this->load->view('auction/index', $data);
 		$this->load->view('layouts/footer');
@@ -43,6 +44,107 @@ class Auction extends CI_Controller
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed binding auction.</div>');
 				redirect('auction');
+			}
+		}
+	}
+
+	public function confirm()
+	{
+		$this->form_validation->set_rules('address_to', 'Address to', 'required|trim');
+		$this->form_validation->set_rules('country', 'Country', 'required|trim');
+		$this->form_validation->set_rules('city', 'City', 'required|trim');
+		$this->form_validation->set_rules('zip', 'Zip', 'required|trim|numeric');
+		$this->form_validation->set_rules('delivery', 'Delivery', 'required');
+		$this->form_validation->set_rules('weight', 'Weight', 'required|numeric|trim');
+		$this->form_validation->set_rules('description', 'Description', 'trim');
+
+		if ($this->form_validation->run() == FALSE) {
+			echo json_encode($this->user->getUserAuction($this->input->post('id')));
+		} else {
+			$address_to = $this->input->post('address_to');
+			$country = $this->input->post('country');
+			$city = $this->input->post('city');
+			$zip = $this->input->post('zip');
+			$delivery = $this->input->post('delivery');
+			$weight = $this->input->post('weight');
+			$description = $this->input->post('decsription');
+
+			$item_id = $this->input->post('item_id');
+			$user_id = $this->input->post('user_id');
+			$price = $this->input->post('price');
+			$stock = $this->input->post('stock');
+			$item_code = substr(base64_encode(random_bytes(8)), 0, 6);
+
+			$delivery = $this->db->get_where('deliveries', ['id' => $delivery])->row_array();
+			$cost_delivery = 0;
+
+			// bea masuk 7,5%
+			$bea_masuk = $price * 0.075;
+			// ppn 10%
+			$ppn = $price * 0.1;
+			// pph 10%
+			$pph = $price * 0.1;
+
+			$tax = $bea_masuk + $ppn + $pph;
+
+			if ($country == 3) {
+				$cost = $price;
+				$tax = 0;
+			} else {
+				$cost = $price + $tax;
+			}
+
+			if ($weight <= 1) {
+				$cost_delivery += $delivery['cost_weight'];
+			} else {
+				$cost_delivery += ($weight * $delivery['cost_weight']);
+			}
+
+			$cost = $cost + $cost_delivery;
+			$cost = $cost * $stock;
+
+			$user_item = [
+				'user_id' => $user_id,
+				'item_id' => $item_id,
+				'delivery_id' => $delivery,
+				'item_code' => $item_code,
+				'total' => $stock,
+				'cost' => $cost,
+				'address_to' => $address_to,
+				'address_from' => 'PF Placemant',
+				'country_id' => $country,
+				'city' => $city,
+				'postcode' => $zip,
+				'description' => $description,
+				'status' => 0,
+				'created_at' => time(),
+				'deleted_at' => time() + 3600
+			];
+			$item = $this->db->get_where('items', ['id' => $item_id])->row_array();
+			if ($this->item->insertUserItem($user_item)) {
+				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item. click <a href="' . base_url('service/report') . '"><i class="fas fa-fw external-link-alt">here</i></a> to detail</div>');
+				$category = $this->item->getItemCategory($item['category_id']);
+				$user = $this->user->getUserDetail($this->session->userdata('user_id'));
+				$this->session->set_userdata('report', [
+					'item_code' => $item_code,
+					'item_name' => $item['name'],
+					'item_category' => $category['name'],
+					'email' => $this->session->userdata('email'),
+					'name' => $user['name'],
+					'phone_number' => $user['phone_number'],
+					'address' => $address_to,
+					'item_price' => $price,
+					'delivery_cost' => $cost_delivery,
+					'tax_cost' => $tax,
+					'total_cost' => $cost,
+					'created_at' => time(),
+					'deadline_at' => time() + 600
+				]);
+
+				redirect('user/auctions');
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Error when inserting data</div>');
+				redirect('user/auctions');
 			}
 		}
 	}

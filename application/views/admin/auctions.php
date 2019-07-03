@@ -9,8 +9,6 @@
 
 						<?= $this->session->flashdata('message'); ?>
 
-						<a href="" class=" btn btn-primary mb-3 tambahDataItem" data-toggle="modal" data-target="#modalItem">Add New Item</a>
-
 						<?php if (!isset($auctions) && empty($auctions)) : ?>
 							<p>Empty Auctions List</p>
 						<?php else : ?>

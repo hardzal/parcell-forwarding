@@ -58,7 +58,7 @@
 								<select name="state" id="inputState" class="form-control">
 									<option selected>Choose...</option>
 									<?php foreach ($states as $state) : ?>
-										<option value="<?= $state; ?>"><?= $state; ?></option>
+										<option value="<?= $state['name']; ?>"><?= $state['name']; ?></option>
 									<?php endforeach; ?>
 									<?= form_error('state', '<small class="text-danger pl-3">', '</small>'); ?>
 								</select>

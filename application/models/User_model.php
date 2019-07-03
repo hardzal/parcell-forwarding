@@ -68,7 +68,20 @@ class User_model extends CI_Model
 	}
 
 	public function getUserTransactions($user_id)
-	{ }
+	{
+		$query = "SELECT items.id AS id_item, 
+						items.name AS item_name, 
+						user_items.id AS user_item_id, 
+						user_items.cost, 
+						user_items.item_code,
+						user_items.total 
+			FROM user_items
+		JOIN items 
+			ON user_items.item_id = items.id
+		 WHERE user_items.user_id = $user_id AND user_items.status = 1";
+
+		return $this->db->query($query)->result_array();
+	}
 
 	public function getUserTransaction($user_item_id)
 	{
@@ -88,6 +101,13 @@ class User_model extends CI_Model
 		$this->db->where('auction_id', $auction_id);
 
 		return $this->db->get()->result_array();
+	}
+
+	public function getUserAuction($auction_id)
+	{
+		$query = "SELECT item_auctions.item_id, user_auctions.user_id, user_auctions.price, item_auctions.stock FROM user_auctions JOIN item_auctions ON user_auctions.auction_id = item_auctions.id JOIN items ON items.id = item_auctions.item_id WHERE user_auctions.auction_id = $auction_id AND user_auctions.status = 1";
+
+		return $this->db->query($query)->row_array();
 	}
 
 	public function insertUserAuction($data)

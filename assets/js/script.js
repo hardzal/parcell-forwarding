@@ -90,7 +90,7 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('#user_item_id').val(data.user_item_id);
+				$('#user_item_id').val(data.id);
 				console.log(data);
 			}
 		});
@@ -172,7 +172,7 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('#user_item_id').val(data.user);
+				$('#user_item_id').val(data.id);
 				$('.form-group').append("<h3 class='save'>Terverifikasi</h3>");
 				console.log(data);
 			}
@@ -198,7 +198,6 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				let auction_id;
 				let size = 0;
 				let auction = `<div class="form-group">
 				<table class="table table-bordered">
@@ -213,7 +212,7 @@ $(function () {
 
 				$.each(data, function (i, item) {
 					auction += `<tr>
-						<th scope="row">${i+1}</th>
+						<th scope="row">${i + 1}</th>
 						<td>${item.name}</td>
 						<td>${item.price}</td>
 					  </tr>`;
@@ -244,5 +243,33 @@ $(function () {
 			}
 		});
 		$('.modal-body strong').html('');
+	});
+
+	$('.confirmAuction').on('click', function (e) {
+		$('#judulModalAuction').html("Confirm Auction");
+		$('.submitButton').html("Confirm");
+
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		$('.modal-content form').attr('action', base_url + 'auction/confirm');
+
+		$.ajax({
+			url: base_url + 'auction/confirm',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('#item_id').val(data.item_id);
+				$('#user_id').val(data.user_id);
+				$('#price').val(data.price);
+				$('#stock').val(data.stock);
+
+				console.log(data);
+			}
+		});
 	});
 });

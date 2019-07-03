@@ -60,6 +60,7 @@ class Service extends CI_Controller
 				'name' 			=> $item_name,
 				'price' 		=> $item_price,
 				'stock'			=> $item_total,
+				'weight' 		=> $weight,
 				'is_broken'		=> $broken,
 				'created_at'	=> time(),
 				'deleted_at'	=> 0

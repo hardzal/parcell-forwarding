@@ -21,7 +21,8 @@
 						<td><?= number_format($auction['price']); ?></td>
 						<td><?= Date('H:i:s - d F Y', $auction['deadline']); ?></td>
 						<td>
-							<a href=" <?= base_url('auction/view/') . $auction['id']; ?>" class="badge badge-primary mr-2 viewAuction" data-toggle="modal" data-target="#modalAuction" data-id="<?= $auction['id']; ?>">view</a></td>
+							<?= is_auction_expired($auction['id']); ?>
+						</td>
 						<?php $no = $no + 1; ?>
 					</tr>
 				<?php endforeach; ?>

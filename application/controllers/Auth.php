@@ -249,7 +249,7 @@ class Auth extends CI_Controller
 				'avatar' => $new_image,
 				'address' => $address,
 				'city' => $city,
-				'state' => $state,
+				'country_id' => $state,
 				'postcode' => $postcode
 			];
 
