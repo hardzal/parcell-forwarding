@@ -18,6 +18,7 @@
 										<th scope="col">id</th>
 										<th scope="col">Item Name</th>
 										<th scope="col">Price</th>
+										<th scope="col">Deadline</th>
 										<th scope="col">Status</th>
 										<th scope="col">Action</th>
 									</tr>
@@ -30,9 +31,10 @@
 											<th scope="row"><?= $no; ?></th>
 											<td><?= $auction['name']; ?></td>
 											<td><?= number_format($auction['price']); ?></td>
-											<td><?= status_auction($auction['id']); ?></td>
+											<td><?= date('H:i:s - d F y', $auction['deadline']);?></td>
+											<td><?= status_auction($auction['auction_id']); ?></td>
 											<td>
-												<?= is_user_auction($auction['id']); ?>
+												<?= is_user_auction($auction['auction_id']); ?>
 											</td>
 										</tr>
 										<?php
@@ -127,6 +129,7 @@
 									</div>
 								</div>
 
+								<input type="hidden" name="auction_id" id="auction_id" />
 								<input type="hidden" name="item_id" id="item_id" />
 								<input type="hidden" name="user_id" id="user_id" />
 								<input type="hidden" name="price" id="price" />

@@ -18,6 +18,7 @@
 									<th scope="col">Item Code</th>
 									<th scope="col">Cost</th>
 									<th scope="col">Total</th>
+									<th scope='col'>Deadline</th>
 									<th scope="col">Status</th>
 									<th scope="col">Action</th>
 								</tr>
@@ -32,6 +33,7 @@
 										<td><?= $item['item_code']; ?></td>
 										<td><?= number_format($item['cost']); ?></td>
 										<td><?= $item['total']; ?></td>
+										<td><?= date('H:i:s - d F y', $item['deadline']);?></td>
 										<td><?= status_item($item['user_item_id'], $this->session->userdata('role_id')); ?></td>
 										<td>
 											<?= is_verified($item['user_item_id']); ?>

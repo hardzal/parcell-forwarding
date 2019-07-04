@@ -99,7 +99,6 @@ $(function () {
 	$('.confirmationTransaction').on('click', function (e) {
 		$('#judulModalTransaction').html("Confirmation Item Transaction");
 		$('.submitButton').html("Confirm It");
-		$('.img-thumbnail').removeAttr('src');
 		const id = $(this).data('id');
 
 		e.preventDefault();
@@ -122,6 +121,58 @@ $(function () {
 				console.log(data);
 			}
 		});
+		$('img-thumbnail').attr('src', '');
+	});
+
+	$('.waitingTransaction').on('click', function (e) {
+		$('#judulModalTransaction').html("Waiting Item Transaction");
+		$('.submitButton').html("Ok");
+		
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		// $('.modal-content form').attr('action', base_url + 'transaction/confirm');
+
+		$.ajax({
+			url: base_url + 'transaction/wait',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('.modal-body').append(`<h3>Waiting user send verification</h3>`);
+				console.log(data);
+			}
+		});
+		$('.modal-body h3').remove();
+		$('.img-thumbnail').remove();
+	});
+
+	$('.waitingAuction').on('click', function (e) {
+		$('#judulModalAuction').html("Waiting Item Auction");
+		$('.submitButton').html("Ok");
+		
+		const id = $(this).data('id');
+
+		e.preventDefault();
+
+		// $('.modal-content form').attr('action', base_url + 'transaction/confirm');
+
+		$.ajax({
+			url: base_url + 'auction/wait',
+			data: {
+				id: id
+			},
+			method: 'POST',
+			dataType: 'json',
+			success: function (data) {
+				$('.modal-body').append(`<h3>Waiting user send verification</h3>`);
+				console.log(data);
+			}
+		});
+		$('.modal-body h3').remove();
 	});
 
 	$('.progressDataItem').on('click', function (e) {
@@ -268,6 +319,7 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
+				$('#auction_id').val(id);
 				$('#item_id').val(data.item_id);
 				$('#user_id').val(data.user_id);
 				$('#price').val(data.price);

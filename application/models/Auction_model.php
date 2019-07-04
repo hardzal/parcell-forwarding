@@ -51,9 +51,11 @@ class Auction_model extends CI_Model
 	public function getUserAuctions($user_id)
 	{
 		$query = "SELECT user_auctions.id,
+					user_auctions.auction_id,
 					items.name, 
 					user_auctions.price,
-					user_auctions.status
+					user_auctions.status,
+					item_auctions.deleted_at AS deadline
 				FROM user_auctions
 					JOIN item_auctions ON user_auctions.auction_id = item_auctions.id
 					JOIN items ON item_auctions.item_id = items.id

@@ -58,11 +58,13 @@ class User_model extends CI_Model
 						user_items.id AS user_item_id, 
 						user_items.cost, 
 						user_items.item_code,
-						user_items.total 
+						user_items.total,
+						user_items.deleted_at AS deadline
 			FROM user_items
 		JOIN items 
 			ON user_items.item_id = items.id
-		 WHERE user_items.user_id = $user_id";
+		 WHERE user_items.user_id = $user_id
+		 ORDER BY user_items.status ASC";
 
 		return $this->db->query($query)->result_array();
 	}

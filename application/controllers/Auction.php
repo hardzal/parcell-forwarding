@@ -126,6 +126,7 @@ class Auction extends CI_Controller
 				'deleted_at' => time() + 3600
 			];
 			$item = $this->db->get_where('items', ['id' => $item_id])->row_array();
+			$id = $this->input->post('auction_id');
 			if ($this->item->insertUserItem($user_item)) {
 				$this->db->delete('user_auctions', ['auction_id' => $id]);
 				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful requesting item. click <a href="' . base_url('service/report') . '"><i class="fas fa-fw external-link-alt">here</i></a> to detail</div>');
@@ -164,7 +165,7 @@ class Auction extends CI_Controller
 			echo json_encode($this->auction->getAuction($this->input->post('id')));
 		} else {
 			$auction = $this->auction->getAuction($this->input->post('auction_id'));
-			if ($auction['status'] == 1) {
+			if ($this->input->post('status') == 1) {
 				$deadline = time() + 600;
 			} else {
 				$deadline = $auction['deadline'];

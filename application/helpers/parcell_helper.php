@@ -100,10 +100,12 @@ function is_auction_expired($auction_id)
 	} else {
 		$user_auction = $ci->db->get_where('user_auctions', ['auction_id' => $auction_id]);
 		if ($user_auction->num_rows() >= 1) {
-			$query = "UPDATE user_auctions SET status = 1 WHERE price = (SELECT MAX(price) FROM user_auctions WHERE auction_id = 1)";
-
+			$query = "UPDATE user_auctions SET status = 1 WHERE price = (SELECT MAX(price) FROM user_auctions WHERE auction_id = $auction_id)";
 			$ci->db->query($query);
-		} else if ($user_auction->num_rows() < 1 || time() > $auction['deleted_at']) {
+
+			$query = "DELETE FROM user_auctions WHERE auction_id = $auction_id AND status = 0";
+			$ci->db->query($query);
+		} else if ($user_auction->num_rows() < 1 || time()+30 > $auction['deleted_at']) {
 			$ci->db->update('item_auctions', ['status' => 0], ['id' => $auction_id]);
 		}
 
@@ -116,12 +118,11 @@ function is_user_auction($auction_id)
 	$ci = &get_instance();
 
 	$auction = $ci->db->get_where('user_auctions', ['auction_id' => $auction_id])->row_array();
-
+	
 	if ($auction['status'] == 1) {
-		return '<a href="' . base_url('auction/confirm/') . $auction['id'] . '" class="badge badge-primary mr-2 confirmAuction" data-toggle="modal" data-target="#modalAuction" data-id="' . $auction['id'] . '">Detail</a>';
-	} else {
-		return '<a href="#" class="badge badge-info" class="badge badge-secondary mr-2 ">Waiting</a>';
+		return '<a href="' . base_url('auction/confirm/') . $auction['auction_id'] . '" class="badge badge-primary mr-2 confirmAuction" data-toggle="modal" data-target="#modalAuction" data-id="' . $auction['auction_id'] . '">Detail</a>';
 	}
+	return '<a href="' . base_url('auction/wait/') . $auction['auction_id'] . '" class="badge badge-info" class="badge badge-secondary mr-2 waitingAuction"  data-toggle="modal" data-target="#modalAuction" data-id="' . $auction['auction_id'] . '">Waiting</a>';
 }
 
 function status_item($user_item_id, $role_id)

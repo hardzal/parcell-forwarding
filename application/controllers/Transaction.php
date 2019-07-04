@@ -38,8 +38,12 @@ class Transaction extends CI_Controller
 		}
 	}
 
-	public function delete()
-	{ }
+	public function delete($id)
+	{
+		$this->db->delete('user_items', ['id' => $id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-success">Successful deleting item</div>');
+		redirect('admin/transactions');
+	 }
 
 	public function save()
 	{
