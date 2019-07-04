@@ -8,12 +8,23 @@ class Item_model extends CI_Model
 		return $this->db->get_where('items', ['id' => $id])->row_array();
 	}
 
-	public function getItems()
+	public function getItems($limit, $offset, $keyword = null)
 	{
 		$this->db->select('items.id AS item_id, items.name AS item_name, item_categories.id AS category_id, item_categories.name AS category_name, items.price AS price, items.stock AS stock');
 		$this->db->from('items');
 		$this->db->join('item_categories', 'items.category_id = item_categories.id');
+		$this->db->offset($offset);
+		$this->db->limit($limit);
+		if ($keyword) {
+			$this->db->like('items.name', $keyword);
+			$this->db->or_like('item_categories.name', $keyword);
+		}
 		return $this->db->get()->result_array();
+	}
+
+	public function getTotalItems()
+	{
+		return $this->db->get('items')->num_rows();
 	}
 
 	public function getUserItems($id)

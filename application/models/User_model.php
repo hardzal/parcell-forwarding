@@ -51,7 +51,7 @@ class User_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function getUserItems($user_id)
+	public function getUserItems($user_id, $limit, $offset = 0, $keyword = null)
 	{
 		$query = "SELECT items.id AS id_item, 
 						items.name AS item_name, 
@@ -63,8 +63,10 @@ class User_model extends CI_Model
 			FROM user_items
 		JOIN items 
 			ON user_items.item_id = items.id
-		 WHERE user_items.user_id = $user_id
-		 ORDER BY user_items.status ASC";
+		 WHERE user_items.user_id = $user_id AND
+		 		items.name LIKE '%$keyword%' OR user_items.item_code LIKE '%$keyword%'
+		 ORDER BY user_items.status ASC
+		 LIMIT $offset, $limit";
 
 		return $this->db->query($query)->result_array();
 	}

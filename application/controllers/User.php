@@ -156,9 +156,32 @@ class User extends CI_Controller
 
 	public function items()
 	{
+		if ($this->input->post('search')) {
+			$data['keyword'] = $this->input->post('keyword');
+			// $this->session->set_userdata('keyword', $data['keyword']);
+		} else {
+			$data['keyword'] = null;
+		}
+
+		$this->db->like('items.name', $data['keyword']);
+		$this->db->or_like('user_items.item_code', $data['keyword']);
+		$this->db->from('items');
+		$this->db->join('user_items', 'items.id = user_items.item_id');
+
+		// config
+		$config['base_url'] = 'http://localhost/parcell-forwarding/user/items';
+		$config['total_rows'] = $this->db->count_all_results();
+		$data['result_total_rows'] = $config['total_rows'];
+		$config['per_page'] = 10;
+		// batas kanan kiri paginasi
+		// $config['num_link'] = 3 
+
+		// initialize
+		$this->pagination->initialize($config);
 		$data['title'] = "My Item list";
+		$data['start'] = $this->uri->segment(3) != null ? $this->uri->segment(3) : 0;
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
-		$data['items'] = $this->user->getUserItems($this->session->userdata('user_id'));
+		$data['items'] = $this->user->getUserItems($this->session->userdata('user_id'), $config['per_page'], $data['start'], $data['keyword']);
 
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar');

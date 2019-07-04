@@ -9,13 +9,34 @@
 						<?= form_error('menu', '<div class="alert alert-danger">', '</div>'); ?>
 
 						<?= $this->session->flashdata('message'); ?>
+						<div class='row'>
+							<div class='col-md-6'>
+								<form method="POST" action="<?= base_url('admin/transactions'); ?>">
+									<div class="input-group mb-3">
+										<input type="text" name="keyword" class="form-control" placeholder="Search keyword..." autocomplete="off" autofocus>
+										<div class="input-group-append">
+											<input class="btn btn-primary" type="submit" name="search" id="search" value="Search" />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 
+						<?php if (empty($transactions)) : ?>
+							<div class='alert alert-danger'>
+								Data not found!
+							</div>
+						<?php endif; ?>
+						<?php if ($this->input->post('search') && !empty($transactions)) : ?>
+							<p>Result : <?= $result_total_rows; ?></p>
+						<?php endif; ?>
 						<table class="table table-hover">
 							<thead>
 								<tr>
 									<th scope="col">id</th>
 									<th scope="col">Email</th>
 									<th scope="col">Item Name</th>
+									<th scope='col'>Item Code</th>
 									<th scope="col">Cost</th>
 									<th scope="col">Status</th>
 									<th scope="col">Action</th>
@@ -29,6 +50,7 @@
 										<th scope="row"><?= $no; ?></th>
 										<td scope="row"><?= $transaction['email']; ?></td>
 										<td scope="row"><?= $transaction['item_name']; ?></td>
+										<td scope="row"><?= $transaction['item_code']; ?></td>
 										<td scope="row"><?= '$ ' . number_format($transaction['cost']); ?></td>
 										<td scope="row"><?= status_item($transaction['id'], $this->session->userdata('role_id')); ?></td>
 										<td scope="row">
@@ -39,6 +61,8 @@
 										endforeach; ?>
 							</tbody>
 						</table>
+						<p><a href='<?= base_url() . 'transactions/report'; ?>'>Export</a></p>
+						<?= $this->pagination->create_links(); ?>
 					</div>
 				</div>
 			</div> <!-- /.container-fluid -->

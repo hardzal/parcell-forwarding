@@ -9,6 +9,28 @@
 
 						<?= $this->session->flashdata('message'); ?>
 
+						<div class='row'>
+							<div class='col-md-6'>
+								<form method="POST" action="<?= base_url('admin/auctions'); ?>">
+									<div class="input-group mb-3">
+										<input type="text" name="keyword" class="form-control" placeholder="Search keyword..." autocomplete="off" autofocus>
+										<div class="input-group-append">
+											<input class="btn btn-primary" type="submit" name="search" id="search" value="Search" />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+						<?php if (empty($auctions)) : ?>
+							<div class='alert alert-danger'>
+								Data not found!
+							</div>
+						<?php endif; ?>
+						<?php if ($this->input->post('search') && !empty($auctions)) : ?>
+							<p>Result : <?= $result_total_rows; ?></p>
+						<?php endif; ?>
+
 						<?php if (!isset($auctions) && empty($auctions)) : ?>
 							<p>Empty Auctions List</p>
 						<?php else : ?>
@@ -26,7 +48,7 @@
 								<tbody>
 									<?php foreach ($auctions as $auction) : ?>
 										<tr>
-											<th scope="row"><?= $auction['id']; ?></th>
+											<th scope="row"><?= ++$start; ?></th>
 											<td><?= $auction['item_name']; ?></td>
 											<td>$ <?= number_format($auction['price']); ?></td>
 											<td><?= Date('H:i:s d F y', $auction['deadline']); ?></td>
@@ -38,6 +60,7 @@
 								</tbody>
 							</table>
 						<?php endif; ?>
+						<?= $this->pagination->create_links(); ?>
 					</div>
 				</div>
 			</div> <!-- /.container-fluid -->

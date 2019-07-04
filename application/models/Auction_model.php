@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auction_model extends CI_Model
 {
-	public function getAuctions()
+	public function getAuctions($limit, $offset = 0, $keyword = null)
 	{
 		$query = "SELECT item_auctions.id, 
 				items.name AS item_name, 
@@ -12,7 +12,9 @@ class Auction_model extends CI_Model
 				item_auctions.deleted_at AS deadline
 			FROM item_auctions
 			LEFT JOIN items ON item_auctions.item_id = items.id
-			ORDER BY item_auctions.status DESC";
+			WHERE items.name LIKE '%$keyword%' 
+			ORDER BY item_auctions.status DESC
+			LIMIT $offset, $limit";
 
 		return $this->db->query($query)->result_array();
 	}

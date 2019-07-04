@@ -43,7 +43,7 @@ class Transaction extends CI_Controller
 		$this->db->delete('user_items', ['id' => $id]);
 		$this->session->set_flashdata('message', '<div class="alert alert-success">Successful deleting item</div>');
 		redirect('admin/transactions');
-	 }
+	}
 
 	public function save()
 	{
@@ -53,6 +53,21 @@ class Transaction extends CI_Controller
 			echo json_encode($this->item->getUserItems($this->input->post('id')));
 		} else {
 			$user_item_id = $this->input->post('user_item_id');
+		}
+	}
+
+	public function report()
+	{
+		if ($this->session->userdata('report')) {
+			$data['title'] = "Item Report";
+			$data['item'] = $this->session->userdata('report');
+			$pdf = new Mpdf();
+			$html = $this->load->view('services/report', $data, true);
+			$pdf->WriteHTML($html);
+			$pdf->output($data['item']['item_code'] . '_report.pdf', 'I');
+			$this->session->unset_userdata('report');
+		} else {
+			redirect('service');
 		}
 	}
 }

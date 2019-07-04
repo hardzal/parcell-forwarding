@@ -3,11 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Transaction_model extends CI_Model
 {
-	public function getItemTransactions()
+	public function getItemTransactions($limit, $offset, $keyword = 0)
 	{
 		$query = "SELECT user_items.id,  
 					users.email AS email,
-					items.name AS item_name, 
+					items.name AS item_name,
+					user_items.item_code, 
 					item_categories.name AS category_name,
 					user_items.cost
 				FROM user_items 
@@ -21,8 +22,10 @@ class Transaction_model extends CI_Model
 						ON items.category_id = item_categories.id
 					LEFT JOIN user_transactions
 						ON user_items.id = user_transactions.user_item_id
+				WHERE items.name LIKE '%$keyword%' OR user_items.item_code LIKE '%$keyword%'
 				ORDER BY user_transactions.user_item_id IS NULL, 
-					user_items.created_at DESC";
+					user_items.created_at DESC
+				LIMIT $offset, $limit";
 
 		return $this->db->query($query)->result_array();
 	}
@@ -53,13 +56,15 @@ class Transaction_model extends CI_Model
 	public function searchTransaction($keyword)
 	{ }
 
-	public function getTotalCost() {
+	public function getTotalCost()
+	{
 		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1";
 
 		return $this->db->query($query)->row_array();
 	}
 
-	public function getTotalTransaction() {
+	public function getTotalTransaction()
+	{
 		$query = "SELECT COUNT(*) AS total_transaction FROM user_items WHERE status = 1";
 
 		return $this->db->query($query)->row_array();

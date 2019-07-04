@@ -8,12 +8,32 @@
 					<div class="col-lg">
 
 						<?= $this->session->flashdata('message'); ?>
+						<div class='row'>
+							<div class='col-md-6'>
+								<form method="POST" action="<?= base_url('admin/items'); ?>">
+									<div class="input-group mb-3">
+										<input type="text" name="keyword" class="form-control" placeholder="Search keyword..." autocomplete="off" autofocus>
+										<div class="input-group-append">
+											<input class="btn btn-primary" type="submit" name="search" id="search" value="Search" />
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 
 						<a href="" class=" btn btn-primary mb-3 tambahDataItem" data-toggle="modal" data-target="#modalItem">Add New Item</a>
+						<?php if (empty($items)) : ?>
+							<div class='alert alert-danger'>
+								Data not found!
+							</div>
+						<?php endif; ?>
+						<?php if ($this->input->post('search') && !empty($items)) : ?>
+							<p>Result : <?= $result_total_rows; ?></p>
+						<?php endif; ?>
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th scope="col">id</th>
+									<th scope="col">No</th>
 									<th scope="col">Item Name</th>
 									<th scope="col">Category</th>
 									<th scope="col">Price</th>
@@ -24,7 +44,7 @@
 							<tbody>
 								<?php foreach ($items as $item) : ?>
 									<tr>
-										<th scope="row"><?= $item['item_id']; ?></th>
+										<th scope="row"><?= ++$start; ?></th>
 										<td><?= $item['item_name']; ?></td>
 										<td><?= $item['category_name']; ?></td>
 										<td>$ <?= number_format($item['price']); ?></td>
@@ -36,6 +56,7 @@
 									</tr> <?php endforeach; ?>
 							</tbody>
 						</table>
+						<?= $this->pagination->create_links(); ?>
 					</div>
 				</div>
 			</div> <!-- /.container-fluid -->

@@ -30,8 +30,33 @@ class Admin extends CI_Controller
 
 	public function items()
 	{
+
+		if ($this->input->post('search')) {
+			$data['keyword'] = $this->input->post('keyword');
+			// $this->session->set_userdata('keyword', $data['keyword']);
+		} else {
+			$data['keyword'] = null;
+		}
+
+		$this->db->like('items.name', $data['keyword']);
+		$this->db->or_like('item_categories.name', $data['keyword']);
+		$this->db->from('items');
+		$this->db->join('item_categories', 'items.category_id = item_categories.id');
+
+		// config
+		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/items';
+		$config['total_rows'] = $this->db->count_all_results();
+		$data['result_total_rows'] = $config['total_rows'];
+		$config['per_page'] = 10;
+		// batas kanan kiri paginasi
+		// $config['num_link'] = 3 
+
+		// initialize
+		$this->pagination->initialize($config);
+
 		$data['title'] = "Items List";
-		$data['items'] = $this->item->getItems();
+		$data['start'] = $this->uri->segment(3) != null ? $this->uri->segment(3) : 0;
+		$data['items'] = $this->item->getItems($config['per_page'], $data['start'], $data['keyword']);
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$data['item_categories'] = $this->item->getItemCategories();
 
@@ -71,9 +96,31 @@ class Admin extends CI_Controller
 
 	public function auctions()
 	{
+		if ($this->input->post('search')) {
+			$data['keyword'] = $this->input->post('keyword');
+			// $this->session->set_userdata('keyword', $data['keyword']);
+		} else {
+			$data['keyword'] = null;
+		}
+
+		$this->db->like('items.name', $data['keyword']);
+		$this->db->from('items');
+
+		// config
+		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/auctions';
+		$config['total_rows'] = $this->db->count_all_results();
+		$data['result_total_rows'] = $config['total_rows'];
+		$config['per_page'] = 10;
+		// batas kanan kiri paginasi
+		// $config['num_link'] = 3 
+
+		// initialize
+		$this->pagination->initialize($config);
+
 		$data['title'] = "Auctions List";
+		$data['start'] = $this->uri->segment(3) != null ? $this->uri->segment(3) : 0;
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
-		$data['auctions'] = $this->auction->getAuctions();
+		$data['auctions'] = $this->auction->getAuctions($config['per_page'], $data['start'], $data['keyword']);
 		$data['item_categories'] = $this->item->getItemCategories();
 
 		$this->load->view('layouts/admin_header', $data);
@@ -108,14 +155,44 @@ class Admin extends CI_Controller
 
 	public function transactions()
 	{
+		if ($this->input->post('search')) {
+			$data['keyword'] = $this->input->post('keyword');
+			// $this->session->set_userdata('keyword', $data['keyword']);
+		} else {
+			$data['keyword'] = null;
+		}
+
+		$this->db->like('items.name', $data['keyword']);
+		$this->db->or_like('user_items.item_code', $data['keyword']);
+		$this->db->from('items');
+		$this->db->join('user_items', 'items.id = user_items.item_id');
+
+		// config
+		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/transactions';
+		$config['total_rows'] = $this->db->count_all_results();
+		$data['result_total_rows'] = $config['total_rows'];
+		$config['per_page'] = 10;
+		// batas kanan kiri paginasi
+		// $config['num_link'] = 3 
+
+		// initialize
+		$this->pagination->initialize($config);
+
 		$data['title'] = "Transactions List";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
-		$data['transactions'] = $this->transaction->getItemTransactions();
+		$data['start'] = $this->uri->segment(3) != null ? $this->uri->segment(3) : 0;
+		$data['transactions'] = $this->transaction->getItemTransactions($config['per_page'], $data['start'], $data['keyword']);
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar', $data);
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('admin/transactions', $data);
 		$this->load->view('layouts/admin_footer');
+
+		// $query = ""
+
+		// $this->session->set_userdata('report', [
+		// 	$data_report
+		// ]);
 	}
 
 	public function posts()
@@ -171,14 +248,14 @@ class Admin extends CI_Controller
 		$data['title'] = "Settings";
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$data['content'] = $this->db->get('site_info')->result_array();
-		
+
 		$this->form_validation->set_rules('fb', 'Facebook', 'required|trim');
 		$this->form_validation->set_rules('tw', 'Twitter', 'required|trim');
 		$this->form_validation->set_rules('ig', 'Instagram', 'required|trim');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('about', 'About', 'required');
 
-		if($this->form_validation->run() == FALSE) {
+		if ($this->form_validation->run() == FALSE) {
 			$this->load->view('layouts/admin_header', $data);
 			$this->load->view('layouts/admin_sidebar', $data);
 			$this->load->view('layouts/admin_topbar', $data);
@@ -190,7 +267,7 @@ class Admin extends CI_Controller
 			$ig = $this->input->post('ig');
 			$email = $this->input->post('email');
 			$about = $this->input->post('about');
-	
+
 			$this->db->set('content', $fb);
 			$this->db->where('id', 2);
 			$this->db->update('site_info');
@@ -198,7 +275,7 @@ class Admin extends CI_Controller
 			$this->db->set('content', $tw);
 			$this->db->where('id', 3);
 			$this->db->update('site_info');
-			
+
 			$this->db->set('content', $ig);
 			$this->db->where('id', 4);
 			$this->db->update('site_info');
@@ -206,11 +283,11 @@ class Admin extends CI_Controller
 			$this->db->set('content', $email);
 			$this->db->where('id', 5);
 			$this->db->update('site_info');
-			
+
 			$this->db->set('content', $about);
 			$this->db->where('id', 1);
 			$this->db->update('site_info');
-			
+
 			$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>update</strong> site info</div>');
 			redirect('admin/settings');
 		}
