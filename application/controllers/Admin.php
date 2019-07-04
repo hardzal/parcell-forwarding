@@ -210,14 +210,9 @@ class Admin extends CI_Controller
 			$this->db->set('content', $about);
 			$this->db->where('id', 1);
 			$this->db->update('site_info');
-
-			if($this->db->affected_rows()) {
-				$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>update</strong> site info</div>');
-				redirect('admin/settings');
-			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed <strong>update</strong> site info</div>');
-				redirect('admin/settings');
-			}
+			
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Successful <strong>update</strong> site info</div>');
+			redirect('admin/settings');
 		}
 	}
 

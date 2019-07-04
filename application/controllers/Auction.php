@@ -36,7 +36,8 @@ class Auction extends CI_Controller
 				'auction_id' 	=> $auction_id,
 				'user_id' 	 	=> $user_id,
 				'price' 		=> $auction_price,
-				'created_at' 	=> time()
+				'created_at' 	=> time(),
+				'deleted_at' 	=> 0
 			];
 
 			if ($this->user->insertUserAuction($data)) {
@@ -123,7 +124,7 @@ class Auction extends CI_Controller
 				'description' => $description,
 				'status' => 0,
 				'created_at' => time(),
-				'deleted_at' => time() + 3600
+				'deleted_at' => time() + 3600 // buat mengubah waktu verifikasi transaksi
 			];
 			$item = $this->db->get_where('items', ['id' => $item_id])->row_array();
 			$id = $this->input->post('auction_id');
@@ -145,7 +146,7 @@ class Auction extends CI_Controller
 					'tax_cost' => $tax,
 					'total_cost' => $cost,
 					'created_at' => time(),
-					'deadline_at' => time() + 600
+					'deadline_at' => time() + 3600
 				]);
 
 				redirect('user/auctions');
@@ -166,7 +167,7 @@ class Auction extends CI_Controller
 		} else {
 			$auction = $this->auction->getAuction($this->input->post('auction_id'));
 			if ($this->input->post('status') == 1) {
-				$deadline = time() + 600;
+				$deadline = time() + 120; // waktu mengaktifkan kembali auction
 			} else {
 				$deadline = $auction['deadline'];
 			}

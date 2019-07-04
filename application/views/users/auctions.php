@@ -31,7 +31,7 @@
 											<th scope="row"><?= $no; ?></th>
 											<td><?= $auction['name']; ?></td>
 											<td><?= number_format($auction['price']); ?></td>
-											<td><?= date('H:i:s - d F y', $auction['deadline']);?></td>
+											<td><?= deadline_at($auction['auction_id']);?></td>
 											<td><?= status_auction($auction['auction_id']); ?></td>
 											<td>
 												<?= is_user_auction($auction['auction_id']); ?>

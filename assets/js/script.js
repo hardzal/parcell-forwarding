@@ -287,12 +287,14 @@ $(function () {
 					`);
 				}
 
-				$('.modal-body').append(`
-					<div class='form-group'>
-						<label for='auction_pricet'>Mengajukan nilai lelang</label>
-						<input type='number' name='auction_price' id='auction_price' class='form-control'/>
-					</div>
-				`);
+				if(data.role_id == '' || data.role_id != 1) {
+					$('.modal-body').append(`
+						<div class='form-group'>
+							<label for='auction_pricet'>Mengajukan nilai lelang</label>
+							<input type='number' name='auction_price' id='auction_price' class='form-control'/>
+						</div>
+					`);
+				}
 
 				$('#auction_id').val(id);
 				console.log(data);
