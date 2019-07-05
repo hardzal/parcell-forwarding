@@ -103,8 +103,10 @@ class Admin extends CI_Controller
 			$data['keyword'] = null;
 		}
 
-		$this->db->like('items.name', $data['keyword']);
-		$this->db->from('items');
+		$this->db->like('item_auctions.price', $data['keyword']);
+		$this->db->or_like('items.name', $data['keyword']);
+		$this->db->from('item_auctions');
+		$this->db->join('items', 'item_auctions.item_id = items.id');
 
 		// config
 		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/auctions';
