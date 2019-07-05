@@ -19,7 +19,7 @@ Servis
 - [x] Mengirim barang pesanan user
 - [x] Cek status barang oleh user
 - [x] Menghapus data barang oleh admin
-- [ ] Pencarian data barang oleh user
+- [x] Pencarian data barang oleh user
 
 Lelang
 
@@ -30,7 +30,7 @@ Lelang
 Fitur lainnya
 
 - [x] CRUD Post
-- [ ] CRUD About Us
+- [x] CRUD About Us
 - [x] CRUD Item
 - [ ] CRUD User
 
@@ -40,16 +40,3 @@ password: 654321
 email: suryadijogja@gmail.com
 password: 987654321
 
-Open noteeee malem ini harus selesai pagi kirim
-1.about us tentang perusahaan harus kelar
-1. Gambar nanti dikirim 
-3.report masukin logo sama alamat dan kontak perusahaan
-
-Email: ParcelForwading@gmail.com
-Website :parcell-forwading.com
-Customer service : 557830028
-
-#tambahn
-1. beri fitur pencarian
-2. beri fitur paginasi
-3. beri fitur report pada setiap user
