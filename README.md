@@ -26,6 +26,7 @@ Lelang
 - [x] Melelang barang yang tidak dibayar oleh user
 - [x] Melisting pelelang
 - [x] Mengirim barang hasil lelangan
+- [x] Mengaktifkan Pelelangan
 
 Fitur lainnya
 
