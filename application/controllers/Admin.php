@@ -189,12 +189,6 @@ class Admin extends CI_Controller
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('admin/transactions', $data);
 		$this->load->view('layouts/admin_footer');
-
-		// $query = ""
-
-		// $this->session->set_userdata('report', [
-		// 	$data_report
-		// ]);
 	}
 
 	public function posts()

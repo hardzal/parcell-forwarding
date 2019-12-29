@@ -38,7 +38,7 @@ class Post extends CI_Controller
 			$image_name = $_FILES['image']['name'];
 			if ($image_name) {
 				$config['allowed_types'] = "gif|jpg|jpeg|png";
-				$config['max_sizes'] = 2048;
+				$config['max_size'] = 2048;
 				$config['upload_path'] = "./assets/img/posts/";
 
 				$this->load->library('upload', $config);

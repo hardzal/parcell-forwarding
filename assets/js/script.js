@@ -67,7 +67,7 @@ $(function () {
 					$('#fragile').prop('checked', false);
 				}
 				$('#id').val(data.id);
-				console.log(data);
+				// console.log(data);
 			}
 		});
 	});
@@ -127,7 +127,7 @@ $(function () {
 	$('.waitingTransaction').on('click', function (e) {
 		$('#judulModalTransaction').html("Waiting Item Transaction");
 		$('.submitButton').html("Ok");
-		
+
 		const id = $(this).data('id');
 
 		e.preventDefault();
@@ -153,7 +153,7 @@ $(function () {
 	$('.waitingAuction').on('click', function (e) {
 		$('#judulModalAuction').html("Waiting Item Auction");
 		$('.submitButton').html("Ok");
-		
+
 		const id = $(this).data('id');
 
 		e.preventDefault();
@@ -287,7 +287,7 @@ $(function () {
 					`);
 				}
 
-				if(data.role_id == '' || data.role_id != 1) {
+				if (data.role_id == '' || data.role_id != 1) {
 					$('.modal-body').append(`
 						<div class='form-group'>
 							<label for='auction_pricet'>Mengajukan nilai lelang</label>

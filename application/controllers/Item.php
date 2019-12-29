@@ -69,7 +69,7 @@ class Item extends CI_Controller
 			if ($image) {
 				print_r($_FILES);
 				$config['allowed_types'] = "gif|jpg|png";
-				$config['max_sizes'] = 2048;
+				$config['max_size'] = 2048;
 				$config['upload_path'] = "./assets/img/screenshot/";
 
 				$this->load->library('upload', $config);

@@ -101,7 +101,7 @@ function is_auction_expired($auction_id)
 		$user_auction = $ci->db->get_where('user_auctions', ['auction_id' => $auction_id]);
 		if ($user_auction->num_rows() >= 1) {
 			$deadline = time() + 3600;
-			$query = "UPDATE user_auctions SET status = 1, deleted_at = $deadline  WHERE price = ( SELECT * FROM (SELECT MAX(price) FROM user_auctions WHERE auction_id = $auction_id) p)";
+			$query = "UPDATE user_auctions SET status = 1, deleted_at = $deadline WHERE price = ( SELECT * FROM (SELECT MAX(price) FROM user_auctions WHERE auction_id = $auction_id) p)";
 			$ci->db->query($query);
 
 			$query = "DELETE FROM user_auctions WHERE auction_id = $auction_id AND status = 0";

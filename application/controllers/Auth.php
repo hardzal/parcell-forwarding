@@ -120,7 +120,7 @@ class Auth extends CI_Controller
 		}
 	}
 
-	public function _sendEmail($token, $type)
+	private function _sendEmail($token, $type)
 	{
 		$config = [
 			'protocol' => 'smtp',
@@ -151,6 +151,7 @@ class Auth extends CI_Controller
 			return true;
 		} else {
 			echo $this->email->print_debugger();
+			return false;
 		}
 	}
 
