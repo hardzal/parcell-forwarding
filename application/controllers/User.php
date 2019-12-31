@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class User extends CI_Controller
 {
 	public function __construct()
@@ -182,7 +184,6 @@ class User extends CI_Controller
 		$data['start'] = $this->uri->segment(3) != null ? $this->uri->segment(3) : 0;
 		$data['user'] = $this->user->getDataUser($this->session->userdata('email'));
 		$data['items'] = $this->user->getUserItems($this->session->userdata('user_id'), $config['per_page'], $data['start'], $data['keyword']);
-
 		$this->load->view('layouts/admin_header', $data);
 		$this->load->view('layouts/admin_sidebar');
 		$this->load->view('layouts/admin_topbar', $data);
@@ -218,5 +219,28 @@ class User extends CI_Controller
 		$this->load->view('layouts/admin_topbar', $data);
 		$this->load->view('users/auctions', $data);
 		$this->load->view('layouts/admin_footer');
+	}
+
+	public function report($id = null)
+	{
+		$pdf = new Mpdf();
+		$pdf->SetDisplayMode('fullpage');
+		if ($id != null) {
+			$user = $this->user->getDataUserById($id);
+			$data['users'][] = $user;
+
+			$html = $this->load->view('users/report', $data, true);
+			$pdf->WriteHTML($html);
+			$pdf->SetHTMLFooter("");
+			$pdf->output($user['name'] . '_report.pdf', 'I');
+		} else {
+			$data['users'] = $this->user->getDataUsers();
+
+			$html = $this->load->view('users/report', $data, true);
+
+			$pdf->WriteHTML($html);
+			$pdf->SetHTMLFooter("");
+			$pdf->output('user_bulk_report.pdf', 'I');
+		}
 	}
 }

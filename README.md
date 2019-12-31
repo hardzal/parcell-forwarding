@@ -37,8 +37,8 @@ Fitur lainnya
 - [ ] CRUD User
 
 ->login
-email: rizaldoeta98@gmail.com	
+email: admin@gmail.com	
 password: 654321
-email: suryadijogja@gmail.com
-password: 987654321
 
+email: member@gmail.com
+password: 987654321

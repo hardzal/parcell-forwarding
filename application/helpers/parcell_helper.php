@@ -26,7 +26,7 @@ function is_expired($user_item_id)
 
 	if ($transaction['deleted_at'] < time()) {
 		// price auction 
-		$price = $transaction['cost'] * 0.8;
+		$price = $transaction['cost_total'] * 0.8;
 
 		$auction = [
 			'item_id' => $transaction['item_id'],
@@ -106,9 +106,9 @@ function is_auction_expired($auction_id)
 
 			$query = "DELETE FROM user_auctions WHERE auction_id = $auction_id AND status = 0";
 			$ci->db->query($query);
-		} 
-		
-		if ($user_auction->num_rows() < 1 || time()+30 > $auction['deleted_at']) {
+		}
+
+		if ($user_auction->num_rows() < 1 || time() + 30 > $auction['deleted_at']) {
 			$ci->db->update('item_auctions', ['status' => 0], ['id' => $auction_id]);
 		}
 
@@ -121,26 +121,27 @@ function is_user_auction($auction_id)
 	$ci = &get_instance();
 
 	$auction = $ci->db->get_where('user_auctions', ['auction_id' => $auction_id])->row_array();
-	
+
 	if ($auction['status'] == 1 && time() < $auction['deleted_at']) {
 		return '<a href="' . base_url('auction/confirm/') . $auction['auction_id'] . '" class="badge badge-primary mr-2 confirmAuction" data-toggle="modal" data-target="#modalAuction" data-id="' . $auction['auction_id'] . '">Detail</a>';
-	} else if(time() > $auction['deleted_at']) {
+	} else if (time() > $auction['deleted_at']) {
 		$ci->db->delete('user_auctions', ['auction_id' => $auction_id]);
 	}
 
 	return '<a href="#" class="badge badge-info" class="badge badge-secondary mr-2 waitingAuction">Waiting</a>';
 }
 
-function deadline_at($auction_id) {
+function deadline_at($auction_id)
+{
 	$ci = &get_instance();
 	$query = "SELECT item_auctions.deleted_at AS deadline_auction, user_auctions.deleted_at AS deadline_user_bind
 				FROM item_auctions 
 					JOIN user_auctions ON item_auctions.id = user_auctions.auction_id
 				WHERE item_auctions.id = $auction_id";
-	
+
 	$auction = $ci->db->query($query)->row_array();
 
-	if($auction['deadline_user_bind'] == 0) {
+	if ($auction['deadline_user_bind'] == 0) {
 		return date('H:i:s - d F y', $auction['deadline_auction']);
 	} else {
 		return date('H:i:s - d F y', $auction['deadline_user_bind']);

@@ -3,7 +3,6 @@
 
 				<!-- Page Heading -->
 				<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-
 				<div class="row">
 					<div class="col-lg">
 
@@ -22,6 +21,8 @@
 						</div>
 
 						<a href="" class=" btn btn-primary mb-3 tambahDataItem" data-toggle="modal" data-target="#modalItem">Add New Item</a>
+						<a href="<?= base_url('item/export'); ?>" class=" btn btn-info mb-3 ml-3">Export</a>
+
 						<?php if (empty($items)) : ?>
 							<div class='alert alert-danger'>
 								Data not found!
@@ -50,7 +51,8 @@
 										<td>$ <?= number_format($item['price']); ?></td>
 										<td><?= $item['stock']; ?></td>
 										<td>
-											<a href="<?= base_url('item/edit/') . $item['item_id']; ?>" class="badge badge-success mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['item_id']; ?>">Edit</a>
+											<a href="<?= base_url('item/edit/') . $item['item_id']; ?>" class="badge badge-primary mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['item_id']; ?>">Edit</a>
+											<a href="<?= base_url('item/export/') . $item['item_id']; ?>" class="badge badge-info mr-2" target="_blank">Export</a>
 											<a href="<?= base_url('item/delete/') . $item['item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus item ini?')">Delete</a>
 										</td>
 									</tr> <?php endforeach; ?>

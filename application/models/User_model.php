@@ -5,19 +5,29 @@ class User_model extends CI_Model
 {
 	public function getDataUsers()
 	{
-		$this->db->select('*');
+		$this->db->select('users.*, user_details.name, users.email, user_details.birth_date, user_details.phone_number, user_details.gender, user_details.address, ');
 		$this->db->from('users');
 		$this->db->join('user_details', 'users.id = user_details.user_id');
 
 		return $this->db->get()->result_array();
 	}
 
-	public function getDataUser($email)
+	public function getDataUser($email = null)
 	{
 		$this->db->select('*');
 		$this->db->from('users');
 		$this->db->join('user_details', 'users.id = user_details.user_id');
 		$this->db->where('email', $email);
+
+		return $this->db->get()->row_array();
+	}
+
+	public function getDataUserById($id)
+	{
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->join('user_details', 'users.id = user_details.user_id');
+		$this->db->where('users.id', $id);
 
 		return $this->db->get()->row_array();
 	}
@@ -34,10 +44,8 @@ class User_model extends CI_Model
 	}
 
 	public function deleteUser()
-	{ }
-
-	public function searchUser()
-	{ }
+	{
+	}
 
 	public function updatePasswordUser($password, $email)
 	{
@@ -56,7 +64,7 @@ class User_model extends CI_Model
 		$query = "SELECT items.id AS id_item, 
 						items.name AS item_name, 
 						user_items.id AS user_item_id, 
-						user_items.cost, 
+						user_items.cost_total, 
 						user_items.item_code,
 						user_items.total,
 						user_items.deleted_at AS deadline
@@ -64,7 +72,7 @@ class User_model extends CI_Model
 		JOIN items 
 			ON user_items.item_id = items.id
 		 WHERE user_items.user_id = $user_id AND
-		 		items.name LIKE '%$keyword%' OR user_items.item_code LIKE '%$keyword%'
+		 		(items.name LIKE '%$keyword%' OR user_items.item_code LIKE '%$keyword%')
 		 ORDER BY user_items.status ASC
 		 LIMIT $offset, $limit";
 
@@ -73,13 +81,15 @@ class User_model extends CI_Model
 
 	public function getUserTransactions($user_id)
 	{
-		$query = "SELECT items.id AS id_item, 
+		$query = "SELECT user_transactions.*, 
+						items.id AS id_item, 
 						items.name AS item_name, 
-						user_items.id AS user_item_id, 
-						user_items.cost, 
+						user_items.cost_total, 
 						user_items.item_code,
 						user_items.total 
-			FROM user_items
+			FROM user_transactions
+		JOIN user_items
+			ON user_transactions.user_item_id = user_items.id
 		JOIN items 
 			ON user_items.item_id = items.id
 		 WHERE user_items.user_id = $user_id AND user_items.status = 1";
@@ -131,7 +141,7 @@ class User_model extends CI_Model
 
 	public function getTotalCost($user_id)
 	{
-		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1 AND user_id = $user_id";
+		$query = "SELECT SUM(cost_total) AS total_cost FROM user_items WHERE status = 1 AND user_id = $user_id";
 
 		return $this->db->query($query)->row_array();
 	}

@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Transactions Report</title>
+	<title>Item Report</title>
 	<style type='text/css'>
 		body {
 			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -60,7 +60,6 @@
 
 <body>
 	<div class='header'>
-
 		<div class='logo'>
 			<img src='<?= base_url(); ?>/assets/img/logo-nobg.png' alt='logo' title='logo' />
 		</div>
@@ -69,47 +68,57 @@
 			<p>Email: ParcelForwading@gmail.com - Customer service : 557830028<br />
 				Website :parcell-forwading.com</p>
 		</div>
-	</div>
-	<hr />
-	<?php if (count($items)) : ?>
+		<hr />
 		<table width="100%">
-			<tr style="background-color: skyblue;">
-				<th>No</th>
+			<tr>
 				<th>Item Code</th>
-				<th>Item Name</th>
-				<th>Price</th>
-				<th>Total</th>
-				<th>Tax</th>
-				<th>Delivery Cost</th>
-				<th>Total Cost</th>
+				<td><?= $item['item_code']; ?></td>
 			</tr>
-			<?php $i = 1;
-			$total_transaksi = 0;
-			foreach ($items as $item) : ?>
-				<tr>
-					<td><?= $i++; ?></td>
-					<td><?= $item['item_code']; ?></td>
-					<td><?= $item['item_name']; ?></td>
-					<td><?= number_format($item['item_price']); ?></td>
-					<td><?= $item['item_total']; ?></td>
-					<td><?= number_format($item['tax_cost']); ?></td>
-					<td><?= number_format($item['delivery_cost']); ?></td>
-					<td><?= number_format($item['total_cost']); ?></td>
-				</tr>
-			<?php
-				$total_transaksi += $item['total_cost'];
-			endforeach; ?>
+			<tr>
+				<th>Item Name</th>
+				<td><?= $item['item_name']; ?></td>
+			</tr>
+			<tr>
+				<th>Item Category</th>
+				<td><?= $item['item_category']; ?></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td><?= $item['email']; ?></td>
+			</tr>
+			<tr>
+				<th>Name</th>
+				<td><?= $item['name']; ?></td>
+			</tr>
+			<tr>
+				<th>No Telepon</th>
+				<td><?= $item['phone_number']; ?></td>
+			</tr>
+			<tr>
+				<th>Alamat</th>
+				<td><?= $item['address']; ?></td>
+			</tr>
+			<tr>
+				<th>Price Item @ </th>
+				<td>$ <?= number_format($item['item_price']); ?></td>
+			</tr>
+			<tr>
+				<th>Postal Fee</th>
+				<td>$ <?= number_format($item['delivery_cost']); ?></td>
+			</tr>
+			<tr>
+				<th>Tax Cost</th>
+				<td>$ <?= number_format($item['tax_cost']); ?></td>
+			</tr>
+			<tr>
+				<th>Total Cost</th>
+				<td>$ <?= number_format($item['total_cost']); ?></td>
+			</tr>
 		</table>
 
 		<div class='footnote'>
-			<p>Total Transaksi : <?= $i - 1; ?></p>
-			<p>Total Pengeluaran Transaksi : <?= number_format($total_transaksi); ?></p>
-			<p>Tercatat terakhir : <?= date('H:i:s d F Y', time()); ?></p>
+			<p>Terima kasih telah bertransaksi</p>
 		</div>
-
-	<?php else : ?>
-		<p>Belum ada Transaksi yang tercatat</p>
-	<?php endif; ?>
 </body>
 
 </html>

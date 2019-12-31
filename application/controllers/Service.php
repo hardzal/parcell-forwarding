@@ -79,13 +79,13 @@ class Service extends CI_Controller
 				// pph 10%
 				$pph = $item_price * 0.1;
 
-				$tax = $bea_masuk + $ppn + $pph;
+				$cost_tax = $bea_masuk + $ppn + $pph;
 
 				if ($country == 3) {
-					$cost = $item_price;
-					$tax = 0;
+					$cost_total = $item_price;
+					$cost_tax = 0;
 				} else {
-					$cost = $item_price + $tax;
+					$cost_total = $item_price + $cost_tax;
 				}
 
 				if ($weight <= 1) {
@@ -94,8 +94,8 @@ class Service extends CI_Controller
 					$cost_delivery += ($weight * $delivery['cost_weight']);
 				}
 
-				$cost = $cost + $cost_delivery;
-				$cost = $cost * $item_total;
+				$cost_total = $cost_total + $cost_delivery;
+				$cost_total = $cost_total * $item_total;
 
 				$user_item = [
 					'user_id' => $user_id,
@@ -103,7 +103,9 @@ class Service extends CI_Controller
 					'delivery_id' => $delivery_id,
 					'item_code' => $item_code,
 					'total' => $item_total,
-					'cost' => $cost,
+					'cost_delivery' => $cost_delivery,
+					'cost_tax' => $cost_tax,
+					'cost_total' => $cost_total,
 					'address_to' => $address_to,
 					'address_from' => $address_from,
 					'country_id' => $country,
@@ -129,8 +131,8 @@ class Service extends CI_Controller
 						'address' => $address_to,
 						'item_price' => $item_price,
 						'delivery_cost' => $cost_delivery,
-						'tax_cost' => $tax,
-						'total_cost' => $cost,
+						'tax_cost' => $cost_tax,
+						'total_cost' => $cost_total,
 						'created_at' => time(),
 						'deadline_at' => time() + 600
 					]);
