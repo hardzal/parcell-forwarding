@@ -50,7 +50,8 @@
 										<td>$ <?= number_format($item['price']); ?></td>
 										<td><?= $item['stock']; ?></td>
 										<td>
-											<a href="<?= base_url('item/edit/') . $item['item_id']; ?>" class="badge badge-success mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['item_id']; ?>">Edit</a>
+											<a href="<?= base_url('item/edit/') . $item['item_id']; ?>" class="badge badge-primary mr-2 editDataItem" data-toggle="modal" data-target="#modalItem" data-id="<?= $item['item_id']; ?>">Edit</a>
+											<a href="<?= base_url(); ?>" class="badge badge-info mr-2">Export</a>
 											<a href="<?= base_url('item/delete/') . $item['item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus item ini?')">Delete</a>
 										</td>
 									</tr> <?php endforeach; ?>

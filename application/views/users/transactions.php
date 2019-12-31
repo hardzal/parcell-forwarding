@@ -3,7 +3,7 @@
 
 				<!-- Page Heading -->
 				<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-
+				<a href='<?= base_url('transactions/export'); ?>' class="btn btn-primary">Export</a>
 				<div class="row">
 					<div class="col-lg">
 
@@ -31,13 +31,14 @@
 											<th scope="row"><?= $no; ?></th>
 											<td><?= $transaction['item_name']; ?></td>
 											<td><?= $transaction['item_code']; ?></td>
-											<td><?= $transaction['cost']; ?></td>
+											<td><?= number_format($transaction['cost_total']); ?></td>
 											<td><?= $transaction['total']; ?></td>
 											<td>
-												<a href="<?= base_url('transaction/detail/') . $transaction['user_item_id']; ?>" class="badge badge-info mr-2 detailDataItem" data-toggle="modal" data-target="#modalTransaction" data-id="<?= $transaction['user_item_id']; ?>">Detail</a>
-												<a href="<?= base_url('item/delete/') . $transaction['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus item ini?')">Delete</a> </td>
+												<!-- <a href="<?= base_url('transaction/detail/') . $transaction['user_item_id']; ?>" class="badge badge-primary mr-2 detailDataItem" data-toggle="modal" data-target="#modalTransaction" data-id="<?= $transaction['user_item_id']; ?>">Detail</a> -->
+												<a href="<?= base_url('transaction/report/') . $transaction['user_item_id']; ?>" class="badge badge-info mr-2">Export</a>
+												<a href="<?= base_url('transaction/delete/') . $transaction['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus item ini?')">Delete</a> </td>
 										</tr>
-										<?php
+									<?php
 										$no = $no + 1;
 									endforeach;
 									?>

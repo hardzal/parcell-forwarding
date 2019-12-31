@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class Admin extends CI_Controller
 {
 	public function __construct()
@@ -44,12 +46,12 @@ class Admin extends CI_Controller
 		$this->db->join('item_categories', 'items.category_id = item_categories.id');
 
 		// config
-		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/items';
+		$config['base_url'] = 'http://localhost/projects/parcell-forwarding/admin/items';
 		$config['total_rows'] = $this->db->count_all_results();
-		$data['result_total_rows'] = $config['total_rows'];
 		$config['per_page'] = 10;
+		$data['result_total_rows'] = $config['total_rows'];
 		// batas kanan kiri paginasi
-		// $config['num_link'] = 3 
+		// $config['num_link'] = 3;
 
 		// initialize
 		$this->pagination->initialize($config);

@@ -23,6 +23,8 @@
 						</div>
 
 						<a href="" class=" btn btn-primary mb-3 tambahDataItem" data-toggle="modal" data-target="#modalItem">Add New Item</a>
+						<a href="<?= base_url('item/report'); ?>" class=" btn btn-info mb-3 ml-3">Export</a>
+
 						<?php if (empty($items)) : ?>
 							<div class='alert alert-danger'>
 								Data not found!
@@ -52,15 +54,17 @@
 										<th scope="row"><?= $no; ?></th>
 										<td><?= $item['item_name']; ?></td>
 										<td><?= $item['item_code']; ?></td>
-										<td><?= number_format($item['cost']); ?></td>
+										<td>$ <?= number_format($item['cost_total']); ?></td>
 										<td><?= $item['total']; ?></td>
 										<td><?= date('H:i:s - d F y', $item['deadline']); ?></td>
 										<td><?= status_item($item['user_item_id'], $this->session->userdata('role_id')); ?></td>
 										<td>
 											<?= is_verified($item['user_item_id']); ?>
-											<a href="<?= base_url('item/delete/') . $item['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a> </td>
+											<a href="<?= base_url('item/report/') . $item['user_item_id']; ?>" class="badge badge-info mr-2">Export</a>
+											<a href="<?= base_url('item/delete/') . $item['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
+										</td>
 									</tr>
-									<?php
+								<?php
 									$no = $no + 1;
 								endforeach;
 								?>

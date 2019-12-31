@@ -30,7 +30,7 @@
 
 				<div class="mb-3">
 					<label for="item_total">Item Total</label>
-					<input type="text" name="item_total" class="form-control" id="item_total" placeholder="Item Total" />
+					<input type="number" name="item_total" class="form-control" id="item_total" placeholder="Item Total" />
 					<div class="invalid-feedback">
 						<?= form_error('item_total', '<small class="text-danger pl-3">', '</small>'); ?>
 					</div>

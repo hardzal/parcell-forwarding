@@ -10,7 +10,7 @@ class Transaction_model extends CI_Model
 					items.name AS item_name,
 					user_items.item_code, 
 					item_categories.name AS category_name,
-					user_items.cost
+					user_items.cost_total
 				FROM user_items 
 					JOIN users 
 						ON user_items.user_id = users.id
@@ -54,11 +54,12 @@ class Transaction_model extends CI_Model
 	}
 
 	public function searchTransaction($keyword)
-	{ }
+	{
+	}
 
 	public function getTotalCost()
 	{
-		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1";
+		$query = "SELECT SUM(cost_total) AS total_cost FROM user_items WHERE status = 1";
 
 		return $this->db->query($query)->row_array();
 	}

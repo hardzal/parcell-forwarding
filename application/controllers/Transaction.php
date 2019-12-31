@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class Transaction extends CI_Controller
 {
 	public function __construct()
@@ -13,10 +15,12 @@ class Transaction extends CI_Controller
 	}
 
 	public function index()
-	{ }
+	{
+	}
 
 	public function detail()
-	{ }
+	{
+	}
 
 	public function confirm()
 	{
@@ -56,18 +60,8 @@ class Transaction extends CI_Controller
 		}
 	}
 
-	public function report()
+	public function report($id = null)
 	{
-		if ($this->session->userdata('report')) {
-			$data['title'] = "Item Report";
-			$data['item'] = $this->session->userdata('report');
-			$pdf = new Mpdf();
-			$html = $this->load->view('services/report', $data, true);
-			$pdf->WriteHTML($html);
-			$pdf->output($data['item']['item_code'] . '_report.pdf', 'I');
-			$this->session->unset_userdata('report');
-		} else {
-			redirect('service');
-		}
+		
 	}
 }

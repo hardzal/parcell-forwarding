@@ -51,7 +51,7 @@
 										<td scope="row"><?= $transaction['email']; ?></td>
 										<td scope="row"><?= $transaction['item_name']; ?></td>
 										<td scope="row"><?= $transaction['item_code']; ?></td>
-										<td scope="row"><?= '$ ' . number_format($transaction['cost']); ?></td>
+										<td scope="row"><?= '$ ' . number_format($transaction['cost_total']); ?></td>
 										<td scope="row"><?= status_item($transaction['id'], $this->session->userdata('role_id')); ?></td>
 										<td scope="row">
 											<?= is_confirmed($transaction['id']); ?>
@@ -61,7 +61,7 @@
 										endforeach; ?>
 							</tbody>
 						</table>
-						<p><a href='<?= base_url() . 'transactions/report'; ?>'>Export</a></p>
+						<p><a href='<?= base_url() . 'transaction/report'; ?>'>Export</a></p>
 						<?= $this->pagination->create_links(); ?>
 					</div>
 				</div>

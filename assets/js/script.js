@@ -1,5 +1,5 @@
 $(function () {
-	const base_url = "http://localhost/parcell-forwarding/";
+	const base_url = "http://localhost/projects/parcell-forwarding/";
 
 	$(".custom-file-input").on("change", function () {
 		var fileName = $(this).val().split("\\").pop();
@@ -91,7 +91,6 @@ $(function () {
 			dataType: 'json',
 			success: function (data) {
 				$('#user_item_id').val(data.id);
-				console.log(data);
 			}
 		});
 	});
@@ -386,9 +385,10 @@ $(function () {
 				$('#price').val(data.price);
 				$('#stock').val(data.stock);
 				$('#id').val(data.id);
-				console.log(data);
 			}
 		});
 		$('#status').val('');
 	});
+
+	
 });

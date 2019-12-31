@@ -56,7 +56,7 @@ class User_model extends CI_Model
 		$query = "SELECT items.id AS id_item, 
 						items.name AS item_name, 
 						user_items.id AS user_item_id, 
-						user_items.cost, 
+						user_items.cost_total, 
 						user_items.item_code,
 						user_items.total,
 						user_items.deleted_at AS deadline
@@ -76,7 +76,7 @@ class User_model extends CI_Model
 		$query = "SELECT items.id AS id_item, 
 						items.name AS item_name, 
 						user_items.id AS user_item_id, 
-						user_items.cost, 
+						user_items.cost_total, 
 						user_items.item_code,
 						user_items.total 
 			FROM user_items
@@ -131,7 +131,7 @@ class User_model extends CI_Model
 
 	public function getTotalCost($user_id)
 	{
-		$query = "SELECT SUM(cost) AS total_cost FROM user_items WHERE status = 1 AND user_id = $user_id";
+		$query = "SELECT SUM(cost_total) AS total_cost FROM user_items WHERE status = 1 AND user_id = $user_id";
 
 		return $this->db->query($query)->row_array();
 	}

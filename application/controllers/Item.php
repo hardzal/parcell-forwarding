@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class Item extends CI_Controller
 {
 	public function __construct()
@@ -14,7 +16,8 @@ class Item extends CI_Controller
 	}
 
 	public function index()
-	{ }
+	{
+	}
 
 	public function edit()
 	{
@@ -51,7 +54,7 @@ class Item extends CI_Controller
 
 	public function delete($id)
 	{
-		$this->transaction->deleteTransaction($id);
+		$this->item->deleteItem($id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success">Successful deleting item</div>');
 		redirect('admin/items');
 	}
@@ -62,7 +65,7 @@ class Item extends CI_Controller
 		$this->form_validation->set_rules('user_item_id', 'User Items Id', 'required');
 
 		if ($this->form_validation->run() == FALSE) {
-			echo json_encode($this->item->getUserItems($this->input->post('id')));
+			echo json_encode($this->item->getUserItem($this->input->post('id')));
 		} else {
 			$user_item_id = $this->input->post('user_item_id');
 			$image = $_FILES['image']['name'];
@@ -107,7 +110,7 @@ class Item extends CI_Controller
 		$this->form_validation->set_rules('user_item_id', 'User Item Id', 'required|numeric|trim');
 
 		if ($this->form_validation->run() == FALSE) {
-			echo json_encode($this->item->getUserItems($this->input->post('id')));
+			echo json_encode($this->item->getUserItem($this->input->post('id')));
 		} else {
 			$user_item_id = $this->input->post('user_item_id');
 			$status = $this->input->post('status');
@@ -123,5 +126,76 @@ class Item extends CI_Controller
 	}
 
 	public function detail()
-	{ }
+	{
+	}
+
+	public function report($id = null)
+	{
+		$data['bulk_status'] = 0;
+		$user = $this->user->getUserDetail($this->session->userdata('user_id'));
+		if ($id != null) {
+			$item = $this->item->getUserItem($id);
+
+			$data['item'] = [
+				'item_code' => $item['item_code'],
+				'item_name' => $item['item_name'],
+				'item_category' => $item['category_name'],
+				'email' => $this->session->userdata('email'),
+				'name' => $user['name'],
+				'phone_number' => $user['phone_number'],
+				'address' => $item['address_to'],
+				'weight' => $item['weight'],
+				'item_price' => $item['cost_price'],
+				'delivery_cost' => $item['cost_delivery'],
+				'tax_cost' => $item['cost_tax'],
+				'total_cost' => $item['cost_total'],
+				'created_at' => $item['created_at'],
+				'deadline_at' => $item['deleted_at']
+			];
+			$pdf = new Mpdf();
+			$html = $this->load->view('items/report', $data, true);
+			$pdf->SetDisplayMode('fullpage');
+			$pdf->WriteHTML($html);
+			$pdf->output($data['item']['item_code'] . '_report.pdf', 'I');
+		} else {
+			$items = $this->item->getUserItems($user['user_id']);
+			$data['items'] = array();
+			$data['bulk_status'] = 1;
+
+			$pdf = new Mpdf();
+			$pdf->SetDisplayMode('fullpage');
+
+			foreach ($items as $key => $item) {
+
+				if ($key) {
+					$pdf->AddPage();
+				}
+
+				array_push($data['items'], [
+					'item_code' => $item['item_code'],
+					'item_name' => $item['item_name'],
+					'item_category' => $item['category_name'],
+					'email' => $this->session->userdata('email'),
+					'name' => $user['name'],
+					'phone_number' => $user['phone_number'],
+					'address' => $item['address_to'],
+					'weight' => $item['weight'],
+					'item_price' => $item['cost_price'],
+					'delivery_cost' => $item['cost_delivery'],
+					'tax_cost' => $item['cost_tax'],
+					'total_cost' => $item['cost_total'],
+					'created_at' => $item['created_at'],
+					'deadline_at' => $item['deleted_at']
+				]);
+
+				$html = $this->load->view('items/report', $data, true);
+				unset($data['items'][$key]);
+
+				$pdf->WriteHTML($html);
+			}
+
+			$pdf->SetHTMLFooter("");
+			$pdf->output('bulk_report.pdf', 'I');
+		}
+	}
 }

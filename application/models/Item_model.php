@@ -27,9 +27,28 @@ class Item_model extends CI_Model
 		return $this->db->get('items')->num_rows();
 	}
 
-	public function getUserItems($id)
+	public function getUserItems($user_id)
 	{
-		return $this->db->get_where('user_items', ['id' => $id])->row_array();
+		return $this->db
+			->select('user_items.*, items.name as item_name, items.price as cost_price, items.category_id, items.weight, item_categories.name as category_name')
+			->from('user_items')
+			->join('items', 'user_items.item_id = items.id')
+			->join('item_categories', 'items.category_id = item_categories.id')
+			->where('user_id', $user_id)
+			->get()
+			->result_array();
+	}
+
+	public function getUserItem($id)
+	{
+		return $this->db
+			->select('user_items.*, items.name as item_name, items.price as cost_price, items.category_id, items.weight, item_categories.name as category_name')
+			->from('user_items')
+			->join('items', 'user_items.item_id = items.id')
+			->join('item_categories', 'items.category_id = item_categories.id')
+			->where('user_items.id', $id)
+			->get()
+			->row_array();
 	}
 
 	public function insertItem($data)
@@ -56,7 +75,8 @@ class Item_model extends CI_Model
 	}
 
 	public function searchItems()
-	{ }
+	{
+	}
 
 	public function getItemCategories()
 	{

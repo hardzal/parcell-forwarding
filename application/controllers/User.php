@@ -219,4 +219,8 @@ class User extends CI_Controller
 		$this->load->view('users/auctions', $data);
 		$this->load->view('layouts/admin_footer');
 	}
+
+	public function report() {
+		
+	}
 }
