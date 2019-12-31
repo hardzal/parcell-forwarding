@@ -17,6 +17,7 @@ class Item extends CI_Controller
 
 	public function index()
 	{
+		redirect(base_url('admin/items'));
 	}
 
 	public function edit()
@@ -129,10 +130,36 @@ class Item extends CI_Controller
 	{
 	}
 
+	public function export($id = null)
+	{
+		if ($this->session->userdata('role_id') == 1) {
+			$pdf = new Mpdf();
+			$pdf->SetDisplayMode('fullpage');
+
+			if ($id != null) {
+				$data['items'][] = $this->item->getDetailItems($id);
+
+				$html = $this->load->view('items/report', $data, true);
+				$pdf->WriteHTML($html);
+				$pdf->output($data['items'][0]['name'] . '_report.pdf', 'I');
+			} else {
+				$data['items'] = $this->item->getDetailItems();
+				$html = $this->load->view('items/report', $data, true);
+				$pdf->WriteHTML($html);
+				$pdf->output('item_bulk_report.pdf', 'I');
+			}
+		} else {
+			redirect(base_url());
+		}
+	}
+
 	public function report($id = null)
 	{
 		$data['bulk_status'] = 0;
 		$user = $this->user->getUserDetail($this->session->userdata('user_id'));
+		$pdf = new Mpdf();
+		$pdf->SetDisplayMode('fullpage');
+
 		if ($id != null) {
 			$item = $this->item->getUserItem($id);
 
@@ -152,50 +179,49 @@ class Item extends CI_Controller
 				'created_at' => $item['created_at'],
 				'deadline_at' => $item['deleted_at']
 			];
-			$pdf = new Mpdf();
-			$html = $this->load->view('items/report', $data, true);
-			$pdf->SetDisplayMode('fullpage');
+
+			$html = $this->load->view('items/report_u', $data, true);
 			$pdf->WriteHTML($html);
 			$pdf->output($data['item']['item_code'] . '_report.pdf', 'I');
 		} else {
-			$items = $this->item->getUserItems($user['user_id']);
 			$data['items'] = array();
 			$data['bulk_status'] = 1;
 
-			$pdf = new Mpdf();
-			$pdf->SetDisplayMode('fullpage');
+			if ($this->session->userdata('role_id') == 1) {
+			} else {
+				$items = $this->item->getUserItems($user['user_id']);
+				foreach ($items as $key => $item) {
 
-			foreach ($items as $key => $item) {
+					if ($key) {
+						$pdf->AddPage();
+					}
 
-				if ($key) {
-					$pdf->AddPage();
+					array_push($data['items'], [
+						'item_code' => $item['item_code'],
+						'item_name' => $item['item_name'],
+						'item_category' => $item['category_name'],
+						'email' => $this->session->userdata('email'),
+						'name' => $user['name'],
+						'phone_number' => $user['phone_number'],
+						'address' => $item['address_to'],
+						'weight' => $item['weight'],
+						'item_price' => $item['cost_price'],
+						'delivery_cost' => $item['cost_delivery'],
+						'tax_cost' => $item['cost_tax'],
+						'total_cost' => $item['cost_total'],
+						'created_at' => $item['created_at'],
+						'deadline_at' => $item['deleted_at']
+					]);
+
+					$html = $this->load->view('items/report_u', $data, true);
+					unset($data['items'][$key]);
+
+					$pdf->WriteHTML($html);
 				}
 
-				array_push($data['items'], [
-					'item_code' => $item['item_code'],
-					'item_name' => $item['item_name'],
-					'item_category' => $item['category_name'],
-					'email' => $this->session->userdata('email'),
-					'name' => $user['name'],
-					'phone_number' => $user['phone_number'],
-					'address' => $item['address_to'],
-					'weight' => $item['weight'],
-					'item_price' => $item['cost_price'],
-					'delivery_cost' => $item['cost_delivery'],
-					'tax_cost' => $item['cost_tax'],
-					'total_cost' => $item['cost_total'],
-					'created_at' => $item['created_at'],
-					'deadline_at' => $item['deleted_at']
-				]);
-
-				$html = $this->load->view('items/report', $data, true);
-				unset($data['items'][$key]);
-
-				$pdf->WriteHTML($html);
+				$pdf->SetHTMLFooter("");
+				$pdf->output($user['name'] . '_bulk_report.pdf', 'I');
 			}
-
-			$pdf->SetHTMLFooter("");
-			$pdf->output('bulk_report.pdf', 'I');
 		}
 	}
 }

@@ -3,6 +3,7 @@
 
 				<!-- Page Heading -->
 				<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
+				<p><a href='<?= base_url() . 'transaction/report'; ?>' class="btn btn-primary">Export</a></p>
 
 				<div class="row">
 					<div class="col-lg">
@@ -55,13 +56,13 @@
 										<td scope="row"><?= status_item($transaction['id'], $this->session->userdata('role_id')); ?></td>
 										<td scope="row">
 											<?= is_confirmed($transaction['id']); ?>
+											<a href="<?= base_url('transaction/report/') . $transaction['id']; ?>" class="badge badge-info mr-2">Export</a>
 											<a href="<?= base_url('transaction/delete/') . $transaction['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
 										</td>
 									</tr> <?php $no = $no + 1;
 										endforeach; ?>
 							</tbody>
 						</table>
-						<p><a href='<?= base_url() . 'transaction/report'; ?>'>Export</a></p>
 						<?= $this->pagination->create_links(); ?>
 					</div>
 				</div>

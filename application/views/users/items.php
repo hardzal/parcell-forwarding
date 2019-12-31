@@ -60,7 +60,7 @@
 										<td><?= status_item($item['user_item_id'], $this->session->userdata('role_id')); ?></td>
 										<td>
 											<?= is_verified($item['user_item_id']); ?>
-											<a href="<?= base_url('item/report/') . $item['user_item_id']; ?>" class="badge badge-info mr-2">Export</a>
+											<a href="<?= base_url('item/report/') . $item['user_item_id']; ?>" class="badge badge-info mr-2" target="_blank">Export</a>
 											<a href="<?= base_url('item/delete/') . $item['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
 										</td>
 									</tr>

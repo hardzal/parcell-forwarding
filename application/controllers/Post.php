@@ -20,9 +20,6 @@ class Post extends CI_Controller
 		$this->load->view('layouts/footer');
 	}
 
-	public function create()
-	{ }
-
 	public function edit()
 	{
 		$this->form_validation->set_rules('title', 'Title', 'required|trim|min_length[3]');
