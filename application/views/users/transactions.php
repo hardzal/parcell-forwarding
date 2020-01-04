@@ -3,7 +3,7 @@
 
 				<!-- Page Heading -->
 				<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-				<a href='<?= base_url('transaction/report'); ?>' class="btn btn-primary">Export</a>
+				<a href='<?= base_url('transaction/report'); ?>' class="btn btn-primary" target="_blank">Export</a>
 				<div class="row">
 					<div class="col-lg">
 

@@ -172,6 +172,7 @@ class Item extends CI_Controller
 				'phone_number' => $user['phone_number'],
 				'address' => $item['address_to'],
 				'weight' => $item['weight'],
+				'item_total' => $item['total'],
 				'item_price' => $item['cost_price'],
 				'delivery_cost' => $item['cost_delivery'],
 				'tax_cost' => $item['cost_tax'],
@@ -191,15 +192,15 @@ class Item extends CI_Controller
 			} else {
 				$items = $this->item->getUserItems($user['user_id']);
 				foreach ($items as $key => $item) {
-
-					if ($key) {
-						$pdf->AddPage();
-					}
+					// if ($key) {
+					// 	$pdf->AddPage();
+					// }
 
 					array_push($data['items'], [
 						'item_code' => $item['item_code'],
 						'item_name' => $item['item_name'],
 						'item_category' => $item['category_name'],
+						'item_total' => $item['total'],
 						'email' => $this->session->userdata('email'),
 						'name' => $user['name'],
 						'phone_number' => $user['phone_number'],
@@ -213,12 +214,14 @@ class Item extends CI_Controller
 						'deadline_at' => $item['deleted_at']
 					]);
 
-					$html = $this->load->view('items/report_u', $data, true);
-					unset($data['items'][$key]);
+					// $html = $this->load->view('items/report_u', $data, true);
+					// unset($data['items'][$key]);
 
-					$pdf->WriteHTML($html);
+					// $pdf->WriteHTML($html);
 				}
 
+				$html = $this->load->view('items/report_i', $data, true);
+				$pdf->WriteHTML($html);
 				$pdf->SetHTMLFooter("");
 				$pdf->output($user['name'] . '_bulk_report.pdf', 'I');
 			}

@@ -43,29 +43,29 @@ class Auth extends CI_Controller
 		$user = $this->auth->getUser($email);
 
 		if ($user) {
-			if ($user['is_active'] == 1) {
-				if (password_verify($password, $user['password'])) {
-					$data = [
-						'user_id' 	=> $user['id'],
-						'email' 	=> $user['email'],
-						'role_id' 	=> $user['role_id']
-					];
+			// if ($user['is_active'] == 1) {
+			if (password_verify($password, $user['password'])) {
+				$data = [
+					'user_id' 	=> $user['id'],
+					'email' 	=> $user['email'],
+					'role_id' 	=> $user['role_id']
+				];
 
-					$this->session->set_userdata($data);
+				$this->session->set_userdata($data);
 
-					if ($data['role_id'] == 1) {
-						redirect('admin');
-					} else if ($data['role_id'] == 2) {
-						redirect('user');
-					}
-				} else {
-					$this->session->set_flashdata('message', '<div class="alert alert-danger">Wrong password!</div>');
-					redirect('auth');
+				if ($data['role_id'] == 1) {
+					redirect('admin');
+				} else if ($data['role_id'] == 2) {
+					redirect('user');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger">This email has not been activated!</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Wrong password!</div>');
 				redirect('auth');
 			}
+			// } else {
+			// 	$this->session->set_flashdata('message', '<div class="alert alert-danger">This email has not been activated!</div>');
+			// 	redirect('auth');
+			// }
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger">This email not registered!</div>');
 			redirect('auth');
@@ -98,21 +98,22 @@ class Auth extends CI_Controller
 			$this->load->view('auth/signup');
 			$this->load->view('layouts/auth_footer');
 		} else {
-			$token = $this->auth->insertToken();
+			// $token = $this->auth->insertToken();
 
-			if (!$token) {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed created token. Please contact admin!</div>');
-				redirect('auth');
-			}
+			// if (!$token) {
+			// 	$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed created token. Please contact admin!</div>');
+			// 	redirect('auth');
+			// }
 
 			if ($this->auth->insertDataUser()) {
 
-				$user = $this->auth->getToken($token);
+				// $user = $this->auth->getToken($token);
 
-				$this->_sendEmail($user['token'], 'verify');
+				// $this->_sendEmail($user['token'], 'verify');
+				$this->session->set_userdata('user_email', $this->input->post('email', true));
 
 				$this->session->set_flashdata('message', '<div class="alert alert-success">Congratulation! your account has been created. Please activate your account!</div>');
-				redirect('auth');
+				redirect('auth/userdetail');
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Failed registered accound. Please contact admin!</div>');
 				redirect('auth');
@@ -193,11 +194,13 @@ class Auth extends CI_Controller
 
 	public function userDetail()
 	{
-		if (!$this->session->userdata('verified_email')) {
-			redirect('auth');
-		}
+		// if (!$this->session->userdata('verified_email')) {
+		// 	redirect('auth');
+		// }
 
-		$user = $this->auth->getUser($this->session->userdata('verified_email'));
+		// $user = $this->auth->getUser($this->session->userdata('verified_email'));
+		$user = $this->auth->getUser($this->session->userdata('user_email'));
+
 		$data['title'] = "User Details";
 		$data['states'] = $this->db->get('countries')->result_array();
 
@@ -215,7 +218,8 @@ class Auth extends CI_Controller
 			$this->load->view('auth/user-detail', $data);
 			$this->load->view('layouts/auth_footer');
 		} else {
-			$this->session->unset_userdata('verified_email');
+			$this->session->unset_userdata('user_email');
+			// $this->session->unset_userdata('verified_email');
 
 			$name = $this->input->post('name');
 			$gender = $this->input->post('gender');

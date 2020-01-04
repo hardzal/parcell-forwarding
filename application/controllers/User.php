@@ -171,7 +171,7 @@ class User extends CI_Controller
 		$this->db->join('user_items', 'items.id = user_items.item_id');
 
 		// config
-		$config['base_url'] = 'http://localhost/parcell-forwarding/user/items';
+		$config['base_url'] = base_url() . 'user/items';
 		$config['total_rows'] = $this->db->count_all_results();
 		$data['result_total_rows'] = $config['total_rows'];
 		$config['per_page'] = 10;

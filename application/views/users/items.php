@@ -23,7 +23,7 @@
 						</div>
 
 						<a href="" class=" btn btn-primary mb-3 tambahDataItem" data-toggle="modal" data-target="#modalItem">Add New Item</a>
-						<a href="<?= base_url('item/report'); ?>" class=" btn btn-info mb-3 ml-3">Export</a>
+						<a href="<?= base_url('item/report'); ?>" class=" btn btn-info mb-3 ml-3" target="_blank">Export</a>
 
 						<?php if (empty($items)) : ?>
 							<div class='alert alert-danger'>
@@ -33,7 +33,7 @@
 						<?php if ($this->input->post('search') && !empty($items)) : ?>
 							<p>Result : <?= $result_total_rows; ?></p>
 						<?php endif; ?>
-						<table class="table table-hover">
+						<table class=" table table-hover">
 							<thead>
 								<tr>
 									<th scope="col">id</th>
