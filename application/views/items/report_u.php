@@ -105,6 +105,10 @@
 						<td>$ <?= number_format($item['item_price']); ?></td>
 					</tr>
 					<tr>
+						<th>Total Item</th>
+						<td><?= $item['item_total']; ?></td>
+					</tr>
+					<tr>
 						<th>Weight Item</th>
 						<td><?= $item['weight']; ?> Kg</td>
 					</tr>
@@ -241,6 +245,10 @@
 						<tr>
 							<th>Price Item @ </th>
 							<td>$ <?= number_format($item['item_price']); ?></td>
+						</tr>
+						<tr>
+							<th>Total Item</th>
+							<td><?= $item['item_total']; ?></td>
 						</tr>
 						<tr>
 							<th>Weight Item</th>

@@ -28,7 +28,7 @@ class Auction extends CI_Controller
 		$this->db->join('items', 'item_auctions.item_id = items.id');
 
 		// config
-		$config['base_url'] = 'http://localhost/parcell-forwarding/auction/index';
+		$config['base_url'] = base_url() . 'auction/index';
 		$config['total_rows'] = $this->db->count_all_results();
 		$data['result_total_rows'] = $config['total_rows'];
 		$config['per_page'] = 10;

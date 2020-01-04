@@ -5,7 +5,7 @@ class User_model extends CI_Model
 {
 	public function getDataUsers()
 	{
-		$this->db->select('users.*, user_details.name, users.email, user_details.birth_date, user_details.phone_number, user_details.gender, user_details.address, ');
+		$this->db->select('users.*, user_details.name, users.email, user_details.birth_date, user_details.phone_number, user_details.gender, user_details.address, user_details.avatar');
 		$this->db->from('users');
 		$this->db->join('user_details', 'users.id = user_details.user_id');
 

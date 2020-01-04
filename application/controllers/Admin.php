@@ -46,7 +46,7 @@ class Admin extends CI_Controller
 		$this->db->join('item_categories', 'items.category_id = item_categories.id');
 
 		// config
-		$config['base_url'] = 'http://localhost/projects/parcell-forwarding/admin/items';
+		$config['base_url'] = base_url() . 'admin/items';
 		$config['total_rows'] = $this->db->count_all_results();
 		$config['per_page'] = 10;
 		$data['result_total_rows'] = $config['total_rows'];
@@ -111,7 +111,7 @@ class Admin extends CI_Controller
 		$this->db->join('items', 'item_auctions.item_id = items.id');
 
 		// config
-		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/auctions';
+		$config['base_url'] = base_url() . 'admin/auctions';
 		$config['total_rows'] = $this->db->count_all_results();
 		$data['result_total_rows'] = $config['total_rows'];
 		$config['per_page'] = 10;
@@ -172,7 +172,7 @@ class Admin extends CI_Controller
 		$this->db->join('user_items', 'items.id = user_items.item_id');
 
 		// config
-		$config['base_url'] = 'http://localhost/parcell-forwarding/admin/transactions';
+		$config['base_url'] = base_url() . 'admin/transactions';
 		$config['total_rows'] = $this->db->count_all_results();
 		$data['result_total_rows'] = $config['total_rows'];
 		$config['per_page'] = 10;

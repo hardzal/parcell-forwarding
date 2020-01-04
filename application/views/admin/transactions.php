@@ -3,7 +3,7 @@
 
 				<!-- Page Heading -->
 				<h1 class="h3 mb-4 text-gray-800"><?= $title; ?></h1>
-				<p><a href='<?= base_url() . 'transaction/report'; ?>' class="btn btn-primary">Export</a></p>
+				<p><a href='<?= base_url() . 'transaction/report'; ?>' class="btn btn-primary" target="_blank">Export</a></p>
 
 				<div class="row">
 					<div class="col-lg">
@@ -53,11 +53,11 @@
 										<td scope="row"><?= $transaction['item_name']; ?></td>
 										<td scope="row"><?= $transaction['item_code']; ?></td>
 										<td scope="row"><?= '$ ' . number_format($transaction['cost_total']); ?></td>
-										<td scope="row"><?= status_item($transaction['id'], $this->session->userdata('role_id')); ?></td>
+										<td scope="row"><?= status_item($transaction['user_item_id'], $this->session->userdata('role_id')); ?></td>
 										<td scope="row">
-											<?= is_confirmed($transaction['id']); ?>
-											<a href="<?= base_url('transaction/report/') . $transaction['id']; ?>" class="badge badge-info mr-2">Export</a>
-											<a href="<?= base_url('transaction/delete/') . $transaction['id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
+											<?= is_confirmed($transaction['user_item_id']); ?>
+											<a href="<?= base_url('transaction/report/') . $transaction['id']; ?>" class="badge badge-info mr-2" target="_blank">Export</a>
+											<a href="<?= base_url('transaction/delete/') . $transaction['user_item_id']; ?>" class="badge badge-danger" onclick="return confirm('Apakah kamu yakin ingin menghapus menu ini?')">Delete</a>
 										</td>
 									</tr> <?php $no = $no + 1;
 										endforeach; ?>

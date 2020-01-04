@@ -5,7 +5,8 @@ class Transaction_model extends CI_Model
 {
 	public function getItemTransactions($limit, $offset, $keyword = 0)
 	{
-		$query = "SELECT user_items.id AS user_item_id,  
+		$query = "SELECT user_transactions.*,
+					user_items.id AS user_item_id,  
 					users.email AS email,
 					items.name AS item_name,
 					user_items.item_code, 
